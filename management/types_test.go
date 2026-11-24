@@ -13103,11 +13103,11 @@ func TestSettersMarkExplicitAllocationRequestItem(t *testing.T) {
 }
 
 func TestSettersAssociateOrganizationClientGrantResponseContent(t *testing.T) {
-	t.Run("SetID", func(t *testing.T) {
+	t.Run("SetGrantID", func(t *testing.T) {
 		obj := &AssociateOrganizationClientGrantResponseContent{}
-		var fernTestValueID *string
-		obj.SetID(fernTestValueID)
-		assert.Equal(t, fernTestValueID, obj.ID)
+		var fernTestValueGrantID *string
+		obj.SetGrantID(fernTestValueGrantID)
+		assert.Equal(t, fernTestValueGrantID, obj.GrantID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -13154,29 +13154,29 @@ func TestSettersAssociateOrganizationClientGrantResponseContent(t *testing.T) {
 }
 
 func TestGettersAssociateOrganizationClientGrantResponseContent(t *testing.T) {
-	t.Run("GetID", func(t *testing.T) {
+	t.Run("GetGrantID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &AssociateOrganizationClientGrantResponseContent{}
 		var value string
-		obj.ID = &value
+		obj.GrantID = &value
 
 		// Act & Assert
-		assert.Equal(t, value, obj.GetID(), "getter should dereference and return the value")
+		assert.Equal(t, value, obj.GetGrantID(), "getter should dereference and return the value")
 	})
 
-	t.Run("GetID_NilProperty", func(t *testing.T) {
+	t.Run("GetGrantID_NilProperty", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &AssociateOrganizationClientGrantResponseContent{}
-		obj.ID = nil
+		obj.GrantID = nil
 		var expectedZero string
 
 		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetID(), "getter should return zero value when property is nil")
+		assert.Equal(t, expectedZero, obj.GetGrantID(), "getter should return zero value when property is nil")
 	})
 
-	t.Run("GetID_NilReceiver", func(t *testing.T) {
+	t.Run("GetGrantID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *AssociateOrganizationClientGrantResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -13185,7 +13185,7 @@ func TestGettersAssociateOrganizationClientGrantResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetID() // Should return zero value
+		_ = obj.GetGrantID() // Should return zero value
 	})
 
 	t.Run("GetClientID", func(t *testing.T) {
@@ -13360,14 +13360,14 @@ func TestGettersAssociateOrganizationClientGrantResponseContent(t *testing.T) {
 }
 
 func TestSettersMarkExplicitAssociateOrganizationClientGrantResponseContent(t *testing.T) {
-	t.Run("SetID_MarksExplicit", func(t *testing.T) {
+	t.Run("SetGrantID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &AssociateOrganizationClientGrantResponseContent{}
-		var fernTestValueID *string
+		var fernTestValueGrantID *string
 
 		// Act
-		obj.SetID(fernTestValueID)
+		obj.SetGrantID(fernTestValueGrantID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -237576,6 +237576,493 @@ func TestSettersMarkExplicitGetVerifiableCredentialTemplateResponseContent(t *te
 
 }
 
+func TestSettersGetWebtaskResponseContent(t *testing.T) {
+	t.Run("SetContainer", func(t *testing.T) {
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueContainer WebtaskContainer
+		obj.SetContainer(fernTestValueContainer)
+		assert.Equal(t, fernTestValueContainer, obj.Container)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetName", func(t *testing.T) {
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueName WebtaskName
+		obj.SetName(fernTestValueName)
+		assert.Equal(t, fernTestValueName, obj.Name)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetToken", func(t *testing.T) {
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueToken *WebtaskToken
+		obj.SetToken(fernTestValueToken)
+		assert.Equal(t, fernTestValueToken, obj.Token)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMeta", func(t *testing.T) {
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueMeta WebtaskResponseMeta
+		obj.SetMeta(fernTestValueMeta)
+		assert.Equal(t, fernTestValueMeta, obj.Meta)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetWebtaskURL", func(t *testing.T) {
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueWebtaskURL *WebtaskURL
+		obj.SetWebtaskURL(fernTestValueWebtaskURL)
+		assert.Equal(t, fernTestValueWebtaskURL, obj.WebtaskURL)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCode", func(t *testing.T) {
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueCode *string
+		obj.SetCode(fernTestValueCode)
+		assert.Equal(t, fernTestValueCode, obj.Code)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSecrets", func(t *testing.T) {
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueSecrets *WebtaskResponseSecrets
+		obj.SetSecrets(fernTestValueSecrets)
+		assert.Equal(t, fernTestValueSecrets, obj.Secrets)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersGetWebtaskResponseContent(t *testing.T) {
+	t.Run("GetContainer", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var expected WebtaskContainer
+		obj.Container = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetContainer(), "getter should return the property value")
+	})
+
+	t.Run("GetContainer_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetContainer() // Should return zero value
+	})
+
+	t.Run("GetName", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var expected WebtaskName
+		obj.Name = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetName(), "getter should return the property value")
+	})
+
+	t.Run("GetName_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetToken", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var value WebtaskToken
+		obj.Token = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetToken(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetToken_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		obj.Token = nil
+		var expectedZero WebtaskToken
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetToken(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetToken_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetToken() // Should return zero value
+	})
+
+	t.Run("GetMeta", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var expected WebtaskResponseMeta
+		obj.Meta = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMeta(), "getter should return the property value")
+	})
+
+	t.Run("GetMeta_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMeta() // Should return zero value
+	})
+
+	t.Run("GetWebtaskURL", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var value WebtaskURL
+		obj.WebtaskURL = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetWebtaskURL(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetWebtaskURL_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		obj.WebtaskURL = nil
+		var expectedZero WebtaskURL
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetWebtaskURL(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetWebtaskURL_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetWebtaskURL() // Should return zero value
+	})
+
+	t.Run("GetCode", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var value string
+		obj.Code = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCode(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCode_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		obj.Code = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCode(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCode_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCode() // Should return zero value
+	})
+
+	t.Run("GetSecrets", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var value WebtaskResponseSecrets
+		obj.Secrets = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSecrets(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSecrets_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		obj.Secrets = nil
+		var expectedZero WebtaskResponseSecrets
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSecrets(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSecrets_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSecrets() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitGetWebtaskResponseContent(t *testing.T) {
+	t.Run("SetContainer_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueContainer WebtaskContainer
+
+		// Act
+		obj.SetContainer(fernTestValueContainer)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetName_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueName WebtaskName
+
+		// Act
+		obj.SetName(fernTestValueName)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetToken_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueToken *WebtaskToken
+
+		// Act
+		obj.SetToken(fernTestValueToken)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMeta_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueMeta WebtaskResponseMeta
+
+		// Act
+		obj.SetMeta(fernTestValueMeta)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetWebtaskURL_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueWebtaskURL *WebtaskURL
+
+		// Act
+		obj.SetWebtaskURL(fernTestValueWebtaskURL)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCode_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueCode *string
+
+		// Act
+		obj.SetCode(fernTestValueCode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSecrets_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+		var fernTestValueSecrets *WebtaskResponseSecrets
+
+		// Act
+		obj.SetSecrets(fernTestValueSecrets)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersGroup(t *testing.T) {
 	t.Run("SetID", func(t *testing.T) {
 		obj := &Group{}
@@ -279022,6 +279509,77 @@ func TestSettersMarkExplicitSelfServiceProfileSSOTicketProvisioningConfig(t *tes
 
 		// Act
 		obj.SetTokenLifetime(fernTestValueTokenLifetime)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("SetAllowConfiguration", func(t *testing.T) {
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		var fernTestValueAllowConfiguration bool
+		obj.SetAllowConfiguration(fernTestValueAllowConfiguration)
+		assert.Equal(t, fernTestValueAllowConfiguration, obj.AllowConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("GetAllowConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		var expected bool
+		obj.AllowConfiguration = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAllowConfiguration(), "getter should return the property value")
+	})
+
+	t.Run("GetAllowConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SelfServiceProfileSSOTicketUniversalLogoutConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowConfiguration() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("SetAllowConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		var fernTestValueAllowConfiguration bool
+
+		// Act
+		obj.SetAllowConfiguration(fernTestValueAllowConfiguration)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -340746,6 +341304,347 @@ func TestSettersMarkExplicitVerifiableCredentialTemplateResponse(t *testing.T) {
 
 }
 
+func TestSettersWebtask(t *testing.T) {
+	t.Run("SetContainer", func(t *testing.T) {
+		obj := &Webtask{}
+		var fernTestValueContainer WebtaskContainer
+		obj.SetContainer(fernTestValueContainer)
+		assert.Equal(t, fernTestValueContainer, obj.Container)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetName", func(t *testing.T) {
+		obj := &Webtask{}
+		var fernTestValueName WebtaskName
+		obj.SetName(fernTestValueName)
+		assert.Equal(t, fernTestValueName, obj.Name)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetToken", func(t *testing.T) {
+		obj := &Webtask{}
+		var fernTestValueToken *WebtaskToken
+		obj.SetToken(fernTestValueToken)
+		assert.Equal(t, fernTestValueToken, obj.Token)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMeta", func(t *testing.T) {
+		obj := &Webtask{}
+		var fernTestValueMeta WebtaskResponseMeta
+		obj.SetMeta(fernTestValueMeta)
+		assert.Equal(t, fernTestValueMeta, obj.Meta)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetWebtaskURL", func(t *testing.T) {
+		obj := &Webtask{}
+		var fernTestValueWebtaskURL *WebtaskURL
+		obj.SetWebtaskURL(fernTestValueWebtaskURL)
+		assert.Equal(t, fernTestValueWebtaskURL, obj.WebtaskURL)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersWebtask(t *testing.T) {
+	t.Run("GetContainer", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var expected WebtaskContainer
+		obj.Container = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetContainer(), "getter should return the property value")
+	})
+
+	t.Run("GetContainer_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Webtask
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetContainer() // Should return zero value
+	})
+
+	t.Run("GetName", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var expected WebtaskName
+		obj.Name = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetName(), "getter should return the property value")
+	})
+
+	t.Run("GetName_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Webtask
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetToken", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var value WebtaskToken
+		obj.Token = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetToken(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetToken_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		obj.Token = nil
+		var expectedZero WebtaskToken
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetToken(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetToken_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Webtask
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetToken() // Should return zero value
+	})
+
+	t.Run("GetMeta", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var expected WebtaskResponseMeta
+		obj.Meta = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMeta(), "getter should return the property value")
+	})
+
+	t.Run("GetMeta_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Webtask
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMeta() // Should return zero value
+	})
+
+	t.Run("GetWebtaskURL", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var value WebtaskURL
+		obj.WebtaskURL = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetWebtaskURL(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetWebtaskURL_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		obj.WebtaskURL = nil
+		var expectedZero WebtaskURL
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetWebtaskURL(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetWebtaskURL_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Webtask
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetWebtaskURL() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitWebtask(t *testing.T) {
+	t.Run("SetContainer_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var fernTestValueContainer WebtaskContainer
+
+		// Act
+		obj.SetContainer(fernTestValueContainer)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetName_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var fernTestValueName WebtaskName
+
+		// Act
+		obj.SetName(fernTestValueName)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetToken_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var fernTestValueToken *WebtaskToken
+
+		// Act
+		obj.SetToken(fernTestValueToken)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMeta_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var fernTestValueMeta WebtaskResponseMeta
+
+		// Act
+		obj.SetMeta(fernTestValueMeta)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetWebtaskURL_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+		var fernTestValueWebtaskURL *WebtaskURL
+
+		// Act
+		obj.SetWebtaskURL(fernTestValueWebtaskURL)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersXSSProtectionConfig(t *testing.T) {
 	t.Run("SetEnabled", func(t *testing.T) {
 		obj := &XSSProtectionConfig{}
@@ -356352,6 +357251,39 @@ func TestJSONMarshalingGetVerifiableCredentialTemplateResponseContent(t *testing
 	})
 }
 
+func TestJSONMarshalingGetWebtaskResponseContent(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWebtaskResponseContent{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled GetWebtaskResponseContent
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj GetWebtaskResponseContent
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj GetWebtaskResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingGroup(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -360802,6 +361734,39 @@ func TestJSONMarshalingSelfServiceProfileSSOTicketProvisioningConfig(t *testing.
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj SelfServiceProfileSSOTicketProvisioningConfig
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled SelfServiceProfileSSOTicketUniversalLogoutConfig
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj SelfServiceProfileSSOTicketUniversalLogoutConfig
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj SelfServiceProfileSSOTicketUniversalLogoutConfig
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -365983,6 +366948,39 @@ func TestJSONMarshalingVerifiableCredentialTemplateResponse(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj VerifiableCredentialTemplateResponse
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingWebtask(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Webtask{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled Webtask
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj Webtask
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj Webtask
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -377894,6 +378892,22 @@ func TestStringGetVerifiableCredentialTemplateResponseContent(t *testing.T) {
 	})
 }
 
+func TestStringGetWebtaskResponseContent(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &GetWebtaskResponseContent{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringGroup(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -380049,6 +381063,22 @@ func TestStringSelfServiceProfileSSOTicketProvisioningConfig(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *SelfServiceProfileSSOTicketProvisioningConfig
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SelfServiceProfileSSOTicketUniversalLogoutConfig
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -382561,6 +383591,22 @@ func TestStringVerifiableCredentialTemplateResponse(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *VerifiableCredentialTemplateResponse
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringWebtask(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &Webtask{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Webtask
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -388622,6 +389668,358 @@ func TestEnumEncryptionKeyType(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventConnectionCreatedObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventConnectionCreatedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_connection_created", func(t *testing.T) {
 		t.Parallel()
@@ -388644,6 +390042,358 @@ func TestEnumEventStreamCloudEventConnectionCreatedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventConnectionDeletedObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventConnectionDeletedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_connection_deleted", func(t *testing.T) {
 		t.Parallel()
@@ -388659,6 +390409,358 @@ func TestEnumEventStreamCloudEventConnectionDeletedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionDeletedTypeEnumFromString("connection.deleted")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("waad")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -388710,6 +390812,138 @@ func TestEnumEventStreamCloudEventErrorMessageTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventGroupCreatedObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedPreviousObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedPreviousObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedPreviousObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventGroupCreatedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_created", func(t *testing.T) {
 		t.Parallel()
@@ -388725,6 +390959,138 @@ func TestEnumEventStreamCloudEventGroupCreatedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupCreatedTypeEnumFromString("group.created")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedPreviousObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedPreviousObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedPreviousObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -388754,6 +391120,226 @@ func TestEnumEventStreamCloudEventGroupDeletedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventGroupMemberAddedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_member_added", func(t *testing.T) {
 		t.Parallel()
@@ -388769,6 +391355,226 @@ func TestEnumEventStreamCloudEventGroupMemberAddedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupMemberAddedTypeEnumFromString("group.member.added")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("connection")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -388798,6 +391604,138 @@ func TestEnumEventStreamCloudEventGroupMemberDeletedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventGroupRoleAssignedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_role_assigned", func(t *testing.T) {
 		t.Parallel()
@@ -388820,6 +391758,138 @@ func TestEnumEventStreamCloudEventGroupRoleAssignedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventGroupRoleDeletedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_role_deleted", func(t *testing.T) {
 		t.Parallel()
@@ -388835,6 +391905,138 @@ func TestEnumEventStreamCloudEventGroupRoleDeletedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupRoleDeletedTypeEnumFromString("group.role.deleted")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -388996,6 +392198,138 @@ func TestEnumEventStreamCloudEventOrgDeletedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventOrgGroupRoleAssignedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_organization_group_role_assigned", func(t *testing.T) {
 		t.Parallel()
@@ -389011,6 +392345,138 @@ func TestEnumEventStreamCloudEventOrgGroupRoleAssignedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedTypeEnumFromString("organization.group.role.assigned")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -389611,6 +393077,72 @@ func TestEnumEventStreamEventTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamEventTypeEnumFromString("connection.created")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamWebhookBasicAuthMethodEnum(t *testing.T) {
+	t.Run("NewFromString_basic", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamWebhookBasicAuthMethodEnumFromString("basic")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamWebhookBasicAuthMethodEnum("basic"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamWebhookBasicAuthMethodEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamWebhookBasicAuthMethodEnumFromString("basic")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamWebhookBearerAuthMethodEnum(t *testing.T) {
+	t.Run("NewFromString_bearer", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamWebhookBearerAuthMethodEnumFromString("bearer")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamWebhookBearerAuthMethodEnum("bearer"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamWebhookBearerAuthMethodEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamWebhookBearerAuthMethodEnumFromString("bearer")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamWebhookCustomHeaderAuthMethodEnum(t *testing.T) {
+	t.Run("NewFromString_custom_header", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("custom_header")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamWebhookCustomHeaderAuthMethodEnum("custom_header"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("custom_header")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -390702,6 +394234,710 @@ func TestEnumForbiddenSchemaError(t *testing.T) {
 	})
 }
 
+func TestEnumFormBlockTypeDividerConst(t *testing.T) {
+	t.Run("NewFromString_DIVIDER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeDividerConstFromString("DIVIDER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeDividerConst("DIVIDER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeDividerConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeDividerConstFromString("DIVIDER")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeHTMLConst(t *testing.T) {
+	t.Run("NewFromString_HTML", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeHTMLConstFromString("HTML")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeHTMLConst("HTML"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeHTMLConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeHTMLConstFromString("HTML")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeImageConst(t *testing.T) {
+	t.Run("NewFromString_IMAGE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeImageConstFromString("IMAGE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeImageConst("IMAGE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeImageConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeImageConstFromString("IMAGE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeJumpButtonConst(t *testing.T) {
+	t.Run("NewFromString_JUMP_BUTTON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeJumpButtonConstFromString("JUMP_BUTTON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeJumpButtonConst("JUMP_BUTTON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeJumpButtonConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeJumpButtonConstFromString("JUMP_BUTTON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeNextButtonConst(t *testing.T) {
+	t.Run("NewFromString_NEXT_BUTTON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeNextButtonConstFromString("NEXT_BUTTON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeNextButtonConst("NEXT_BUTTON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeNextButtonConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeNextButtonConstFromString("NEXT_BUTTON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypePreviousButtonConst(t *testing.T) {
+	t.Run("NewFromString_PREVIOUS_BUTTON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypePreviousButtonConstFromString("PREVIOUS_BUTTON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypePreviousButtonConst("PREVIOUS_BUTTON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypePreviousButtonConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypePreviousButtonConstFromString("PREVIOUS_BUTTON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeResendButtonConst(t *testing.T) {
+	t.Run("NewFromString_RESEND_BUTTON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeResendButtonConstFromString("RESEND_BUTTON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeResendButtonConst("RESEND_BUTTON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeResendButtonConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeResendButtonConstFromString("RESEND_BUTTON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeRichTextConst(t *testing.T) {
+	t.Run("NewFromString_RICH_TEXT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeRichTextConstFromString("RICH_TEXT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeRichTextConst("RICH_TEXT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeRichTextConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeRichTextConstFromString("RICH_TEXT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldPaymentConfigChargeTypeOneOffConst(t *testing.T) {
+	t.Run("NewFromString_ONE_OFF", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("ONE_OFF")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldPaymentConfigChargeTypeOneOffConst("ONE_OFF"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("ONE_OFF")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldPaymentConfigChargeTypeSubscriptionConst(t *testing.T) {
+	t.Run("NewFromString_SUBSCRIPTION", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("SUBSCRIPTION")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldPaymentConfigChargeTypeSubscriptionConst("SUBSCRIPTION"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("SUBSCRIPTION")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeBooleanConst(t *testing.T) {
+	t.Run("NewFromString_BOOLEAN", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeBooleanConstFromString("BOOLEAN")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeBooleanConst("BOOLEAN"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeBooleanConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeBooleanConstFromString("BOOLEAN")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeCardsConst(t *testing.T) {
+	t.Run("NewFromString_CARDS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeCardsConstFromString("CARDS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeCardsConst("CARDS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeCardsConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeCardsConstFromString("CARDS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeChoiceConst(t *testing.T) {
+	t.Run("NewFromString_CHOICE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeChoiceConstFromString("CHOICE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeChoiceConst("CHOICE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeChoiceConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeChoiceConstFromString("CHOICE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeCustomConst(t *testing.T) {
+	t.Run("NewFromString_CUSTOM", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeCustomConstFromString("CUSTOM")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeCustomConst("CUSTOM"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeCustomConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeCustomConstFromString("CUSTOM")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeDateConst(t *testing.T) {
+	t.Run("NewFromString_DATE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeDateConstFromString("DATE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeDateConst("DATE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeDateConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeDateConstFromString("DATE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeDropdownConst(t *testing.T) {
+	t.Run("NewFromString_DROPDOWN", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeDropdownConstFromString("DROPDOWN")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeDropdownConst("DROPDOWN"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeDropdownConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeDropdownConstFromString("DROPDOWN")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeEmailConst(t *testing.T) {
+	t.Run("NewFromString_EMAIL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeEmailConstFromString("EMAIL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeEmailConst("EMAIL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeEmailConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeEmailConstFromString("EMAIL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeFileConst(t *testing.T) {
+	t.Run("NewFromString_FILE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeFileConstFromString("FILE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeFileConst("FILE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeFileConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeFileConstFromString("FILE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeLegalConst(t *testing.T) {
+	t.Run("NewFromString_LEGAL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeLegalConstFromString("LEGAL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeLegalConst("LEGAL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeLegalConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeLegalConstFromString("LEGAL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeNumberConst(t *testing.T) {
+	t.Run("NewFromString_NUMBER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeNumberConstFromString("NUMBER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeNumberConst("NUMBER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeNumberConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeNumberConstFromString("NUMBER")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypePasswordConst(t *testing.T) {
+	t.Run("NewFromString_PASSWORD", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypePasswordConstFromString("PASSWORD")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypePasswordConst("PASSWORD"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypePasswordConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypePasswordConstFromString("PASSWORD")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypePaymentConst(t *testing.T) {
+	t.Run("NewFromString_PAYMENT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypePaymentConstFromString("PAYMENT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypePaymentConst("PAYMENT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypePaymentConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypePaymentConstFromString("PAYMENT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeSocialConst(t *testing.T) {
+	t.Run("NewFromString_SOCIAL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeSocialConstFromString("SOCIAL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeSocialConst("SOCIAL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeSocialConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeSocialConstFromString("SOCIAL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeTelConst(t *testing.T) {
+	t.Run("NewFromString_TEL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeTelConstFromString("TEL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeTelConst("TEL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeTelConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeTelConstFromString("TEL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeTextConst(t *testing.T) {
+	t.Run("NewFromString_TEXT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeTextConstFromString("TEXT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeTextConst("TEXT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeTextConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeTextConstFromString("TEXT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeURLConst(t *testing.T) {
+	t.Run("NewFromString_URL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeURLConstFromString("URL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeURLConst("URL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeURLConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeURLConstFromString("URL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormNodeTypeFlowConst(t *testing.T) {
+	t.Run("NewFromString_FLOW", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormNodeTypeFlowConstFromString("FLOW")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormNodeTypeFlowConst("FLOW"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormNodeTypeFlowConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormNodeTypeFlowConstFromString("FLOW")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormNodeTypeRouterConst(t *testing.T) {
+	t.Run("NewFromString_ROUTER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormNodeTypeRouterConstFromString("ROUTER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormNodeTypeRouterConst("ROUTER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormNodeTypeRouterConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormNodeTypeRouterConstFromString("ROUTER")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormNodeTypeStepConst(t *testing.T) {
+	t.Run("NewFromString_STEP", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormNodeTypeStepConstFromString("STEP")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormNodeTypeStepConst("STEP"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormNodeTypeStepConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormNodeTypeStepConstFromString("STEP")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormWidgetTypeAuth0VerifiableCredentialsConst(t *testing.T) {
+	t.Run("NewFromString_AUTH0_VERIFIABLE_CREDENTIALS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("AUTH0_VERIFIABLE_CREDENTIALS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormWidgetTypeAuth0VerifiableCredentialsConst("AUTH0_VERIFIABLE_CREDENTIALS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("AUTH0_VERIFIABLE_CREDENTIALS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormWidgetTypeGMapsAddressConst(t *testing.T) {
+	t.Run("NewFromString_GMAPS_ADDRESS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormWidgetTypeGMapsAddressConstFromString("GMAPS_ADDRESS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormWidgetTypeGMapsAddressConst("GMAPS_ADDRESS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormWidgetTypeGMapsAddressConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormWidgetTypeGMapsAddressConstFromString("GMAPS_ADDRESS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormWidgetTypeRecaptchaConst(t *testing.T) {
+	t.Run("NewFromString_RECAPTCHA", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormWidgetTypeRecaptchaConstFromString("RECAPTCHA")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormWidgetTypeRecaptchaConst("RECAPTCHA"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormWidgetTypeRecaptchaConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormWidgetTypeRecaptchaConstFromString("RECAPTCHA")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumGetFlowExecutionRequestParametersHydrateEnum(t *testing.T) {
 	t.Run("NewFromString_debug", func(t *testing.T) {
 		t.Parallel()
@@ -391606,6 +395842,182 @@ func TestEnumJobFileFormatEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewJobFileFormatEnumFromString("json")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamDatadogEnum(t *testing.T) {
+	t.Run("NewFromString_datadog", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamDatadogEnumFromString("datadog")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamDatadogEnum("datadog"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamDatadogEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamDatadogEnumFromString("datadog")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamEventBridgeEnum(t *testing.T) {
+	t.Run("NewFromString_eventbridge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamEventBridgeEnumFromString("eventbridge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamEventBridgeEnum("eventbridge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamEventBridgeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamEventBridgeEnumFromString("eventbridge")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamEventGridEnum(t *testing.T) {
+	t.Run("NewFromString_eventgrid", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamEventGridEnumFromString("eventgrid")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamEventGridEnum("eventgrid"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamEventGridEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamEventGridEnumFromString("eventgrid")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamHTTPEnum(t *testing.T) {
+	t.Run("NewFromString_http", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamHTTPEnumFromString("http")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamHTTPEnum("http"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamHTTPEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamHTTPEnumFromString("http")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamMixpanelEnum(t *testing.T) {
+	t.Run("NewFromString_mixpanel", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamMixpanelEnumFromString("mixpanel")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamMixpanelEnum("mixpanel"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamMixpanelEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamMixpanelEnumFromString("mixpanel")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamSegmentEnum(t *testing.T) {
+	t.Run("NewFromString_segment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSegmentEnumFromString("segment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSegmentEnum("segment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSegmentEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSegmentEnumFromString("segment")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamSplunkEnum(t *testing.T) {
+	t.Run("NewFromString_splunk", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSplunkEnumFromString("splunk")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSplunkEnum("splunk"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSplunkEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSplunkEnumFromString("splunk")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamSumoEnum(t *testing.T) {
+	t.Run("NewFromString_sumo", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSumoEnumFromString("sumo")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSumoEnum("sumo"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSumoEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSumoEnumFromString("sumo")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -409156,6 +413568,29 @@ func TestExtraPropertiesGetVerifiableCredentialTemplateResponseContent(t *testin
 	})
 }
 
+func TestExtraPropertiesGetWebtaskResponseContent(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &GetWebtaskResponseContent{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetWebtaskResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesGroup(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -412256,6 +416691,29 @@ func TestExtraPropertiesSelfServiceProfileSSOTicketProvisioningConfig(t *testing
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *SelfServiceProfileSSOTicketProvisioningConfig
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SelfServiceProfileSSOTicketUniversalLogoutConfig
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
@@ -415867,6 +420325,29 @@ func TestExtraPropertiesVerifiableCredentialTemplateResponse(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *VerifiableCredentialTemplateResponse
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesWebtask(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &Webtask{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Webtask
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -506,319 +506,333 @@ func (e *EventStreamCloudEventConnectionCreatedData) String() string {
 
 // The event content.
 type EventStreamCloudEventConnectionCreatedObject struct {
-	EventStreamCloudEventConnectionCreatedObject0 *EventStreamCloudEventConnectionCreatedObject0
-	EventStreamCloudEventConnectionCreatedObject1 *EventStreamCloudEventConnectionCreatedObject1
-	EventStreamCloudEventConnectionCreatedObject2 *EventStreamCloudEventConnectionCreatedObject2
-	EventStreamCloudEventConnectionCreatedObject3 *EventStreamCloudEventConnectionCreatedObject3
-	EventStreamCloudEventConnectionCreatedObject4 *EventStreamCloudEventConnectionCreatedObject4
-	EventStreamCloudEventConnectionCreatedObject5 *EventStreamCloudEventConnectionCreatedObject5
-	EventStreamCloudEventConnectionCreatedObject6 *EventStreamCloudEventConnectionCreatedObject6
-	EventStreamCloudEventConnectionCreatedObject7 *EventStreamCloudEventConnectionCreatedObject7
+	Strategy           string
+	DisplayName        *string
+	EnabledClients     []string
+	ID                 string
+	IsDomainConnection *bool
+	Name               string
+	Realms             []string
+	Oidc               *EventStreamCloudEventConnectionCreatedObject0
+	Okta               *EventStreamCloudEventConnectionCreatedObject1
+	Samlp              *EventStreamCloudEventConnectionCreatedObject2
+	Pingfederate       *EventStreamCloudEventConnectionCreatedObject3
+	Adfs               *EventStreamCloudEventConnectionCreatedObject4
+	Ad                 *EventStreamCloudEventConnectionCreatedObject5
+	GoogleApps         *EventStreamCloudEventConnectionCreatedObject6
+	Waad               *EventStreamCloudEventConnectionCreatedObject7
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventConnectionCreatedObject0() *EventStreamCloudEventConnectionCreatedObject0 {
+func (e *EventStreamCloudEventConnectionCreatedObject) GetStrategy() string {
+	if e == nil {
+		return ""
+	}
+	return e.Strategy
+}
+
+func (e *EventStreamCloudEventConnectionCreatedObject) GetDisplayName() string {
+	if e == nil || e.DisplayName == nil {
+		return ""
+	}
+	return *e.DisplayName
+}
+
+func (e *EventStreamCloudEventConnectionCreatedObject) GetEnabledClients() []string {
+	if e == nil || e.EnabledClients == nil {
+		return nil
+	}
+	return e.EnabledClients
+}
+
+func (e *EventStreamCloudEventConnectionCreatedObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventConnectionCreatedObject) GetIsDomainConnection() bool {
+	if e == nil || e.IsDomainConnection == nil {
+		return false
+	}
+	return *e.IsDomainConnection
+}
+
+func (e *EventStreamCloudEventConnectionCreatedObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventConnectionCreatedObject) GetRealms() []string {
+	if e == nil || e.Realms == nil {
+		return nil
+	}
+	return e.Realms
+}
+
+func (e *EventStreamCloudEventConnectionCreatedObject) GetOidc() *EventStreamCloudEventConnectionCreatedObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedObject0
+	return e.Oidc
 }
 
-func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventConnectionCreatedObject1() *EventStreamCloudEventConnectionCreatedObject1 {
+func (e *EventStreamCloudEventConnectionCreatedObject) GetOkta() *EventStreamCloudEventConnectionCreatedObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedObject1
+	return e.Okta
 }
 
-func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventConnectionCreatedObject2() *EventStreamCloudEventConnectionCreatedObject2 {
+func (e *EventStreamCloudEventConnectionCreatedObject) GetSamlp() *EventStreamCloudEventConnectionCreatedObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedObject2
+	return e.Samlp
 }
 
-func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventConnectionCreatedObject3() *EventStreamCloudEventConnectionCreatedObject3 {
+func (e *EventStreamCloudEventConnectionCreatedObject) GetPingfederate() *EventStreamCloudEventConnectionCreatedObject3 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedObject3
+	return e.Pingfederate
 }
 
-func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventConnectionCreatedObject4() *EventStreamCloudEventConnectionCreatedObject4 {
+func (e *EventStreamCloudEventConnectionCreatedObject) GetAdfs() *EventStreamCloudEventConnectionCreatedObject4 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedObject4
+	return e.Adfs
 }
 
-func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventConnectionCreatedObject5() *EventStreamCloudEventConnectionCreatedObject5 {
+func (e *EventStreamCloudEventConnectionCreatedObject) GetAd() *EventStreamCloudEventConnectionCreatedObject5 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedObject5
+	return e.Ad
 }
 
-func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventConnectionCreatedObject6() *EventStreamCloudEventConnectionCreatedObject6 {
+func (e *EventStreamCloudEventConnectionCreatedObject) GetGoogleApps() *EventStreamCloudEventConnectionCreatedObject6 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedObject6
+	return e.GoogleApps
 }
 
-func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventConnectionCreatedObject7() *EventStreamCloudEventConnectionCreatedObject7 {
+func (e *EventStreamCloudEventConnectionCreatedObject) GetWaad() *EventStreamCloudEventConnectionCreatedObject7 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedObject7
+	return e.Waad
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject0 := new(EventStreamCloudEventConnectionCreatedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject0"
-			e.EventStreamCloudEventConnectionCreatedObject0 = valueEventStreamCloudEventConnectionCreatedObject0
-			return nil
+	var unmarshaler struct {
+		Strategy           string   `json:"strategy"`
+		DisplayName        *string  `json:"display_name,omitempty"`
+		EnabledClients     []string `json:"enabled_clients,omitempty"`
+		ID                 string   `json:"id"`
+		IsDomainConnection *bool    `json:"is_domain_connection,omitempty"`
+		Name               string   `json:"name"`
+		Realms             []string `json:"realms,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Strategy = unmarshaler.Strategy
+	e.DisplayName = unmarshaler.DisplayName
+	e.EnabledClients = unmarshaler.EnabledClients
+	e.ID = unmarshaler.ID
+	e.IsDomainConnection = unmarshaler.IsDomainConnection
+	e.Name = unmarshaler.Name
+	e.Realms = unmarshaler.Realms
+	if unmarshaler.Strategy == "" {
+		return fmt.Errorf("%T did not include discriminant strategy", e)
+	}
+	switch unmarshaler.Strategy {
+	case "oidc":
+		value := new(EventStreamCloudEventConnectionCreatedObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject1 := new(EventStreamCloudEventConnectionCreatedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject1"
-			e.EventStreamCloudEventConnectionCreatedObject1 = valueEventStreamCloudEventConnectionCreatedObject1
-			return nil
+		e.Oidc = value
+	case "okta":
+		value := new(EventStreamCloudEventConnectionCreatedObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject2 := new(EventStreamCloudEventConnectionCreatedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject2"
-			e.EventStreamCloudEventConnectionCreatedObject2 = valueEventStreamCloudEventConnectionCreatedObject2
-			return nil
+		e.Okta = value
+	case "samlp":
+		value := new(EventStreamCloudEventConnectionCreatedObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject3 := new(EventStreamCloudEventConnectionCreatedObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject3"
-			e.EventStreamCloudEventConnectionCreatedObject3 = valueEventStreamCloudEventConnectionCreatedObject3
-			return nil
+		e.Samlp = value
+	case "pingfederate":
+		value := new(EventStreamCloudEventConnectionCreatedObject3)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject4 := new(EventStreamCloudEventConnectionCreatedObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject4"
-			e.EventStreamCloudEventConnectionCreatedObject4 = valueEventStreamCloudEventConnectionCreatedObject4
-			return nil
+		e.Pingfederate = value
+	case "adfs":
+		value := new(EventStreamCloudEventConnectionCreatedObject4)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject5 := new(EventStreamCloudEventConnectionCreatedObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject5"
-			e.EventStreamCloudEventConnectionCreatedObject5 = valueEventStreamCloudEventConnectionCreatedObject5
-			return nil
+		e.Adfs = value
+	case "ad":
+		value := new(EventStreamCloudEventConnectionCreatedObject5)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject6 := new(EventStreamCloudEventConnectionCreatedObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject6"
-			e.EventStreamCloudEventConnectionCreatedObject6 = valueEventStreamCloudEventConnectionCreatedObject6
-			return nil
+		e.Ad = value
+	case "google-apps":
+		value := new(EventStreamCloudEventConnectionCreatedObject6)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject7 := new(EventStreamCloudEventConnectionCreatedObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject7"
-			e.EventStreamCloudEventConnectionCreatedObject7 = valueEventStreamCloudEventConnectionCreatedObject7
-			return nil
+		e.GoogleApps = value
+	case "waad":
+		value := new(EventStreamCloudEventConnectionCreatedObject7)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Waad = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject0 := new(EventStreamCloudEventConnectionCreatedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject0"
-			e.EventStreamCloudEventConnectionCreatedObject0 = valueEventStreamCloudEventConnectionCreatedObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject1 := new(EventStreamCloudEventConnectionCreatedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject1"
-			e.EventStreamCloudEventConnectionCreatedObject1 = valueEventStreamCloudEventConnectionCreatedObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject2 := new(EventStreamCloudEventConnectionCreatedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject2"
-			e.EventStreamCloudEventConnectionCreatedObject2 = valueEventStreamCloudEventConnectionCreatedObject2
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject3 := new(EventStreamCloudEventConnectionCreatedObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject3"
-			e.EventStreamCloudEventConnectionCreatedObject3 = valueEventStreamCloudEventConnectionCreatedObject3
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject4 := new(EventStreamCloudEventConnectionCreatedObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject4"
-			e.EventStreamCloudEventConnectionCreatedObject4 = valueEventStreamCloudEventConnectionCreatedObject4
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject5 := new(EventStreamCloudEventConnectionCreatedObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject5"
-			e.EventStreamCloudEventConnectionCreatedObject5 = valueEventStreamCloudEventConnectionCreatedObject5
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject6 := new(EventStreamCloudEventConnectionCreatedObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject6"
-			e.EventStreamCloudEventConnectionCreatedObject6 = valueEventStreamCloudEventConnectionCreatedObject6
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedObject7 := new(EventStreamCloudEventConnectionCreatedObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedObject7"
-			e.EventStreamCloudEventConnectionCreatedObject7 = valueEventStreamCloudEventConnectionCreatedObject7
-			return nil
-		}
-	}
-	valueEventStreamCloudEventConnectionCreatedObject0 := new(EventStreamCloudEventConnectionCreatedObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject0); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedObject0"
-		e.EventStreamCloudEventConnectionCreatedObject0 = valueEventStreamCloudEventConnectionCreatedObject0
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedObject1 := new(EventStreamCloudEventConnectionCreatedObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject1); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedObject1"
-		e.EventStreamCloudEventConnectionCreatedObject1 = valueEventStreamCloudEventConnectionCreatedObject1
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedObject2 := new(EventStreamCloudEventConnectionCreatedObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject2); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedObject2"
-		e.EventStreamCloudEventConnectionCreatedObject2 = valueEventStreamCloudEventConnectionCreatedObject2
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedObject3 := new(EventStreamCloudEventConnectionCreatedObject3)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject3); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedObject3"
-		e.EventStreamCloudEventConnectionCreatedObject3 = valueEventStreamCloudEventConnectionCreatedObject3
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedObject4 := new(EventStreamCloudEventConnectionCreatedObject4)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject4); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedObject4"
-		e.EventStreamCloudEventConnectionCreatedObject4 = valueEventStreamCloudEventConnectionCreatedObject4
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedObject5 := new(EventStreamCloudEventConnectionCreatedObject5)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject5); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedObject5"
-		e.EventStreamCloudEventConnectionCreatedObject5 = valueEventStreamCloudEventConnectionCreatedObject5
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedObject6 := new(EventStreamCloudEventConnectionCreatedObject6)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject6); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedObject6"
-		e.EventStreamCloudEventConnectionCreatedObject6 = valueEventStreamCloudEventConnectionCreatedObject6
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedObject7 := new(EventStreamCloudEventConnectionCreatedObject7)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject7); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedObject7"
-		e.EventStreamCloudEventConnectionCreatedObject7 = valueEventStreamCloudEventConnectionCreatedObject7
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventConnectionCreatedObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject0" || e.EventStreamCloudEventConnectionCreatedObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject1" || e.EventStreamCloudEventConnectionCreatedObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedObject1)
+	if e.Oidc != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Oidc, "strategy", "oidc")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject2" || e.EventStreamCloudEventConnectionCreatedObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedObject2)
+	if e.Okta != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Okta, "strategy", "okta")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject3" || e.EventStreamCloudEventConnectionCreatedObject3 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedObject3)
+	if e.Samlp != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Samlp, "strategy", "samlp")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject4" || e.EventStreamCloudEventConnectionCreatedObject4 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedObject4)
+	if e.Pingfederate != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Pingfederate, "strategy", "pingfederate")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject5" || e.EventStreamCloudEventConnectionCreatedObject5 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedObject5)
+	if e.Adfs != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Adfs, "strategy", "adfs")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject6" || e.EventStreamCloudEventConnectionCreatedObject6 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedObject6)
+	if e.Ad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Ad, "strategy", "ad")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject7" || e.EventStreamCloudEventConnectionCreatedObject7 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedObject7)
+	if e.GoogleApps != nil {
+		return internal.MarshalJSONWithExtraProperty(e.GoogleApps, "strategy", "google-apps")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Waad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Waad, "strategy", "waad")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventConnectionCreatedObjectVisitor interface {
-	VisitEventStreamCloudEventConnectionCreatedObject0(*EventStreamCloudEventConnectionCreatedObject0) error
-	VisitEventStreamCloudEventConnectionCreatedObject1(*EventStreamCloudEventConnectionCreatedObject1) error
-	VisitEventStreamCloudEventConnectionCreatedObject2(*EventStreamCloudEventConnectionCreatedObject2) error
-	VisitEventStreamCloudEventConnectionCreatedObject3(*EventStreamCloudEventConnectionCreatedObject3) error
-	VisitEventStreamCloudEventConnectionCreatedObject4(*EventStreamCloudEventConnectionCreatedObject4) error
-	VisitEventStreamCloudEventConnectionCreatedObject5(*EventStreamCloudEventConnectionCreatedObject5) error
-	VisitEventStreamCloudEventConnectionCreatedObject6(*EventStreamCloudEventConnectionCreatedObject6) error
-	VisitEventStreamCloudEventConnectionCreatedObject7(*EventStreamCloudEventConnectionCreatedObject7) error
+	VisitOidc(*EventStreamCloudEventConnectionCreatedObject0) error
+	VisitOkta(*EventStreamCloudEventConnectionCreatedObject1) error
+	VisitSamlp(*EventStreamCloudEventConnectionCreatedObject2) error
+	VisitPingfederate(*EventStreamCloudEventConnectionCreatedObject3) error
+	VisitAdfs(*EventStreamCloudEventConnectionCreatedObject4) error
+	VisitAd(*EventStreamCloudEventConnectionCreatedObject5) error
+	VisitGoogleApps(*EventStreamCloudEventConnectionCreatedObject6) error
+	VisitWaad(*EventStreamCloudEventConnectionCreatedObject7) error
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject) Accept(visitor EventStreamCloudEventConnectionCreatedObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject0" || e.EventStreamCloudEventConnectionCreatedObject0 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedObject0(e.EventStreamCloudEventConnectionCreatedObject0)
+	if e.Oidc != nil {
+		return visitor.VisitOidc(e.Oidc)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject1" || e.EventStreamCloudEventConnectionCreatedObject1 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedObject1(e.EventStreamCloudEventConnectionCreatedObject1)
+	if e.Okta != nil {
+		return visitor.VisitOkta(e.Okta)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject2" || e.EventStreamCloudEventConnectionCreatedObject2 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedObject2(e.EventStreamCloudEventConnectionCreatedObject2)
+	if e.Samlp != nil {
+		return visitor.VisitSamlp(e.Samlp)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject3" || e.EventStreamCloudEventConnectionCreatedObject3 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedObject3(e.EventStreamCloudEventConnectionCreatedObject3)
+	if e.Pingfederate != nil {
+		return visitor.VisitPingfederate(e.Pingfederate)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject4" || e.EventStreamCloudEventConnectionCreatedObject4 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedObject4(e.EventStreamCloudEventConnectionCreatedObject4)
+	if e.Adfs != nil {
+		return visitor.VisitAdfs(e.Adfs)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject5" || e.EventStreamCloudEventConnectionCreatedObject5 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedObject5(e.EventStreamCloudEventConnectionCreatedObject5)
+	if e.Ad != nil {
+		return visitor.VisitAd(e.Ad)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject6" || e.EventStreamCloudEventConnectionCreatedObject6 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedObject6(e.EventStreamCloudEventConnectionCreatedObject6)
+	if e.GoogleApps != nil {
+		return visitor.VisitGoogleApps(e.GoogleApps)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedObject7" || e.EventStreamCloudEventConnectionCreatedObject7 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedObject7(e.EventStreamCloudEventConnectionCreatedObject7)
+	if e.Waad != nil {
+		return visitor.VisitWaad(e.Waad)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventConnectionCreatedObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Oidc != nil {
+		fields = append(fields, "oidc")
+	}
+	if e.Okta != nil {
+		fields = append(fields, "okta")
+	}
+	if e.Samlp != nil {
+		fields = append(fields, "samlp")
+	}
+	if e.Pingfederate != nil {
+		fields = append(fields, "pingfederate")
+	}
+	if e.Adfs != nil {
+		fields = append(fields, "adfs")
+	}
+	if e.Ad != nil {
+		fields = append(fields, "ad")
+	}
+	if e.GoogleApps != nil {
+		fields = append(fields, "google-apps")
+	}
+	if e.Waad != nil {
+		fields = append(fields, "waad")
+	}
+	if len(fields) == 0 {
+		if e.Strategy != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Strategy)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Strategy != "" {
+		field := fields[0]
+		if e.Strategy != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Strategy,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -833,7 +847,6 @@ var (
 	eventStreamCloudEventConnectionCreatedObject0FieldConnectedAccounts  = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedObject0FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedObject0FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedObject0FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedObject0 struct {
@@ -854,8 +867,7 @@ type EventStreamCloudEventConnectionCreatedObject0 struct {
 	ConnectedAccounts *EventStreamCloudEventConnectionCreatedObject0ConnectedAccounts `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	Options           *EventStreamCloudEventConnectionCreatedObject0Options           `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedObject0StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -939,13 +951,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject0) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedObject0) GetStrategy() EventStreamCloudEventConnectionCreatedObject0StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0) GetExtraProperties() map[string]interface{} {
@@ -1039,13 +1044,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject0) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionCreatedObject0) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedObject0FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedObject0) SetStrategy(strategy EventStreamCloudEventConnectionCreatedObject0StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedObject0FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0) UnmarshalJSON(data []byte) error {
@@ -3176,26 +3174,6 @@ func (e EventStreamCloudEventConnectionCreatedObject0OptionsTypeEnum) Ptr() *Eve
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedObject0OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedObject0StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedObject0StrategyEnumOidc EventStreamCloudEventConnectionCreatedObject0StrategyEnum = "oidc"
-)
-
-func NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject0StrategyEnum, error) {
-	switch s {
-	case "oidc":
-		return EventStreamCloudEventConnectionCreatedObject0StrategyEnumOidc, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedObject0StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject0StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedObject1FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject1FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -3208,7 +3186,6 @@ var (
 	eventStreamCloudEventConnectionCreatedObject1FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedObject1FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedObject1FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedObject1FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedObject1 struct {
@@ -3229,8 +3206,7 @@ type EventStreamCloudEventConnectionCreatedObject1 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedObject1Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedObject1StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3314,13 +3290,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject1) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedObject1) GetStrategy() EventStreamCloudEventConnectionCreatedObject1StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1) GetExtraProperties() map[string]interface{} {
@@ -3414,13 +3383,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject1) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionCreatedObject1) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedObject1FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedObject1) SetStrategy(strategy EventStreamCloudEventConnectionCreatedObject1StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedObject1FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1) UnmarshalJSON(data []byte) error {
@@ -5532,26 +5494,6 @@ func (e EventStreamCloudEventConnectionCreatedObject1OptionsTypeEnum) Ptr() *Eve
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedObject1OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedObject1StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedObject1StrategyEnumOkta EventStreamCloudEventConnectionCreatedObject1StrategyEnum = "okta"
-)
-
-func NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject1StrategyEnum, error) {
-	switch s {
-	case "okta":
-		return EventStreamCloudEventConnectionCreatedObject1StrategyEnumOkta, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedObject1StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject1StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedObject2FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -5564,7 +5506,6 @@ var (
 	eventStreamCloudEventConnectionCreatedObject2FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedObject2FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedObject2FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedObject2FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedObject2 struct {
@@ -5585,8 +5526,7 @@ type EventStreamCloudEventConnectionCreatedObject2 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedObject2Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedObject2StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -5670,13 +5610,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject2) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedObject2) GetStrategy() EventStreamCloudEventConnectionCreatedObject2StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2) GetExtraProperties() map[string]interface{} {
@@ -5770,13 +5703,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject2) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionCreatedObject2) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedObject2FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedObject2) SetStrategy(strategy EventStreamCloudEventConnectionCreatedObject2StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedObject2FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2) UnmarshalJSON(data []byte) error {
@@ -7922,26 +7848,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject2OptionsSubject) String() s
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedObject2OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedObject2StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedObject2StrategyEnumSamlp EventStreamCloudEventConnectionCreatedObject2StrategyEnum = "samlp"
-)
-
-func NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject2StrategyEnum, error) {
-	switch s {
-	case "samlp":
-		return EventStreamCloudEventConnectionCreatedObject2StrategyEnumSamlp, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedObject2StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject2StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedObject3FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject3FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -7954,7 +7860,6 @@ var (
 	eventStreamCloudEventConnectionCreatedObject3FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedObject3FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedObject3FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedObject3FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedObject3 struct {
@@ -7975,8 +7880,7 @@ type EventStreamCloudEventConnectionCreatedObject3 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedObject3Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedObject3StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -8060,13 +7964,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject3) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedObject3) GetStrategy() EventStreamCloudEventConnectionCreatedObject3StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3) GetExtraProperties() map[string]interface{} {
@@ -8160,13 +8057,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject3) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionCreatedObject3) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedObject3FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedObject3) SetStrategy(strategy EventStreamCloudEventConnectionCreatedObject3StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedObject3FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3) UnmarshalJSON(data []byte) error {
@@ -9339,26 +9229,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject3OptionsSubject) String() s
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedObject3OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedObject3StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedObject3StrategyEnumPingfederate EventStreamCloudEventConnectionCreatedObject3StrategyEnum = "pingfederate"
-)
-
-func NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject3StrategyEnum, error) {
-	switch s {
-	case "pingfederate":
-		return EventStreamCloudEventConnectionCreatedObject3StrategyEnumPingfederate, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedObject3StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject3StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedObject4FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject4FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -9371,7 +9241,6 @@ var (
 	eventStreamCloudEventConnectionCreatedObject4FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedObject4FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedObject4FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedObject4FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedObject4 struct {
@@ -9392,8 +9261,7 @@ type EventStreamCloudEventConnectionCreatedObject4 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedObject4Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedObject4StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9477,13 +9345,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject4) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedObject4) GetStrategy() EventStreamCloudEventConnectionCreatedObject4StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject4) GetExtraProperties() map[string]interface{} {
@@ -9577,13 +9438,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject4) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionCreatedObject4) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedObject4FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedObject4) SetStrategy(strategy EventStreamCloudEventConnectionCreatedObject4StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedObject4FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject4) UnmarshalJSON(data []byte) error {
@@ -10253,26 +10107,6 @@ func (e EventStreamCloudEventConnectionCreatedObject4OptionsShouldTrustEmailVeri
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedObject4OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedObject4StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedObject4StrategyEnumAdfs EventStreamCloudEventConnectionCreatedObject4StrategyEnum = "adfs"
-)
-
-func NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject4StrategyEnum, error) {
-	switch s {
-	case "adfs":
-		return EventStreamCloudEventConnectionCreatedObject4StrategyEnumAdfs, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedObject4StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject4StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedObject5FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject5FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -10284,7 +10118,6 @@ var (
 	eventStreamCloudEventConnectionCreatedObject5FieldName               = big.NewInt(1 << 7)
 	eventStreamCloudEventConnectionCreatedObject5FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedObject5FieldOptions            = big.NewInt(1 << 9)
-	eventStreamCloudEventConnectionCreatedObject5FieldStrategy           = big.NewInt(1 << 10)
 )
 
 type EventStreamCloudEventConnectionCreatedObject5 struct {
@@ -10302,9 +10135,8 @@ type EventStreamCloudEventConnectionCreatedObject5 struct {
 	// The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
 	Name string `json:"name" url:"name"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-	Realms   []string                                                  `json:"realms,omitempty" url:"realms,omitempty"`
-	Options  *EventStreamCloudEventConnectionCreatedObject5Options     `json:"options,omitempty" url:"options,omitempty"`
-	Strategy EventStreamCloudEventConnectionCreatedObject5StrategyEnum `json:"strategy" url:"strategy"`
+	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
+	Options *EventStreamCloudEventConnectionCreatedObject5Options `json:"options,omitempty" url:"options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10381,13 +10213,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject5) GetOptions() EventStream
 		return EventStreamCloudEventConnectionCreatedObject5Options{}
 	}
 	return *e.Options
-}
-
-func (e *EventStreamCloudEventConnectionCreatedObject5) GetStrategy() EventStreamCloudEventConnectionCreatedObject5StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject5) GetExtraProperties() map[string]interface{} {
@@ -10474,13 +10299,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject5) SetRealms(realms []strin
 func (e *EventStreamCloudEventConnectionCreatedObject5) SetOptions(options *EventStreamCloudEventConnectionCreatedObject5Options) {
 	e.Options = options
 	e.require(eventStreamCloudEventConnectionCreatedObject5FieldOptions)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedObject5) SetStrategy(strategy EventStreamCloudEventConnectionCreatedObject5StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedObject5FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject5) UnmarshalJSON(data []byte) error {
@@ -11188,26 +11006,6 @@ func (e EventStreamCloudEventConnectionCreatedObject5OptionsSetUserRootAttribute
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedObject5OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedObject5StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedObject5StrategyEnumAd EventStreamCloudEventConnectionCreatedObject5StrategyEnum = "ad"
-)
-
-func NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject5StrategyEnum, error) {
-	switch s {
-	case "ad":
-		return EventStreamCloudEventConnectionCreatedObject5StrategyEnumAd, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedObject5StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject5StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedObject6FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject6FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -11220,7 +11018,6 @@ var (
 	eventStreamCloudEventConnectionCreatedObject6FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedObject6FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedObject6FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedObject6FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedObject6 struct {
@@ -11241,8 +11038,7 @@ type EventStreamCloudEventConnectionCreatedObject6 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedObject6Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedObject6StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11326,13 +11122,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject6) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedObject6) GetStrategy() EventStreamCloudEventConnectionCreatedObject6StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6) GetExtraProperties() map[string]interface{} {
@@ -11426,13 +11215,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject6) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionCreatedObject6) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedObject6FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedObject6) SetStrategy(strategy EventStreamCloudEventConnectionCreatedObject6StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedObject6FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6) UnmarshalJSON(data []byte) error {
@@ -12303,26 +12085,6 @@ func (e EventStreamCloudEventConnectionCreatedObject6OptionsSetUserRootAttribute
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedObject6OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedObject6StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionCreatedObject6StrategyEnum = "google-apps"
-)
-
-func NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject6StrategyEnum, error) {
-	switch s {
-	case "google-apps":
-		return EventStreamCloudEventConnectionCreatedObject6StrategyEnumGoogleApps, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedObject6StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject6StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedObject7FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject7FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -12335,7 +12097,6 @@ var (
 	eventStreamCloudEventConnectionCreatedObject7FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedObject7FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedObject7FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedObject7FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedObject7 struct {
@@ -12356,8 +12117,7 @@ type EventStreamCloudEventConnectionCreatedObject7 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedObject7Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedObject7StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -12441,13 +12201,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject7) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedObject7) GetStrategy() EventStreamCloudEventConnectionCreatedObject7StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7) GetExtraProperties() map[string]interface{} {
@@ -12541,13 +12294,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject7) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionCreatedObject7) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedObject7FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedObject7) SetStrategy(strategy EventStreamCloudEventConnectionCreatedObject7StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedObject7FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7) UnmarshalJSON(data []byte) error {
@@ -13593,341 +13339,335 @@ func (e EventStreamCloudEventConnectionCreatedObject7OptionsWaadProtocolEnum) Pt
 	return &e
 }
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedObject7StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedObject7StrategyEnumWaad EventStreamCloudEventConnectionCreatedObject7StrategyEnum = "waad"
-)
-
-func NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject7StrategyEnum, error) {
-	switch s {
-	case "waad":
-		return EventStreamCloudEventConnectionCreatedObject7StrategyEnumWaad, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedObject7StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject7StrategyEnum {
-	return &e
-}
-
 // The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventConnectionCreatedPreviousObject struct {
-	EventStreamCloudEventConnectionCreatedPreviousObject0 *EventStreamCloudEventConnectionCreatedPreviousObject0
-	EventStreamCloudEventConnectionCreatedPreviousObject1 *EventStreamCloudEventConnectionCreatedPreviousObject1
-	EventStreamCloudEventConnectionCreatedPreviousObject2 *EventStreamCloudEventConnectionCreatedPreviousObject2
-	EventStreamCloudEventConnectionCreatedPreviousObject3 *EventStreamCloudEventConnectionCreatedPreviousObject3
-	EventStreamCloudEventConnectionCreatedPreviousObject4 *EventStreamCloudEventConnectionCreatedPreviousObject4
-	EventStreamCloudEventConnectionCreatedPreviousObject5 *EventStreamCloudEventConnectionCreatedPreviousObject5
-	EventStreamCloudEventConnectionCreatedPreviousObject6 *EventStreamCloudEventConnectionCreatedPreviousObject6
-	EventStreamCloudEventConnectionCreatedPreviousObject7 *EventStreamCloudEventConnectionCreatedPreviousObject7
+	Strategy           string
+	DisplayName        *string
+	EnabledClients     []string
+	ID                 string
+	IsDomainConnection *bool
+	Name               string
+	Realms             []string
+	Oidc               *EventStreamCloudEventConnectionCreatedPreviousObject0
+	Okta               *EventStreamCloudEventConnectionCreatedPreviousObject1
+	Samlp              *EventStreamCloudEventConnectionCreatedPreviousObject2
+	Pingfederate       *EventStreamCloudEventConnectionCreatedPreviousObject3
+	Adfs               *EventStreamCloudEventConnectionCreatedPreviousObject4
+	Ad                 *EventStreamCloudEventConnectionCreatedPreviousObject5
+	GoogleApps         *EventStreamCloudEventConnectionCreatedPreviousObject6
+	Waad               *EventStreamCloudEventConnectionCreatedPreviousObject7
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamCloudEventConnectionCreatedPreviousObject0() *EventStreamCloudEventConnectionCreatedPreviousObject0 {
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetStrategy() string {
+	if e == nil {
+		return ""
+	}
+	return e.Strategy
+}
+
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetDisplayName() string {
+	if e == nil || e.DisplayName == nil {
+		return ""
+	}
+	return *e.DisplayName
+}
+
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEnabledClients() []string {
+	if e == nil || e.EnabledClients == nil {
+		return nil
+	}
+	return e.EnabledClients
+}
+
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetIsDomainConnection() bool {
+	if e == nil || e.IsDomainConnection == nil {
+		return false
+	}
+	return *e.IsDomainConnection
+}
+
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetRealms() []string {
+	if e == nil || e.Realms == nil {
+		return nil
+	}
+	return e.Realms
+}
+
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetOidc() *EventStreamCloudEventConnectionCreatedPreviousObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedPreviousObject0
+	return e.Oidc
 }
 
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamCloudEventConnectionCreatedPreviousObject1() *EventStreamCloudEventConnectionCreatedPreviousObject1 {
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetOkta() *EventStreamCloudEventConnectionCreatedPreviousObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedPreviousObject1
+	return e.Okta
 }
 
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamCloudEventConnectionCreatedPreviousObject2() *EventStreamCloudEventConnectionCreatedPreviousObject2 {
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetSamlp() *EventStreamCloudEventConnectionCreatedPreviousObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedPreviousObject2
+	return e.Samlp
 }
 
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamCloudEventConnectionCreatedPreviousObject3() *EventStreamCloudEventConnectionCreatedPreviousObject3 {
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetPingfederate() *EventStreamCloudEventConnectionCreatedPreviousObject3 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedPreviousObject3
+	return e.Pingfederate
 }
 
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamCloudEventConnectionCreatedPreviousObject4() *EventStreamCloudEventConnectionCreatedPreviousObject4 {
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetAdfs() *EventStreamCloudEventConnectionCreatedPreviousObject4 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedPreviousObject4
+	return e.Adfs
 }
 
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamCloudEventConnectionCreatedPreviousObject5() *EventStreamCloudEventConnectionCreatedPreviousObject5 {
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetAd() *EventStreamCloudEventConnectionCreatedPreviousObject5 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedPreviousObject5
+	return e.Ad
 }
 
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamCloudEventConnectionCreatedPreviousObject6() *EventStreamCloudEventConnectionCreatedPreviousObject6 {
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetGoogleApps() *EventStreamCloudEventConnectionCreatedPreviousObject6 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedPreviousObject6
+	return e.GoogleApps
 }
 
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamCloudEventConnectionCreatedPreviousObject7() *EventStreamCloudEventConnectionCreatedPreviousObject7 {
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetWaad() *EventStreamCloudEventConnectionCreatedPreviousObject7 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionCreatedPreviousObject7
+	return e.Waad
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject0 := new(EventStreamCloudEventConnectionCreatedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject0"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject0 = valueEventStreamCloudEventConnectionCreatedPreviousObject0
-			return nil
+	var unmarshaler struct {
+		Strategy           string   `json:"strategy"`
+		DisplayName        *string  `json:"display_name,omitempty"`
+		EnabledClients     []string `json:"enabled_clients,omitempty"`
+		ID                 string   `json:"id"`
+		IsDomainConnection *bool    `json:"is_domain_connection,omitempty"`
+		Name               string   `json:"name"`
+		Realms             []string `json:"realms,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Strategy = unmarshaler.Strategy
+	e.DisplayName = unmarshaler.DisplayName
+	e.EnabledClients = unmarshaler.EnabledClients
+	e.ID = unmarshaler.ID
+	e.IsDomainConnection = unmarshaler.IsDomainConnection
+	e.Name = unmarshaler.Name
+	e.Realms = unmarshaler.Realms
+	if unmarshaler.Strategy == "" {
+		return fmt.Errorf("%T did not include discriminant strategy", e)
+	}
+	switch unmarshaler.Strategy {
+	case "oidc":
+		value := new(EventStreamCloudEventConnectionCreatedPreviousObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject1 := new(EventStreamCloudEventConnectionCreatedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject1"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject1 = valueEventStreamCloudEventConnectionCreatedPreviousObject1
-			return nil
+		e.Oidc = value
+	case "okta":
+		value := new(EventStreamCloudEventConnectionCreatedPreviousObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject2 := new(EventStreamCloudEventConnectionCreatedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject2"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject2 = valueEventStreamCloudEventConnectionCreatedPreviousObject2
-			return nil
+		e.Okta = value
+	case "samlp":
+		value := new(EventStreamCloudEventConnectionCreatedPreviousObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject3 := new(EventStreamCloudEventConnectionCreatedPreviousObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject3"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject3 = valueEventStreamCloudEventConnectionCreatedPreviousObject3
-			return nil
+		e.Samlp = value
+	case "pingfederate":
+		value := new(EventStreamCloudEventConnectionCreatedPreviousObject3)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject4 := new(EventStreamCloudEventConnectionCreatedPreviousObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject4"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject4 = valueEventStreamCloudEventConnectionCreatedPreviousObject4
-			return nil
+		e.Pingfederate = value
+	case "adfs":
+		value := new(EventStreamCloudEventConnectionCreatedPreviousObject4)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject5 := new(EventStreamCloudEventConnectionCreatedPreviousObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject5"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject5 = valueEventStreamCloudEventConnectionCreatedPreviousObject5
-			return nil
+		e.Adfs = value
+	case "ad":
+		value := new(EventStreamCloudEventConnectionCreatedPreviousObject5)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject6 := new(EventStreamCloudEventConnectionCreatedPreviousObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject6"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject6 = valueEventStreamCloudEventConnectionCreatedPreviousObject6
-			return nil
+		e.Ad = value
+	case "google-apps":
+		value := new(EventStreamCloudEventConnectionCreatedPreviousObject6)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject7 := new(EventStreamCloudEventConnectionCreatedPreviousObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject7"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject7 = valueEventStreamCloudEventConnectionCreatedPreviousObject7
-			return nil
+		e.GoogleApps = value
+	case "waad":
+		value := new(EventStreamCloudEventConnectionCreatedPreviousObject7)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Waad = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject0 := new(EventStreamCloudEventConnectionCreatedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject0"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject0 = valueEventStreamCloudEventConnectionCreatedPreviousObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject1 := new(EventStreamCloudEventConnectionCreatedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject1"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject1 = valueEventStreamCloudEventConnectionCreatedPreviousObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject2 := new(EventStreamCloudEventConnectionCreatedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject2"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject2 = valueEventStreamCloudEventConnectionCreatedPreviousObject2
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject3 := new(EventStreamCloudEventConnectionCreatedPreviousObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject3"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject3 = valueEventStreamCloudEventConnectionCreatedPreviousObject3
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject4 := new(EventStreamCloudEventConnectionCreatedPreviousObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject4"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject4 = valueEventStreamCloudEventConnectionCreatedPreviousObject4
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject5 := new(EventStreamCloudEventConnectionCreatedPreviousObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject5"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject5 = valueEventStreamCloudEventConnectionCreatedPreviousObject5
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject6 := new(EventStreamCloudEventConnectionCreatedPreviousObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject6"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject6 = valueEventStreamCloudEventConnectionCreatedPreviousObject6
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionCreatedPreviousObject7 := new(EventStreamCloudEventConnectionCreatedPreviousObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject7"
-			e.EventStreamCloudEventConnectionCreatedPreviousObject7 = valueEventStreamCloudEventConnectionCreatedPreviousObject7
-			return nil
-		}
-	}
-	valueEventStreamCloudEventConnectionCreatedPreviousObject0 := new(EventStreamCloudEventConnectionCreatedPreviousObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject0); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject0"
-		e.EventStreamCloudEventConnectionCreatedPreviousObject0 = valueEventStreamCloudEventConnectionCreatedPreviousObject0
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedPreviousObject1 := new(EventStreamCloudEventConnectionCreatedPreviousObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject1); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject1"
-		e.EventStreamCloudEventConnectionCreatedPreviousObject1 = valueEventStreamCloudEventConnectionCreatedPreviousObject1
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedPreviousObject2 := new(EventStreamCloudEventConnectionCreatedPreviousObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject2); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject2"
-		e.EventStreamCloudEventConnectionCreatedPreviousObject2 = valueEventStreamCloudEventConnectionCreatedPreviousObject2
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedPreviousObject3 := new(EventStreamCloudEventConnectionCreatedPreviousObject3)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject3); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject3"
-		e.EventStreamCloudEventConnectionCreatedPreviousObject3 = valueEventStreamCloudEventConnectionCreatedPreviousObject3
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedPreviousObject4 := new(EventStreamCloudEventConnectionCreatedPreviousObject4)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject4); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject4"
-		e.EventStreamCloudEventConnectionCreatedPreviousObject4 = valueEventStreamCloudEventConnectionCreatedPreviousObject4
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedPreviousObject5 := new(EventStreamCloudEventConnectionCreatedPreviousObject5)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject5); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject5"
-		e.EventStreamCloudEventConnectionCreatedPreviousObject5 = valueEventStreamCloudEventConnectionCreatedPreviousObject5
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedPreviousObject6 := new(EventStreamCloudEventConnectionCreatedPreviousObject6)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject6); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject6"
-		e.EventStreamCloudEventConnectionCreatedPreviousObject6 = valueEventStreamCloudEventConnectionCreatedPreviousObject6
-		return nil
-	}
-	valueEventStreamCloudEventConnectionCreatedPreviousObject7 := new(EventStreamCloudEventConnectionCreatedPreviousObject7)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject7); err == nil {
-		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject7"
-		e.EventStreamCloudEventConnectionCreatedPreviousObject7 = valueEventStreamCloudEventConnectionCreatedPreviousObject7
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventConnectionCreatedPreviousObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject0" || e.EventStreamCloudEventConnectionCreatedPreviousObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedPreviousObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject1" || e.EventStreamCloudEventConnectionCreatedPreviousObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedPreviousObject1)
+	if e.Oidc != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Oidc, "strategy", "oidc")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject2" || e.EventStreamCloudEventConnectionCreatedPreviousObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedPreviousObject2)
+	if e.Okta != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Okta, "strategy", "okta")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject3" || e.EventStreamCloudEventConnectionCreatedPreviousObject3 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedPreviousObject3)
+	if e.Samlp != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Samlp, "strategy", "samlp")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject4" || e.EventStreamCloudEventConnectionCreatedPreviousObject4 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedPreviousObject4)
+	if e.Pingfederate != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Pingfederate, "strategy", "pingfederate")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject5" || e.EventStreamCloudEventConnectionCreatedPreviousObject5 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedPreviousObject5)
+	if e.Adfs != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Adfs, "strategy", "adfs")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject6" || e.EventStreamCloudEventConnectionCreatedPreviousObject6 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedPreviousObject6)
+	if e.Ad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Ad, "strategy", "ad")
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject7" || e.EventStreamCloudEventConnectionCreatedPreviousObject7 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionCreatedPreviousObject7)
+	if e.GoogleApps != nil {
+		return internal.MarshalJSONWithExtraProperty(e.GoogleApps, "strategy", "google-apps")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Waad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Waad, "strategy", "waad")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventConnectionCreatedPreviousObjectVisitor interface {
-	VisitEventStreamCloudEventConnectionCreatedPreviousObject0(*EventStreamCloudEventConnectionCreatedPreviousObject0) error
-	VisitEventStreamCloudEventConnectionCreatedPreviousObject1(*EventStreamCloudEventConnectionCreatedPreviousObject1) error
-	VisitEventStreamCloudEventConnectionCreatedPreviousObject2(*EventStreamCloudEventConnectionCreatedPreviousObject2) error
-	VisitEventStreamCloudEventConnectionCreatedPreviousObject3(*EventStreamCloudEventConnectionCreatedPreviousObject3) error
-	VisitEventStreamCloudEventConnectionCreatedPreviousObject4(*EventStreamCloudEventConnectionCreatedPreviousObject4) error
-	VisitEventStreamCloudEventConnectionCreatedPreviousObject5(*EventStreamCloudEventConnectionCreatedPreviousObject5) error
-	VisitEventStreamCloudEventConnectionCreatedPreviousObject6(*EventStreamCloudEventConnectionCreatedPreviousObject6) error
-	VisitEventStreamCloudEventConnectionCreatedPreviousObject7(*EventStreamCloudEventConnectionCreatedPreviousObject7) error
+	VisitOidc(*EventStreamCloudEventConnectionCreatedPreviousObject0) error
+	VisitOkta(*EventStreamCloudEventConnectionCreatedPreviousObject1) error
+	VisitSamlp(*EventStreamCloudEventConnectionCreatedPreviousObject2) error
+	VisitPingfederate(*EventStreamCloudEventConnectionCreatedPreviousObject3) error
+	VisitAdfs(*EventStreamCloudEventConnectionCreatedPreviousObject4) error
+	VisitAd(*EventStreamCloudEventConnectionCreatedPreviousObject5) error
+	VisitGoogleApps(*EventStreamCloudEventConnectionCreatedPreviousObject6) error
+	VisitWaad(*EventStreamCloudEventConnectionCreatedPreviousObject7) error
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject) Accept(visitor EventStreamCloudEventConnectionCreatedPreviousObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject0" || e.EventStreamCloudEventConnectionCreatedPreviousObject0 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedPreviousObject0(e.EventStreamCloudEventConnectionCreatedPreviousObject0)
+	if e.Oidc != nil {
+		return visitor.VisitOidc(e.Oidc)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject1" || e.EventStreamCloudEventConnectionCreatedPreviousObject1 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedPreviousObject1(e.EventStreamCloudEventConnectionCreatedPreviousObject1)
+	if e.Okta != nil {
+		return visitor.VisitOkta(e.Okta)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject2" || e.EventStreamCloudEventConnectionCreatedPreviousObject2 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedPreviousObject2(e.EventStreamCloudEventConnectionCreatedPreviousObject2)
+	if e.Samlp != nil {
+		return visitor.VisitSamlp(e.Samlp)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject3" || e.EventStreamCloudEventConnectionCreatedPreviousObject3 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedPreviousObject3(e.EventStreamCloudEventConnectionCreatedPreviousObject3)
+	if e.Pingfederate != nil {
+		return visitor.VisitPingfederate(e.Pingfederate)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject4" || e.EventStreamCloudEventConnectionCreatedPreviousObject4 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedPreviousObject4(e.EventStreamCloudEventConnectionCreatedPreviousObject4)
+	if e.Adfs != nil {
+		return visitor.VisitAdfs(e.Adfs)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject5" || e.EventStreamCloudEventConnectionCreatedPreviousObject5 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedPreviousObject5(e.EventStreamCloudEventConnectionCreatedPreviousObject5)
+	if e.Ad != nil {
+		return visitor.VisitAd(e.Ad)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject6" || e.EventStreamCloudEventConnectionCreatedPreviousObject6 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedPreviousObject6(e.EventStreamCloudEventConnectionCreatedPreviousObject6)
+	if e.GoogleApps != nil {
+		return visitor.VisitGoogleApps(e.GoogleApps)
 	}
-	if e.typ == "EventStreamCloudEventConnectionCreatedPreviousObject7" || e.EventStreamCloudEventConnectionCreatedPreviousObject7 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionCreatedPreviousObject7(e.EventStreamCloudEventConnectionCreatedPreviousObject7)
+	if e.Waad != nil {
+		return visitor.VisitWaad(e.Waad)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventConnectionCreatedPreviousObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Oidc != nil {
+		fields = append(fields, "oidc")
+	}
+	if e.Okta != nil {
+		fields = append(fields, "okta")
+	}
+	if e.Samlp != nil {
+		fields = append(fields, "samlp")
+	}
+	if e.Pingfederate != nil {
+		fields = append(fields, "pingfederate")
+	}
+	if e.Adfs != nil {
+		fields = append(fields, "adfs")
+	}
+	if e.Ad != nil {
+		fields = append(fields, "ad")
+	}
+	if e.GoogleApps != nil {
+		fields = append(fields, "google-apps")
+	}
+	if e.Waad != nil {
+		fields = append(fields, "waad")
+	}
+	if len(fields) == 0 {
+		if e.Strategy != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Strategy)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Strategy != "" {
+		field := fields[0]
+		if e.Strategy != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Strategy,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -13942,7 +13682,6 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0FieldConnectedAccounts  = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedPreviousObject0FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedPreviousObject0FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedPreviousObject0FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedPreviousObject0 struct {
@@ -13963,8 +13702,7 @@ type EventStreamCloudEventConnectionCreatedPreviousObject0 struct {
 	ConnectedAccounts *EventStreamCloudEventConnectionCreatedPreviousObject0ConnectedAccounts `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	Options           *EventStreamCloudEventConnectionCreatedPreviousObject0Options           `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -14048,13 +13786,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) GetStrategy() EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) GetExtraProperties() map[string]interface{} {
@@ -14148,13 +13879,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) SetOptions(optio
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedPreviousObject0FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) SetStrategy(strategy EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedPreviousObject0FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) UnmarshalJSON(data []byte) error {
@@ -16285,26 +16009,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject0OptionsTypeEnum) Pt
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedPreviousObject0OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumOidc EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum = "oidc"
-)
-
-func NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum, error) {
-	switch s {
-	case "oidc":
-		return EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumOidc, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject1FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -16317,7 +16021,6 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedPreviousObject1FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedPreviousObject1FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedPreviousObject1FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedPreviousObject1 struct {
@@ -16338,8 +16041,7 @@ type EventStreamCloudEventConnectionCreatedPreviousObject1 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedPreviousObject1Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -16423,13 +16125,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) GetStrategy() EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) GetExtraProperties() map[string]interface{} {
@@ -16523,13 +16218,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) SetOptions(optio
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedPreviousObject1FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) SetStrategy(strategy EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedPreviousObject1FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) UnmarshalJSON(data []byte) error {
@@ -18641,26 +18329,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject1OptionsTypeEnum) Pt
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedPreviousObject1OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumOkta EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum = "okta"
-)
-
-func NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum, error) {
-	switch s {
-	case "okta":
-		return EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumOkta, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -18673,7 +18341,6 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedPreviousObject2FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedPreviousObject2FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedPreviousObject2FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedPreviousObject2 struct {
@@ -18694,8 +18361,7 @@ type EventStreamCloudEventConnectionCreatedPreviousObject2 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedPreviousObject2Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -18779,13 +18445,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) GetStrategy() EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) GetExtraProperties() map[string]interface{} {
@@ -18879,13 +18538,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) SetOptions(optio
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedPreviousObject2FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) SetStrategy(strategy EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedPreviousObject2FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) UnmarshalJSON(data []byte) error {
@@ -21031,26 +20683,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsSubject) St
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedPreviousObject2OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumSamlp EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum = "samlp"
-)
-
-func NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum, error) {
-	switch s {
-	case "samlp":
-		return EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumSamlp, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject3FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -21063,7 +20695,6 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedPreviousObject3FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedPreviousObject3FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedPreviousObject3FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedPreviousObject3 struct {
@@ -21084,8 +20715,7 @@ type EventStreamCloudEventConnectionCreatedPreviousObject3 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedPreviousObject3Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -21169,13 +20799,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) GetStrategy() EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) GetExtraProperties() map[string]interface{} {
@@ -21269,13 +20892,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) SetOptions(optio
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedPreviousObject3FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) SetStrategy(strategy EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedPreviousObject3FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) UnmarshalJSON(data []byte) error {
@@ -22448,26 +22064,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsSubject) St
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedPreviousObject3OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumPingfederate EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum = "pingfederate"
-)
-
-func NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum, error) {
-	switch s {
-	case "pingfederate":
-		return EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumPingfederate, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject4FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject4FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -22480,7 +22076,6 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject4FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedPreviousObject4FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedPreviousObject4FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedPreviousObject4FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedPreviousObject4 struct {
@@ -22501,8 +22096,7 @@ type EventStreamCloudEventConnectionCreatedPreviousObject4 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedPreviousObject4Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -22586,13 +22180,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) GetStrategy() EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) GetExtraProperties() map[string]interface{} {
@@ -22686,13 +22273,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) SetOptions(optio
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedPreviousObject4FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) SetStrategy(strategy EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedPreviousObject4FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) UnmarshalJSON(data []byte) error {
@@ -23362,26 +22942,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject4OptionsShouldTrustE
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedPreviousObject4OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumAdfs EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum = "adfs"
-)
-
-func NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum, error) {
-	switch s {
-	case "adfs":
-		return EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumAdfs, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject5FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject5FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -23393,7 +22953,6 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject5FieldName               = big.NewInt(1 << 7)
 	eventStreamCloudEventConnectionCreatedPreviousObject5FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedPreviousObject5FieldOptions            = big.NewInt(1 << 9)
-	eventStreamCloudEventConnectionCreatedPreviousObject5FieldStrategy           = big.NewInt(1 << 10)
 )
 
 type EventStreamCloudEventConnectionCreatedPreviousObject5 struct {
@@ -23411,9 +22970,8 @@ type EventStreamCloudEventConnectionCreatedPreviousObject5 struct {
 	// The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
 	Name string `json:"name" url:"name"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-	Realms   []string                                                          `json:"realms,omitempty" url:"realms,omitempty"`
-	Options  *EventStreamCloudEventConnectionCreatedPreviousObject5Options     `json:"options,omitempty" url:"options,omitempty"`
-	Strategy EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum `json:"strategy" url:"strategy"`
+	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
+	Options *EventStreamCloudEventConnectionCreatedPreviousObject5Options `json:"options,omitempty" url:"options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -23490,13 +23048,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) GetOptions() Eve
 		return EventStreamCloudEventConnectionCreatedPreviousObject5Options{}
 	}
 	return *e.Options
-}
-
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) GetStrategy() EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) GetExtraProperties() map[string]interface{} {
@@ -23583,13 +23134,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) SetRealms(realms
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) SetOptions(options *EventStreamCloudEventConnectionCreatedPreviousObject5Options) {
 	e.Options = options
 	e.require(eventStreamCloudEventConnectionCreatedPreviousObject5FieldOptions)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) SetStrategy(strategy EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedPreviousObject5FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) UnmarshalJSON(data []byte) error {
@@ -24297,26 +23841,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject5OptionsSetUserRootA
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedPreviousObject5OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumAd EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum = "ad"
-)
-
-func NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum, error) {
-	switch s {
-	case "ad":
-		return EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumAd, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject6FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject6FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -24329,7 +23853,6 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject6FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedPreviousObject6FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedPreviousObject6FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedPreviousObject6FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedPreviousObject6 struct {
@@ -24350,8 +23873,7 @@ type EventStreamCloudEventConnectionCreatedPreviousObject6 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedPreviousObject6Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -24435,13 +23957,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) GetStrategy() EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) GetExtraProperties() map[string]interface{} {
@@ -24535,13 +24050,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) SetOptions(optio
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedPreviousObject6FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) SetStrategy(strategy EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedPreviousObject6FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) UnmarshalJSON(data []byte) error {
@@ -25412,26 +24920,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject6OptionsSetUserRootA
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionCreatedPreviousObject6OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum = "google-apps"
-)
-
-func NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum, error) {
-	switch s {
-	case "google-apps":
-		return EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumGoogleApps, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject7FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject7FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -25444,7 +24932,6 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject7FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionCreatedPreviousObject7FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionCreatedPreviousObject7FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionCreatedPreviousObject7FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionCreatedPreviousObject7 struct {
@@ -25465,8 +24952,7 @@ type EventStreamCloudEventConnectionCreatedPreviousObject7 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionCreatedPreviousObject7Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -25550,13 +25036,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) GetStrategy() EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) GetExtraProperties() map[string]interface{} {
@@ -25650,13 +25129,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) SetOptions(optio
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionCreatedPreviousObject7FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) SetStrategy(strategy EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionCreatedPreviousObject7FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) UnmarshalJSON(data []byte) error {
@@ -26702,26 +26174,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject7OptionsWaadProtocol
 	return &e
 }
 
-// The connection strategy.
-type EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumWaad EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum = "waad"
-)
-
-func NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum, error) {
-	switch s {
-	case "waad":
-		return EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumWaad, nil
-	}
-	var t EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedFieldEvent  = big.NewInt(1 << 1)
@@ -27197,319 +26649,333 @@ func (e *EventStreamCloudEventConnectionDeletedData) String() string {
 
 // The event content.
 type EventStreamCloudEventConnectionDeletedObject struct {
-	EventStreamCloudEventConnectionDeletedObject0 *EventStreamCloudEventConnectionDeletedObject0
-	EventStreamCloudEventConnectionDeletedObject1 *EventStreamCloudEventConnectionDeletedObject1
-	EventStreamCloudEventConnectionDeletedObject2 *EventStreamCloudEventConnectionDeletedObject2
-	EventStreamCloudEventConnectionDeletedObject3 *EventStreamCloudEventConnectionDeletedObject3
-	EventStreamCloudEventConnectionDeletedObject4 *EventStreamCloudEventConnectionDeletedObject4
-	EventStreamCloudEventConnectionDeletedObject5 *EventStreamCloudEventConnectionDeletedObject5
-	EventStreamCloudEventConnectionDeletedObject6 *EventStreamCloudEventConnectionDeletedObject6
-	EventStreamCloudEventConnectionDeletedObject7 *EventStreamCloudEventConnectionDeletedObject7
+	Strategy           string
+	DisplayName        *string
+	EnabledClients     []string
+	ID                 string
+	IsDomainConnection *bool
+	Name               string
+	Realms             []string
+	Oidc               *EventStreamCloudEventConnectionDeletedObject0
+	Okta               *EventStreamCloudEventConnectionDeletedObject1
+	Samlp              *EventStreamCloudEventConnectionDeletedObject2
+	Pingfederate       *EventStreamCloudEventConnectionDeletedObject3
+	Adfs               *EventStreamCloudEventConnectionDeletedObject4
+	Ad                 *EventStreamCloudEventConnectionDeletedObject5
+	GoogleApps         *EventStreamCloudEventConnectionDeletedObject6
+	Waad               *EventStreamCloudEventConnectionDeletedObject7
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventConnectionDeletedObject0() *EventStreamCloudEventConnectionDeletedObject0 {
+func (e *EventStreamCloudEventConnectionDeletedObject) GetStrategy() string {
+	if e == nil {
+		return ""
+	}
+	return e.Strategy
+}
+
+func (e *EventStreamCloudEventConnectionDeletedObject) GetDisplayName() string {
+	if e == nil || e.DisplayName == nil {
+		return ""
+	}
+	return *e.DisplayName
+}
+
+func (e *EventStreamCloudEventConnectionDeletedObject) GetEnabledClients() []string {
+	if e == nil || e.EnabledClients == nil {
+		return nil
+	}
+	return e.EnabledClients
+}
+
+func (e *EventStreamCloudEventConnectionDeletedObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventConnectionDeletedObject) GetIsDomainConnection() bool {
+	if e == nil || e.IsDomainConnection == nil {
+		return false
+	}
+	return *e.IsDomainConnection
+}
+
+func (e *EventStreamCloudEventConnectionDeletedObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventConnectionDeletedObject) GetRealms() []string {
+	if e == nil || e.Realms == nil {
+		return nil
+	}
+	return e.Realms
+}
+
+func (e *EventStreamCloudEventConnectionDeletedObject) GetOidc() *EventStreamCloudEventConnectionDeletedObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedObject0
+	return e.Oidc
 }
 
-func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventConnectionDeletedObject1() *EventStreamCloudEventConnectionDeletedObject1 {
+func (e *EventStreamCloudEventConnectionDeletedObject) GetOkta() *EventStreamCloudEventConnectionDeletedObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedObject1
+	return e.Okta
 }
 
-func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventConnectionDeletedObject2() *EventStreamCloudEventConnectionDeletedObject2 {
+func (e *EventStreamCloudEventConnectionDeletedObject) GetSamlp() *EventStreamCloudEventConnectionDeletedObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedObject2
+	return e.Samlp
 }
 
-func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventConnectionDeletedObject3() *EventStreamCloudEventConnectionDeletedObject3 {
+func (e *EventStreamCloudEventConnectionDeletedObject) GetPingfederate() *EventStreamCloudEventConnectionDeletedObject3 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedObject3
+	return e.Pingfederate
 }
 
-func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventConnectionDeletedObject4() *EventStreamCloudEventConnectionDeletedObject4 {
+func (e *EventStreamCloudEventConnectionDeletedObject) GetAdfs() *EventStreamCloudEventConnectionDeletedObject4 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedObject4
+	return e.Adfs
 }
 
-func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventConnectionDeletedObject5() *EventStreamCloudEventConnectionDeletedObject5 {
+func (e *EventStreamCloudEventConnectionDeletedObject) GetAd() *EventStreamCloudEventConnectionDeletedObject5 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedObject5
+	return e.Ad
 }
 
-func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventConnectionDeletedObject6() *EventStreamCloudEventConnectionDeletedObject6 {
+func (e *EventStreamCloudEventConnectionDeletedObject) GetGoogleApps() *EventStreamCloudEventConnectionDeletedObject6 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedObject6
+	return e.GoogleApps
 }
 
-func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventConnectionDeletedObject7() *EventStreamCloudEventConnectionDeletedObject7 {
+func (e *EventStreamCloudEventConnectionDeletedObject) GetWaad() *EventStreamCloudEventConnectionDeletedObject7 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedObject7
+	return e.Waad
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject0 := new(EventStreamCloudEventConnectionDeletedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject0"
-			e.EventStreamCloudEventConnectionDeletedObject0 = valueEventStreamCloudEventConnectionDeletedObject0
-			return nil
+	var unmarshaler struct {
+		Strategy           string   `json:"strategy"`
+		DisplayName        *string  `json:"display_name,omitempty"`
+		EnabledClients     []string `json:"enabled_clients,omitempty"`
+		ID                 string   `json:"id"`
+		IsDomainConnection *bool    `json:"is_domain_connection,omitempty"`
+		Name               string   `json:"name"`
+		Realms             []string `json:"realms,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Strategy = unmarshaler.Strategy
+	e.DisplayName = unmarshaler.DisplayName
+	e.EnabledClients = unmarshaler.EnabledClients
+	e.ID = unmarshaler.ID
+	e.IsDomainConnection = unmarshaler.IsDomainConnection
+	e.Name = unmarshaler.Name
+	e.Realms = unmarshaler.Realms
+	if unmarshaler.Strategy == "" {
+		return fmt.Errorf("%T did not include discriminant strategy", e)
+	}
+	switch unmarshaler.Strategy {
+	case "oidc":
+		value := new(EventStreamCloudEventConnectionDeletedObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject1 := new(EventStreamCloudEventConnectionDeletedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject1"
-			e.EventStreamCloudEventConnectionDeletedObject1 = valueEventStreamCloudEventConnectionDeletedObject1
-			return nil
+		e.Oidc = value
+	case "okta":
+		value := new(EventStreamCloudEventConnectionDeletedObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject2 := new(EventStreamCloudEventConnectionDeletedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject2"
-			e.EventStreamCloudEventConnectionDeletedObject2 = valueEventStreamCloudEventConnectionDeletedObject2
-			return nil
+		e.Okta = value
+	case "samlp":
+		value := new(EventStreamCloudEventConnectionDeletedObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject3 := new(EventStreamCloudEventConnectionDeletedObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject3"
-			e.EventStreamCloudEventConnectionDeletedObject3 = valueEventStreamCloudEventConnectionDeletedObject3
-			return nil
+		e.Samlp = value
+	case "pingfederate":
+		value := new(EventStreamCloudEventConnectionDeletedObject3)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject4 := new(EventStreamCloudEventConnectionDeletedObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject4"
-			e.EventStreamCloudEventConnectionDeletedObject4 = valueEventStreamCloudEventConnectionDeletedObject4
-			return nil
+		e.Pingfederate = value
+	case "adfs":
+		value := new(EventStreamCloudEventConnectionDeletedObject4)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject5 := new(EventStreamCloudEventConnectionDeletedObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject5"
-			e.EventStreamCloudEventConnectionDeletedObject5 = valueEventStreamCloudEventConnectionDeletedObject5
-			return nil
+		e.Adfs = value
+	case "ad":
+		value := new(EventStreamCloudEventConnectionDeletedObject5)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject6 := new(EventStreamCloudEventConnectionDeletedObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject6"
-			e.EventStreamCloudEventConnectionDeletedObject6 = valueEventStreamCloudEventConnectionDeletedObject6
-			return nil
+		e.Ad = value
+	case "google-apps":
+		value := new(EventStreamCloudEventConnectionDeletedObject6)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject7 := new(EventStreamCloudEventConnectionDeletedObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject7"
-			e.EventStreamCloudEventConnectionDeletedObject7 = valueEventStreamCloudEventConnectionDeletedObject7
-			return nil
+		e.GoogleApps = value
+	case "waad":
+		value := new(EventStreamCloudEventConnectionDeletedObject7)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Waad = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject0 := new(EventStreamCloudEventConnectionDeletedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject0"
-			e.EventStreamCloudEventConnectionDeletedObject0 = valueEventStreamCloudEventConnectionDeletedObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject1 := new(EventStreamCloudEventConnectionDeletedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject1"
-			e.EventStreamCloudEventConnectionDeletedObject1 = valueEventStreamCloudEventConnectionDeletedObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject2 := new(EventStreamCloudEventConnectionDeletedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject2"
-			e.EventStreamCloudEventConnectionDeletedObject2 = valueEventStreamCloudEventConnectionDeletedObject2
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject3 := new(EventStreamCloudEventConnectionDeletedObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject3"
-			e.EventStreamCloudEventConnectionDeletedObject3 = valueEventStreamCloudEventConnectionDeletedObject3
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject4 := new(EventStreamCloudEventConnectionDeletedObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject4"
-			e.EventStreamCloudEventConnectionDeletedObject4 = valueEventStreamCloudEventConnectionDeletedObject4
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject5 := new(EventStreamCloudEventConnectionDeletedObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject5"
-			e.EventStreamCloudEventConnectionDeletedObject5 = valueEventStreamCloudEventConnectionDeletedObject5
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject6 := new(EventStreamCloudEventConnectionDeletedObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject6"
-			e.EventStreamCloudEventConnectionDeletedObject6 = valueEventStreamCloudEventConnectionDeletedObject6
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedObject7 := new(EventStreamCloudEventConnectionDeletedObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedObject7"
-			e.EventStreamCloudEventConnectionDeletedObject7 = valueEventStreamCloudEventConnectionDeletedObject7
-			return nil
-		}
-	}
-	valueEventStreamCloudEventConnectionDeletedObject0 := new(EventStreamCloudEventConnectionDeletedObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject0); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedObject0"
-		e.EventStreamCloudEventConnectionDeletedObject0 = valueEventStreamCloudEventConnectionDeletedObject0
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedObject1 := new(EventStreamCloudEventConnectionDeletedObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject1); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedObject1"
-		e.EventStreamCloudEventConnectionDeletedObject1 = valueEventStreamCloudEventConnectionDeletedObject1
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedObject2 := new(EventStreamCloudEventConnectionDeletedObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject2); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedObject2"
-		e.EventStreamCloudEventConnectionDeletedObject2 = valueEventStreamCloudEventConnectionDeletedObject2
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedObject3 := new(EventStreamCloudEventConnectionDeletedObject3)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject3); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedObject3"
-		e.EventStreamCloudEventConnectionDeletedObject3 = valueEventStreamCloudEventConnectionDeletedObject3
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedObject4 := new(EventStreamCloudEventConnectionDeletedObject4)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject4); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedObject4"
-		e.EventStreamCloudEventConnectionDeletedObject4 = valueEventStreamCloudEventConnectionDeletedObject4
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedObject5 := new(EventStreamCloudEventConnectionDeletedObject5)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject5); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedObject5"
-		e.EventStreamCloudEventConnectionDeletedObject5 = valueEventStreamCloudEventConnectionDeletedObject5
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedObject6 := new(EventStreamCloudEventConnectionDeletedObject6)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject6); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedObject6"
-		e.EventStreamCloudEventConnectionDeletedObject6 = valueEventStreamCloudEventConnectionDeletedObject6
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedObject7 := new(EventStreamCloudEventConnectionDeletedObject7)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject7); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedObject7"
-		e.EventStreamCloudEventConnectionDeletedObject7 = valueEventStreamCloudEventConnectionDeletedObject7
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventConnectionDeletedObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject0" || e.EventStreamCloudEventConnectionDeletedObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject1" || e.EventStreamCloudEventConnectionDeletedObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedObject1)
+	if e.Oidc != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Oidc, "strategy", "oidc")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject2" || e.EventStreamCloudEventConnectionDeletedObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedObject2)
+	if e.Okta != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Okta, "strategy", "okta")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject3" || e.EventStreamCloudEventConnectionDeletedObject3 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedObject3)
+	if e.Samlp != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Samlp, "strategy", "samlp")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject4" || e.EventStreamCloudEventConnectionDeletedObject4 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedObject4)
+	if e.Pingfederate != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Pingfederate, "strategy", "pingfederate")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject5" || e.EventStreamCloudEventConnectionDeletedObject5 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedObject5)
+	if e.Adfs != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Adfs, "strategy", "adfs")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject6" || e.EventStreamCloudEventConnectionDeletedObject6 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedObject6)
+	if e.Ad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Ad, "strategy", "ad")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject7" || e.EventStreamCloudEventConnectionDeletedObject7 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedObject7)
+	if e.GoogleApps != nil {
+		return internal.MarshalJSONWithExtraProperty(e.GoogleApps, "strategy", "google-apps")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Waad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Waad, "strategy", "waad")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventConnectionDeletedObjectVisitor interface {
-	VisitEventStreamCloudEventConnectionDeletedObject0(*EventStreamCloudEventConnectionDeletedObject0) error
-	VisitEventStreamCloudEventConnectionDeletedObject1(*EventStreamCloudEventConnectionDeletedObject1) error
-	VisitEventStreamCloudEventConnectionDeletedObject2(*EventStreamCloudEventConnectionDeletedObject2) error
-	VisitEventStreamCloudEventConnectionDeletedObject3(*EventStreamCloudEventConnectionDeletedObject3) error
-	VisitEventStreamCloudEventConnectionDeletedObject4(*EventStreamCloudEventConnectionDeletedObject4) error
-	VisitEventStreamCloudEventConnectionDeletedObject5(*EventStreamCloudEventConnectionDeletedObject5) error
-	VisitEventStreamCloudEventConnectionDeletedObject6(*EventStreamCloudEventConnectionDeletedObject6) error
-	VisitEventStreamCloudEventConnectionDeletedObject7(*EventStreamCloudEventConnectionDeletedObject7) error
+	VisitOidc(*EventStreamCloudEventConnectionDeletedObject0) error
+	VisitOkta(*EventStreamCloudEventConnectionDeletedObject1) error
+	VisitSamlp(*EventStreamCloudEventConnectionDeletedObject2) error
+	VisitPingfederate(*EventStreamCloudEventConnectionDeletedObject3) error
+	VisitAdfs(*EventStreamCloudEventConnectionDeletedObject4) error
+	VisitAd(*EventStreamCloudEventConnectionDeletedObject5) error
+	VisitGoogleApps(*EventStreamCloudEventConnectionDeletedObject6) error
+	VisitWaad(*EventStreamCloudEventConnectionDeletedObject7) error
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject) Accept(visitor EventStreamCloudEventConnectionDeletedObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject0" || e.EventStreamCloudEventConnectionDeletedObject0 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedObject0(e.EventStreamCloudEventConnectionDeletedObject0)
+	if e.Oidc != nil {
+		return visitor.VisitOidc(e.Oidc)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject1" || e.EventStreamCloudEventConnectionDeletedObject1 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedObject1(e.EventStreamCloudEventConnectionDeletedObject1)
+	if e.Okta != nil {
+		return visitor.VisitOkta(e.Okta)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject2" || e.EventStreamCloudEventConnectionDeletedObject2 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedObject2(e.EventStreamCloudEventConnectionDeletedObject2)
+	if e.Samlp != nil {
+		return visitor.VisitSamlp(e.Samlp)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject3" || e.EventStreamCloudEventConnectionDeletedObject3 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedObject3(e.EventStreamCloudEventConnectionDeletedObject3)
+	if e.Pingfederate != nil {
+		return visitor.VisitPingfederate(e.Pingfederate)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject4" || e.EventStreamCloudEventConnectionDeletedObject4 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedObject4(e.EventStreamCloudEventConnectionDeletedObject4)
+	if e.Adfs != nil {
+		return visitor.VisitAdfs(e.Adfs)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject5" || e.EventStreamCloudEventConnectionDeletedObject5 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedObject5(e.EventStreamCloudEventConnectionDeletedObject5)
+	if e.Ad != nil {
+		return visitor.VisitAd(e.Ad)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject6" || e.EventStreamCloudEventConnectionDeletedObject6 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedObject6(e.EventStreamCloudEventConnectionDeletedObject6)
+	if e.GoogleApps != nil {
+		return visitor.VisitGoogleApps(e.GoogleApps)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedObject7" || e.EventStreamCloudEventConnectionDeletedObject7 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedObject7(e.EventStreamCloudEventConnectionDeletedObject7)
+	if e.Waad != nil {
+		return visitor.VisitWaad(e.Waad)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventConnectionDeletedObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Oidc != nil {
+		fields = append(fields, "oidc")
+	}
+	if e.Okta != nil {
+		fields = append(fields, "okta")
+	}
+	if e.Samlp != nil {
+		fields = append(fields, "samlp")
+	}
+	if e.Pingfederate != nil {
+		fields = append(fields, "pingfederate")
+	}
+	if e.Adfs != nil {
+		fields = append(fields, "adfs")
+	}
+	if e.Ad != nil {
+		fields = append(fields, "ad")
+	}
+	if e.GoogleApps != nil {
+		fields = append(fields, "google-apps")
+	}
+	if e.Waad != nil {
+		fields = append(fields, "waad")
+	}
+	if len(fields) == 0 {
+		if e.Strategy != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Strategy)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Strategy != "" {
+		field := fields[0]
+		if e.Strategy != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Strategy,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -27524,7 +26990,6 @@ var (
 	eventStreamCloudEventConnectionDeletedObject0FieldConnectedAccounts  = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedObject0FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedObject0FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedObject0FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedObject0 struct {
@@ -27545,8 +27010,7 @@ type EventStreamCloudEventConnectionDeletedObject0 struct {
 	ConnectedAccounts *EventStreamCloudEventConnectionDeletedObject0ConnectedAccounts `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	Options           *EventStreamCloudEventConnectionDeletedObject0Options           `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedObject0StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -27630,13 +27094,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject0) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedObject0) GetStrategy() EventStreamCloudEventConnectionDeletedObject0StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0) GetExtraProperties() map[string]interface{} {
@@ -27730,13 +27187,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject0) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionDeletedObject0) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedObject0FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedObject0) SetStrategy(strategy EventStreamCloudEventConnectionDeletedObject0StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedObject0FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0) UnmarshalJSON(data []byte) error {
@@ -29867,26 +29317,6 @@ func (e EventStreamCloudEventConnectionDeletedObject0OptionsTypeEnum) Ptr() *Eve
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedObject0OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedObject0StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedObject0StrategyEnumOidc EventStreamCloudEventConnectionDeletedObject0StrategyEnum = "oidc"
-)
-
-func NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject0StrategyEnum, error) {
-	switch s {
-	case "oidc":
-		return EventStreamCloudEventConnectionDeletedObject0StrategyEnumOidc, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedObject0StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject0StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedObject1FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject1FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -29899,7 +29329,6 @@ var (
 	eventStreamCloudEventConnectionDeletedObject1FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedObject1FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedObject1FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedObject1FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedObject1 struct {
@@ -29920,8 +29349,7 @@ type EventStreamCloudEventConnectionDeletedObject1 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedObject1Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedObject1StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -30005,13 +29433,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject1) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedObject1) GetStrategy() EventStreamCloudEventConnectionDeletedObject1StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1) GetExtraProperties() map[string]interface{} {
@@ -30105,13 +29526,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject1) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionDeletedObject1) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedObject1FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedObject1) SetStrategy(strategy EventStreamCloudEventConnectionDeletedObject1StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedObject1FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1) UnmarshalJSON(data []byte) error {
@@ -32223,26 +31637,6 @@ func (e EventStreamCloudEventConnectionDeletedObject1OptionsTypeEnum) Ptr() *Eve
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedObject1OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedObject1StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedObject1StrategyEnumOkta EventStreamCloudEventConnectionDeletedObject1StrategyEnum = "okta"
-)
-
-func NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject1StrategyEnum, error) {
-	switch s {
-	case "okta":
-		return EventStreamCloudEventConnectionDeletedObject1StrategyEnumOkta, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedObject1StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject1StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedObject2FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -32255,7 +31649,6 @@ var (
 	eventStreamCloudEventConnectionDeletedObject2FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedObject2FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedObject2FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedObject2FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedObject2 struct {
@@ -32276,8 +31669,7 @@ type EventStreamCloudEventConnectionDeletedObject2 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedObject2Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedObject2StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -32361,13 +31753,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject2) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedObject2) GetStrategy() EventStreamCloudEventConnectionDeletedObject2StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2) GetExtraProperties() map[string]interface{} {
@@ -32461,13 +31846,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject2) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionDeletedObject2) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedObject2FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedObject2) SetStrategy(strategy EventStreamCloudEventConnectionDeletedObject2StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedObject2FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2) UnmarshalJSON(data []byte) error {
@@ -34613,26 +33991,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject2OptionsSubject) String() s
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedObject2OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedObject2StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedObject2StrategyEnumSamlp EventStreamCloudEventConnectionDeletedObject2StrategyEnum = "samlp"
-)
-
-func NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject2StrategyEnum, error) {
-	switch s {
-	case "samlp":
-		return EventStreamCloudEventConnectionDeletedObject2StrategyEnumSamlp, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedObject2StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject2StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedObject3FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject3FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -34645,7 +34003,6 @@ var (
 	eventStreamCloudEventConnectionDeletedObject3FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedObject3FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedObject3FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedObject3FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedObject3 struct {
@@ -34666,8 +34023,7 @@ type EventStreamCloudEventConnectionDeletedObject3 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedObject3Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedObject3StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -34751,13 +34107,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject3) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedObject3) GetStrategy() EventStreamCloudEventConnectionDeletedObject3StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3) GetExtraProperties() map[string]interface{} {
@@ -34851,13 +34200,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject3) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionDeletedObject3) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedObject3FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedObject3) SetStrategy(strategy EventStreamCloudEventConnectionDeletedObject3StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedObject3FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3) UnmarshalJSON(data []byte) error {
@@ -36030,26 +35372,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject3OptionsSubject) String() s
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedObject3OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedObject3StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedObject3StrategyEnumPingfederate EventStreamCloudEventConnectionDeletedObject3StrategyEnum = "pingfederate"
-)
-
-func NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject3StrategyEnum, error) {
-	switch s {
-	case "pingfederate":
-		return EventStreamCloudEventConnectionDeletedObject3StrategyEnumPingfederate, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedObject3StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject3StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedObject4FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject4FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -36062,7 +35384,6 @@ var (
 	eventStreamCloudEventConnectionDeletedObject4FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedObject4FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedObject4FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedObject4FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedObject4 struct {
@@ -36083,8 +35404,7 @@ type EventStreamCloudEventConnectionDeletedObject4 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedObject4Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedObject4StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -36168,13 +35488,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject4) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedObject4) GetStrategy() EventStreamCloudEventConnectionDeletedObject4StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject4) GetExtraProperties() map[string]interface{} {
@@ -36268,13 +35581,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject4) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionDeletedObject4) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedObject4FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedObject4) SetStrategy(strategy EventStreamCloudEventConnectionDeletedObject4StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedObject4FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject4) UnmarshalJSON(data []byte) error {
@@ -36944,26 +36250,6 @@ func (e EventStreamCloudEventConnectionDeletedObject4OptionsShouldTrustEmailVeri
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedObject4OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedObject4StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedObject4StrategyEnumAdfs EventStreamCloudEventConnectionDeletedObject4StrategyEnum = "adfs"
-)
-
-func NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject4StrategyEnum, error) {
-	switch s {
-	case "adfs":
-		return EventStreamCloudEventConnectionDeletedObject4StrategyEnumAdfs, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedObject4StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject4StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedObject5FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject5FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -36975,7 +36261,6 @@ var (
 	eventStreamCloudEventConnectionDeletedObject5FieldName               = big.NewInt(1 << 7)
 	eventStreamCloudEventConnectionDeletedObject5FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedObject5FieldOptions            = big.NewInt(1 << 9)
-	eventStreamCloudEventConnectionDeletedObject5FieldStrategy           = big.NewInt(1 << 10)
 )
 
 type EventStreamCloudEventConnectionDeletedObject5 struct {
@@ -36993,9 +36278,8 @@ type EventStreamCloudEventConnectionDeletedObject5 struct {
 	// The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
 	Name string `json:"name" url:"name"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-	Realms   []string                                                  `json:"realms,omitempty" url:"realms,omitempty"`
-	Options  *EventStreamCloudEventConnectionDeletedObject5Options     `json:"options,omitempty" url:"options,omitempty"`
-	Strategy EventStreamCloudEventConnectionDeletedObject5StrategyEnum `json:"strategy" url:"strategy"`
+	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
+	Options *EventStreamCloudEventConnectionDeletedObject5Options `json:"options,omitempty" url:"options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -37072,13 +36356,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject5) GetOptions() EventStream
 		return EventStreamCloudEventConnectionDeletedObject5Options{}
 	}
 	return *e.Options
-}
-
-func (e *EventStreamCloudEventConnectionDeletedObject5) GetStrategy() EventStreamCloudEventConnectionDeletedObject5StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject5) GetExtraProperties() map[string]interface{} {
@@ -37165,13 +36442,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject5) SetRealms(realms []strin
 func (e *EventStreamCloudEventConnectionDeletedObject5) SetOptions(options *EventStreamCloudEventConnectionDeletedObject5Options) {
 	e.Options = options
 	e.require(eventStreamCloudEventConnectionDeletedObject5FieldOptions)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedObject5) SetStrategy(strategy EventStreamCloudEventConnectionDeletedObject5StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedObject5FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject5) UnmarshalJSON(data []byte) error {
@@ -37879,26 +37149,6 @@ func (e EventStreamCloudEventConnectionDeletedObject5OptionsSetUserRootAttribute
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedObject5OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedObject5StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedObject5StrategyEnumAd EventStreamCloudEventConnectionDeletedObject5StrategyEnum = "ad"
-)
-
-func NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject5StrategyEnum, error) {
-	switch s {
-	case "ad":
-		return EventStreamCloudEventConnectionDeletedObject5StrategyEnumAd, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedObject5StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject5StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedObject6FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject6FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -37911,7 +37161,6 @@ var (
 	eventStreamCloudEventConnectionDeletedObject6FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedObject6FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedObject6FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedObject6FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedObject6 struct {
@@ -37932,8 +37181,7 @@ type EventStreamCloudEventConnectionDeletedObject6 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedObject6Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedObject6StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -38017,13 +37265,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject6) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedObject6) GetStrategy() EventStreamCloudEventConnectionDeletedObject6StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6) GetExtraProperties() map[string]interface{} {
@@ -38117,13 +37358,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject6) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionDeletedObject6) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedObject6FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedObject6) SetStrategy(strategy EventStreamCloudEventConnectionDeletedObject6StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedObject6FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6) UnmarshalJSON(data []byte) error {
@@ -38994,26 +38228,6 @@ func (e EventStreamCloudEventConnectionDeletedObject6OptionsSetUserRootAttribute
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedObject6OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedObject6StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionDeletedObject6StrategyEnum = "google-apps"
-)
-
-func NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject6StrategyEnum, error) {
-	switch s {
-	case "google-apps":
-		return EventStreamCloudEventConnectionDeletedObject6StrategyEnumGoogleApps, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedObject6StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject6StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedObject7FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject7FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -39026,7 +38240,6 @@ var (
 	eventStreamCloudEventConnectionDeletedObject7FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedObject7FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedObject7FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedObject7FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedObject7 struct {
@@ -39047,8 +38260,7 @@ type EventStreamCloudEventConnectionDeletedObject7 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedObject7Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedObject7StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -39132,13 +38344,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject7) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedObject7) GetStrategy() EventStreamCloudEventConnectionDeletedObject7StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7) GetExtraProperties() map[string]interface{} {
@@ -39232,13 +38437,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject7) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionDeletedObject7) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedObject7FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedObject7) SetStrategy(strategy EventStreamCloudEventConnectionDeletedObject7StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedObject7FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7) UnmarshalJSON(data []byte) error {
@@ -40284,341 +39482,335 @@ func (e EventStreamCloudEventConnectionDeletedObject7OptionsWaadProtocolEnum) Pt
 	return &e
 }
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedObject7StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedObject7StrategyEnumWaad EventStreamCloudEventConnectionDeletedObject7StrategyEnum = "waad"
-)
-
-func NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject7StrategyEnum, error) {
-	switch s {
-	case "waad":
-		return EventStreamCloudEventConnectionDeletedObject7StrategyEnumWaad, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedObject7StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject7StrategyEnum {
-	return &e
-}
-
 // The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventConnectionDeletedPreviousObject struct {
-	EventStreamCloudEventConnectionDeletedPreviousObject0 *EventStreamCloudEventConnectionDeletedPreviousObject0
-	EventStreamCloudEventConnectionDeletedPreviousObject1 *EventStreamCloudEventConnectionDeletedPreviousObject1
-	EventStreamCloudEventConnectionDeletedPreviousObject2 *EventStreamCloudEventConnectionDeletedPreviousObject2
-	EventStreamCloudEventConnectionDeletedPreviousObject3 *EventStreamCloudEventConnectionDeletedPreviousObject3
-	EventStreamCloudEventConnectionDeletedPreviousObject4 *EventStreamCloudEventConnectionDeletedPreviousObject4
-	EventStreamCloudEventConnectionDeletedPreviousObject5 *EventStreamCloudEventConnectionDeletedPreviousObject5
-	EventStreamCloudEventConnectionDeletedPreviousObject6 *EventStreamCloudEventConnectionDeletedPreviousObject6
-	EventStreamCloudEventConnectionDeletedPreviousObject7 *EventStreamCloudEventConnectionDeletedPreviousObject7
+	Strategy           string
+	DisplayName        *string
+	EnabledClients     []string
+	ID                 string
+	IsDomainConnection *bool
+	Name               string
+	Realms             []string
+	Oidc               *EventStreamCloudEventConnectionDeletedPreviousObject0
+	Okta               *EventStreamCloudEventConnectionDeletedPreviousObject1
+	Samlp              *EventStreamCloudEventConnectionDeletedPreviousObject2
+	Pingfederate       *EventStreamCloudEventConnectionDeletedPreviousObject3
+	Adfs               *EventStreamCloudEventConnectionDeletedPreviousObject4
+	Ad                 *EventStreamCloudEventConnectionDeletedPreviousObject5
+	GoogleApps         *EventStreamCloudEventConnectionDeletedPreviousObject6
+	Waad               *EventStreamCloudEventConnectionDeletedPreviousObject7
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamCloudEventConnectionDeletedPreviousObject0() *EventStreamCloudEventConnectionDeletedPreviousObject0 {
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetStrategy() string {
+	if e == nil {
+		return ""
+	}
+	return e.Strategy
+}
+
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetDisplayName() string {
+	if e == nil || e.DisplayName == nil {
+		return ""
+	}
+	return *e.DisplayName
+}
+
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEnabledClients() []string {
+	if e == nil || e.EnabledClients == nil {
+		return nil
+	}
+	return e.EnabledClients
+}
+
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetIsDomainConnection() bool {
+	if e == nil || e.IsDomainConnection == nil {
+		return false
+	}
+	return *e.IsDomainConnection
+}
+
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetRealms() []string {
+	if e == nil || e.Realms == nil {
+		return nil
+	}
+	return e.Realms
+}
+
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetOidc() *EventStreamCloudEventConnectionDeletedPreviousObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedPreviousObject0
+	return e.Oidc
 }
 
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamCloudEventConnectionDeletedPreviousObject1() *EventStreamCloudEventConnectionDeletedPreviousObject1 {
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetOkta() *EventStreamCloudEventConnectionDeletedPreviousObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedPreviousObject1
+	return e.Okta
 }
 
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamCloudEventConnectionDeletedPreviousObject2() *EventStreamCloudEventConnectionDeletedPreviousObject2 {
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetSamlp() *EventStreamCloudEventConnectionDeletedPreviousObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedPreviousObject2
+	return e.Samlp
 }
 
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamCloudEventConnectionDeletedPreviousObject3() *EventStreamCloudEventConnectionDeletedPreviousObject3 {
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetPingfederate() *EventStreamCloudEventConnectionDeletedPreviousObject3 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedPreviousObject3
+	return e.Pingfederate
 }
 
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamCloudEventConnectionDeletedPreviousObject4() *EventStreamCloudEventConnectionDeletedPreviousObject4 {
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetAdfs() *EventStreamCloudEventConnectionDeletedPreviousObject4 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedPreviousObject4
+	return e.Adfs
 }
 
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamCloudEventConnectionDeletedPreviousObject5() *EventStreamCloudEventConnectionDeletedPreviousObject5 {
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetAd() *EventStreamCloudEventConnectionDeletedPreviousObject5 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedPreviousObject5
+	return e.Ad
 }
 
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamCloudEventConnectionDeletedPreviousObject6() *EventStreamCloudEventConnectionDeletedPreviousObject6 {
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetGoogleApps() *EventStreamCloudEventConnectionDeletedPreviousObject6 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedPreviousObject6
+	return e.GoogleApps
 }
 
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamCloudEventConnectionDeletedPreviousObject7() *EventStreamCloudEventConnectionDeletedPreviousObject7 {
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetWaad() *EventStreamCloudEventConnectionDeletedPreviousObject7 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionDeletedPreviousObject7
+	return e.Waad
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject0 := new(EventStreamCloudEventConnectionDeletedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject0"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject0 = valueEventStreamCloudEventConnectionDeletedPreviousObject0
-			return nil
+	var unmarshaler struct {
+		Strategy           string   `json:"strategy"`
+		DisplayName        *string  `json:"display_name,omitempty"`
+		EnabledClients     []string `json:"enabled_clients,omitempty"`
+		ID                 string   `json:"id"`
+		IsDomainConnection *bool    `json:"is_domain_connection,omitempty"`
+		Name               string   `json:"name"`
+		Realms             []string `json:"realms,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Strategy = unmarshaler.Strategy
+	e.DisplayName = unmarshaler.DisplayName
+	e.EnabledClients = unmarshaler.EnabledClients
+	e.ID = unmarshaler.ID
+	e.IsDomainConnection = unmarshaler.IsDomainConnection
+	e.Name = unmarshaler.Name
+	e.Realms = unmarshaler.Realms
+	if unmarshaler.Strategy == "" {
+		return fmt.Errorf("%T did not include discriminant strategy", e)
+	}
+	switch unmarshaler.Strategy {
+	case "oidc":
+		value := new(EventStreamCloudEventConnectionDeletedPreviousObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject1 := new(EventStreamCloudEventConnectionDeletedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject1"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject1 = valueEventStreamCloudEventConnectionDeletedPreviousObject1
-			return nil
+		e.Oidc = value
+	case "okta":
+		value := new(EventStreamCloudEventConnectionDeletedPreviousObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject2 := new(EventStreamCloudEventConnectionDeletedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject2"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject2 = valueEventStreamCloudEventConnectionDeletedPreviousObject2
-			return nil
+		e.Okta = value
+	case "samlp":
+		value := new(EventStreamCloudEventConnectionDeletedPreviousObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject3 := new(EventStreamCloudEventConnectionDeletedPreviousObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject3"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject3 = valueEventStreamCloudEventConnectionDeletedPreviousObject3
-			return nil
+		e.Samlp = value
+	case "pingfederate":
+		value := new(EventStreamCloudEventConnectionDeletedPreviousObject3)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject4 := new(EventStreamCloudEventConnectionDeletedPreviousObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject4"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject4 = valueEventStreamCloudEventConnectionDeletedPreviousObject4
-			return nil
+		e.Pingfederate = value
+	case "adfs":
+		value := new(EventStreamCloudEventConnectionDeletedPreviousObject4)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject5 := new(EventStreamCloudEventConnectionDeletedPreviousObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject5"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject5 = valueEventStreamCloudEventConnectionDeletedPreviousObject5
-			return nil
+		e.Adfs = value
+	case "ad":
+		value := new(EventStreamCloudEventConnectionDeletedPreviousObject5)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject6 := new(EventStreamCloudEventConnectionDeletedPreviousObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject6"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject6 = valueEventStreamCloudEventConnectionDeletedPreviousObject6
-			return nil
+		e.Ad = value
+	case "google-apps":
+		value := new(EventStreamCloudEventConnectionDeletedPreviousObject6)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject7 := new(EventStreamCloudEventConnectionDeletedPreviousObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject7"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject7 = valueEventStreamCloudEventConnectionDeletedPreviousObject7
-			return nil
+		e.GoogleApps = value
+	case "waad":
+		value := new(EventStreamCloudEventConnectionDeletedPreviousObject7)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Waad = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject0 := new(EventStreamCloudEventConnectionDeletedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject0"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject0 = valueEventStreamCloudEventConnectionDeletedPreviousObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject1 := new(EventStreamCloudEventConnectionDeletedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject1"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject1 = valueEventStreamCloudEventConnectionDeletedPreviousObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject2 := new(EventStreamCloudEventConnectionDeletedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject2"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject2 = valueEventStreamCloudEventConnectionDeletedPreviousObject2
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject3 := new(EventStreamCloudEventConnectionDeletedPreviousObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject3"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject3 = valueEventStreamCloudEventConnectionDeletedPreviousObject3
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject4 := new(EventStreamCloudEventConnectionDeletedPreviousObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject4"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject4 = valueEventStreamCloudEventConnectionDeletedPreviousObject4
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject5 := new(EventStreamCloudEventConnectionDeletedPreviousObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject5"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject5 = valueEventStreamCloudEventConnectionDeletedPreviousObject5
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject6 := new(EventStreamCloudEventConnectionDeletedPreviousObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject6"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject6 = valueEventStreamCloudEventConnectionDeletedPreviousObject6
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionDeletedPreviousObject7 := new(EventStreamCloudEventConnectionDeletedPreviousObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject7"
-			e.EventStreamCloudEventConnectionDeletedPreviousObject7 = valueEventStreamCloudEventConnectionDeletedPreviousObject7
-			return nil
-		}
-	}
-	valueEventStreamCloudEventConnectionDeletedPreviousObject0 := new(EventStreamCloudEventConnectionDeletedPreviousObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject0); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject0"
-		e.EventStreamCloudEventConnectionDeletedPreviousObject0 = valueEventStreamCloudEventConnectionDeletedPreviousObject0
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedPreviousObject1 := new(EventStreamCloudEventConnectionDeletedPreviousObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject1); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject1"
-		e.EventStreamCloudEventConnectionDeletedPreviousObject1 = valueEventStreamCloudEventConnectionDeletedPreviousObject1
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedPreviousObject2 := new(EventStreamCloudEventConnectionDeletedPreviousObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject2); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject2"
-		e.EventStreamCloudEventConnectionDeletedPreviousObject2 = valueEventStreamCloudEventConnectionDeletedPreviousObject2
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedPreviousObject3 := new(EventStreamCloudEventConnectionDeletedPreviousObject3)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject3); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject3"
-		e.EventStreamCloudEventConnectionDeletedPreviousObject3 = valueEventStreamCloudEventConnectionDeletedPreviousObject3
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedPreviousObject4 := new(EventStreamCloudEventConnectionDeletedPreviousObject4)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject4); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject4"
-		e.EventStreamCloudEventConnectionDeletedPreviousObject4 = valueEventStreamCloudEventConnectionDeletedPreviousObject4
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedPreviousObject5 := new(EventStreamCloudEventConnectionDeletedPreviousObject5)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject5); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject5"
-		e.EventStreamCloudEventConnectionDeletedPreviousObject5 = valueEventStreamCloudEventConnectionDeletedPreviousObject5
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedPreviousObject6 := new(EventStreamCloudEventConnectionDeletedPreviousObject6)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject6); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject6"
-		e.EventStreamCloudEventConnectionDeletedPreviousObject6 = valueEventStreamCloudEventConnectionDeletedPreviousObject6
-		return nil
-	}
-	valueEventStreamCloudEventConnectionDeletedPreviousObject7 := new(EventStreamCloudEventConnectionDeletedPreviousObject7)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject7); err == nil {
-		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject7"
-		e.EventStreamCloudEventConnectionDeletedPreviousObject7 = valueEventStreamCloudEventConnectionDeletedPreviousObject7
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventConnectionDeletedPreviousObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject0" || e.EventStreamCloudEventConnectionDeletedPreviousObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedPreviousObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject1" || e.EventStreamCloudEventConnectionDeletedPreviousObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedPreviousObject1)
+	if e.Oidc != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Oidc, "strategy", "oidc")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject2" || e.EventStreamCloudEventConnectionDeletedPreviousObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedPreviousObject2)
+	if e.Okta != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Okta, "strategy", "okta")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject3" || e.EventStreamCloudEventConnectionDeletedPreviousObject3 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedPreviousObject3)
+	if e.Samlp != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Samlp, "strategy", "samlp")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject4" || e.EventStreamCloudEventConnectionDeletedPreviousObject4 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedPreviousObject4)
+	if e.Pingfederate != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Pingfederate, "strategy", "pingfederate")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject5" || e.EventStreamCloudEventConnectionDeletedPreviousObject5 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedPreviousObject5)
+	if e.Adfs != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Adfs, "strategy", "adfs")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject6" || e.EventStreamCloudEventConnectionDeletedPreviousObject6 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedPreviousObject6)
+	if e.Ad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Ad, "strategy", "ad")
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject7" || e.EventStreamCloudEventConnectionDeletedPreviousObject7 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionDeletedPreviousObject7)
+	if e.GoogleApps != nil {
+		return internal.MarshalJSONWithExtraProperty(e.GoogleApps, "strategy", "google-apps")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Waad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Waad, "strategy", "waad")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventConnectionDeletedPreviousObjectVisitor interface {
-	VisitEventStreamCloudEventConnectionDeletedPreviousObject0(*EventStreamCloudEventConnectionDeletedPreviousObject0) error
-	VisitEventStreamCloudEventConnectionDeletedPreviousObject1(*EventStreamCloudEventConnectionDeletedPreviousObject1) error
-	VisitEventStreamCloudEventConnectionDeletedPreviousObject2(*EventStreamCloudEventConnectionDeletedPreviousObject2) error
-	VisitEventStreamCloudEventConnectionDeletedPreviousObject3(*EventStreamCloudEventConnectionDeletedPreviousObject3) error
-	VisitEventStreamCloudEventConnectionDeletedPreviousObject4(*EventStreamCloudEventConnectionDeletedPreviousObject4) error
-	VisitEventStreamCloudEventConnectionDeletedPreviousObject5(*EventStreamCloudEventConnectionDeletedPreviousObject5) error
-	VisitEventStreamCloudEventConnectionDeletedPreviousObject6(*EventStreamCloudEventConnectionDeletedPreviousObject6) error
-	VisitEventStreamCloudEventConnectionDeletedPreviousObject7(*EventStreamCloudEventConnectionDeletedPreviousObject7) error
+	VisitOidc(*EventStreamCloudEventConnectionDeletedPreviousObject0) error
+	VisitOkta(*EventStreamCloudEventConnectionDeletedPreviousObject1) error
+	VisitSamlp(*EventStreamCloudEventConnectionDeletedPreviousObject2) error
+	VisitPingfederate(*EventStreamCloudEventConnectionDeletedPreviousObject3) error
+	VisitAdfs(*EventStreamCloudEventConnectionDeletedPreviousObject4) error
+	VisitAd(*EventStreamCloudEventConnectionDeletedPreviousObject5) error
+	VisitGoogleApps(*EventStreamCloudEventConnectionDeletedPreviousObject6) error
+	VisitWaad(*EventStreamCloudEventConnectionDeletedPreviousObject7) error
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject) Accept(visitor EventStreamCloudEventConnectionDeletedPreviousObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject0" || e.EventStreamCloudEventConnectionDeletedPreviousObject0 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedPreviousObject0(e.EventStreamCloudEventConnectionDeletedPreviousObject0)
+	if e.Oidc != nil {
+		return visitor.VisitOidc(e.Oidc)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject1" || e.EventStreamCloudEventConnectionDeletedPreviousObject1 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedPreviousObject1(e.EventStreamCloudEventConnectionDeletedPreviousObject1)
+	if e.Okta != nil {
+		return visitor.VisitOkta(e.Okta)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject2" || e.EventStreamCloudEventConnectionDeletedPreviousObject2 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedPreviousObject2(e.EventStreamCloudEventConnectionDeletedPreviousObject2)
+	if e.Samlp != nil {
+		return visitor.VisitSamlp(e.Samlp)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject3" || e.EventStreamCloudEventConnectionDeletedPreviousObject3 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedPreviousObject3(e.EventStreamCloudEventConnectionDeletedPreviousObject3)
+	if e.Pingfederate != nil {
+		return visitor.VisitPingfederate(e.Pingfederate)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject4" || e.EventStreamCloudEventConnectionDeletedPreviousObject4 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedPreviousObject4(e.EventStreamCloudEventConnectionDeletedPreviousObject4)
+	if e.Adfs != nil {
+		return visitor.VisitAdfs(e.Adfs)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject5" || e.EventStreamCloudEventConnectionDeletedPreviousObject5 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedPreviousObject5(e.EventStreamCloudEventConnectionDeletedPreviousObject5)
+	if e.Ad != nil {
+		return visitor.VisitAd(e.Ad)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject6" || e.EventStreamCloudEventConnectionDeletedPreviousObject6 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedPreviousObject6(e.EventStreamCloudEventConnectionDeletedPreviousObject6)
+	if e.GoogleApps != nil {
+		return visitor.VisitGoogleApps(e.GoogleApps)
 	}
-	if e.typ == "EventStreamCloudEventConnectionDeletedPreviousObject7" || e.EventStreamCloudEventConnectionDeletedPreviousObject7 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionDeletedPreviousObject7(e.EventStreamCloudEventConnectionDeletedPreviousObject7)
+	if e.Waad != nil {
+		return visitor.VisitWaad(e.Waad)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventConnectionDeletedPreviousObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Oidc != nil {
+		fields = append(fields, "oidc")
+	}
+	if e.Okta != nil {
+		fields = append(fields, "okta")
+	}
+	if e.Samlp != nil {
+		fields = append(fields, "samlp")
+	}
+	if e.Pingfederate != nil {
+		fields = append(fields, "pingfederate")
+	}
+	if e.Adfs != nil {
+		fields = append(fields, "adfs")
+	}
+	if e.Ad != nil {
+		fields = append(fields, "ad")
+	}
+	if e.GoogleApps != nil {
+		fields = append(fields, "google-apps")
+	}
+	if e.Waad != nil {
+		fields = append(fields, "waad")
+	}
+	if len(fields) == 0 {
+		if e.Strategy != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Strategy)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Strategy != "" {
+		field := fields[0]
+		if e.Strategy != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Strategy,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -40633,7 +39825,6 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0FieldConnectedAccounts  = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedPreviousObject0FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedPreviousObject0FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedPreviousObject0FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedPreviousObject0 struct {
@@ -40654,8 +39845,7 @@ type EventStreamCloudEventConnectionDeletedPreviousObject0 struct {
 	ConnectedAccounts *EventStreamCloudEventConnectionDeletedPreviousObject0ConnectedAccounts `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	Options           *EventStreamCloudEventConnectionDeletedPreviousObject0Options           `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -40739,13 +39929,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) GetStrategy() EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) GetExtraProperties() map[string]interface{} {
@@ -40839,13 +40022,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) SetOptions(optio
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedPreviousObject0FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) SetStrategy(strategy EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedPreviousObject0FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) UnmarshalJSON(data []byte) error {
@@ -42976,26 +42152,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject0OptionsTypeEnum) Pt
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedPreviousObject0OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumOidc EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum = "oidc"
-)
-
-func NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum, error) {
-	switch s {
-	case "oidc":
-		return EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumOidc, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject1FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -43008,7 +42164,6 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedPreviousObject1FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedPreviousObject1FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedPreviousObject1FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedPreviousObject1 struct {
@@ -43029,8 +42184,7 @@ type EventStreamCloudEventConnectionDeletedPreviousObject1 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedPreviousObject1Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -43114,13 +42268,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) GetStrategy() EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) GetExtraProperties() map[string]interface{} {
@@ -43214,13 +42361,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) SetOptions(optio
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedPreviousObject1FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) SetStrategy(strategy EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedPreviousObject1FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) UnmarshalJSON(data []byte) error {
@@ -45332,26 +44472,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject1OptionsTypeEnum) Pt
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedPreviousObject1OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumOkta EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum = "okta"
-)
-
-func NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum, error) {
-	switch s {
-	case "okta":
-		return EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumOkta, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -45364,7 +44484,6 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedPreviousObject2FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedPreviousObject2FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedPreviousObject2FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedPreviousObject2 struct {
@@ -45385,8 +44504,7 @@ type EventStreamCloudEventConnectionDeletedPreviousObject2 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedPreviousObject2Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -45470,13 +44588,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) GetStrategy() EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) GetExtraProperties() map[string]interface{} {
@@ -45570,13 +44681,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) SetOptions(optio
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedPreviousObject2FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) SetStrategy(strategy EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedPreviousObject2FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) UnmarshalJSON(data []byte) error {
@@ -47722,26 +46826,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsSubject) St
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedPreviousObject2OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumSamlp EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum = "samlp"
-)
-
-func NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum, error) {
-	switch s {
-	case "samlp":
-		return EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumSamlp, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject3FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -47754,7 +46838,6 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedPreviousObject3FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedPreviousObject3FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedPreviousObject3FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedPreviousObject3 struct {
@@ -47775,8 +46858,7 @@ type EventStreamCloudEventConnectionDeletedPreviousObject3 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedPreviousObject3Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -47860,13 +46942,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) GetStrategy() EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) GetExtraProperties() map[string]interface{} {
@@ -47960,13 +47035,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) SetOptions(optio
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedPreviousObject3FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) SetStrategy(strategy EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedPreviousObject3FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) UnmarshalJSON(data []byte) error {
@@ -49139,26 +48207,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsSubject) St
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedPreviousObject3OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumPingfederate EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum = "pingfederate"
-)
-
-func NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum, error) {
-	switch s {
-	case "pingfederate":
-		return EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumPingfederate, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject4FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject4FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -49171,7 +48219,6 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject4FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedPreviousObject4FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedPreviousObject4FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedPreviousObject4FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedPreviousObject4 struct {
@@ -49192,8 +48239,7 @@ type EventStreamCloudEventConnectionDeletedPreviousObject4 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedPreviousObject4Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -49277,13 +48323,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) GetStrategy() EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) GetExtraProperties() map[string]interface{} {
@@ -49377,13 +48416,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) SetOptions(optio
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedPreviousObject4FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) SetStrategy(strategy EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedPreviousObject4FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) UnmarshalJSON(data []byte) error {
@@ -50053,26 +49085,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject4OptionsShouldTrustE
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedPreviousObject4OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumAdfs EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum = "adfs"
-)
-
-func NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum, error) {
-	switch s {
-	case "adfs":
-		return EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumAdfs, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject5FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject5FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -50084,7 +49096,6 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject5FieldName               = big.NewInt(1 << 7)
 	eventStreamCloudEventConnectionDeletedPreviousObject5FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedPreviousObject5FieldOptions            = big.NewInt(1 << 9)
-	eventStreamCloudEventConnectionDeletedPreviousObject5FieldStrategy           = big.NewInt(1 << 10)
 )
 
 type EventStreamCloudEventConnectionDeletedPreviousObject5 struct {
@@ -50102,9 +49113,8 @@ type EventStreamCloudEventConnectionDeletedPreviousObject5 struct {
 	// The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
 	Name string `json:"name" url:"name"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-	Realms   []string                                                          `json:"realms,omitempty" url:"realms,omitempty"`
-	Options  *EventStreamCloudEventConnectionDeletedPreviousObject5Options     `json:"options,omitempty" url:"options,omitempty"`
-	Strategy EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum `json:"strategy" url:"strategy"`
+	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
+	Options *EventStreamCloudEventConnectionDeletedPreviousObject5Options `json:"options,omitempty" url:"options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -50181,13 +49191,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) GetOptions() Eve
 		return EventStreamCloudEventConnectionDeletedPreviousObject5Options{}
 	}
 	return *e.Options
-}
-
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) GetStrategy() EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) GetExtraProperties() map[string]interface{} {
@@ -50274,13 +49277,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) SetRealms(realms
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) SetOptions(options *EventStreamCloudEventConnectionDeletedPreviousObject5Options) {
 	e.Options = options
 	e.require(eventStreamCloudEventConnectionDeletedPreviousObject5FieldOptions)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) SetStrategy(strategy EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedPreviousObject5FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) UnmarshalJSON(data []byte) error {
@@ -50988,26 +49984,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject5OptionsSetUserRootA
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedPreviousObject5OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumAd EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum = "ad"
-)
-
-func NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum, error) {
-	switch s {
-	case "ad":
-		return EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumAd, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject6FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject6FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -51020,7 +49996,6 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject6FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedPreviousObject6FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedPreviousObject6FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedPreviousObject6FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedPreviousObject6 struct {
@@ -51041,8 +50016,7 @@ type EventStreamCloudEventConnectionDeletedPreviousObject6 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedPreviousObject6Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -51126,13 +50100,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) GetStrategy() EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) GetExtraProperties() map[string]interface{} {
@@ -51226,13 +50193,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) SetOptions(optio
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedPreviousObject6FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) SetStrategy(strategy EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedPreviousObject6FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) UnmarshalJSON(data []byte) error {
@@ -52103,26 +51063,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject6OptionsSetUserRootA
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionDeletedPreviousObject6OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum = "google-apps"
-)
-
-func NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum, error) {
-	switch s {
-	case "google-apps":
-		return EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumGoogleApps, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject7FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject7FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -52135,7 +51075,6 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject7FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionDeletedPreviousObject7FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionDeletedPreviousObject7FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionDeletedPreviousObject7FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionDeletedPreviousObject7 struct {
@@ -52156,8 +51095,7 @@ type EventStreamCloudEventConnectionDeletedPreviousObject7 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionDeletedPreviousObject7Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -52241,13 +51179,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) GetStrategy() EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) GetExtraProperties() map[string]interface{} {
@@ -52341,13 +51272,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) SetOptions(optio
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionDeletedPreviousObject7FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) SetStrategy(strategy EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionDeletedPreviousObject7FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) UnmarshalJSON(data []byte) error {
@@ -53393,26 +52317,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject7OptionsWaadProtocol
 	return &e
 }
 
-// The connection strategy.
-type EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumWaad EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum = "waad"
-)
-
-func NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum, error) {
-	switch s {
-	case "waad":
-		return EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumWaad, nil
-	}
-	var t EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedFieldEvent  = big.NewInt(1 << 1)
@@ -53888,319 +52792,333 @@ func (e *EventStreamCloudEventConnectionUpdatedData) String() string {
 
 // The event content.
 type EventStreamCloudEventConnectionUpdatedObject struct {
-	EventStreamCloudEventConnectionUpdatedObject0 *EventStreamCloudEventConnectionUpdatedObject0
-	EventStreamCloudEventConnectionUpdatedObject1 *EventStreamCloudEventConnectionUpdatedObject1
-	EventStreamCloudEventConnectionUpdatedObject2 *EventStreamCloudEventConnectionUpdatedObject2
-	EventStreamCloudEventConnectionUpdatedObject3 *EventStreamCloudEventConnectionUpdatedObject3
-	EventStreamCloudEventConnectionUpdatedObject4 *EventStreamCloudEventConnectionUpdatedObject4
-	EventStreamCloudEventConnectionUpdatedObject5 *EventStreamCloudEventConnectionUpdatedObject5
-	EventStreamCloudEventConnectionUpdatedObject6 *EventStreamCloudEventConnectionUpdatedObject6
-	EventStreamCloudEventConnectionUpdatedObject7 *EventStreamCloudEventConnectionUpdatedObject7
+	Strategy           string
+	DisplayName        *string
+	EnabledClients     []string
+	ID                 string
+	IsDomainConnection *bool
+	Name               string
+	Realms             []string
+	Oidc               *EventStreamCloudEventConnectionUpdatedObject0
+	Okta               *EventStreamCloudEventConnectionUpdatedObject1
+	Samlp              *EventStreamCloudEventConnectionUpdatedObject2
+	Pingfederate       *EventStreamCloudEventConnectionUpdatedObject3
+	Adfs               *EventStreamCloudEventConnectionUpdatedObject4
+	Ad                 *EventStreamCloudEventConnectionUpdatedObject5
+	GoogleApps         *EventStreamCloudEventConnectionUpdatedObject6
+	Waad               *EventStreamCloudEventConnectionUpdatedObject7
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventConnectionUpdatedObject0() *EventStreamCloudEventConnectionUpdatedObject0 {
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetStrategy() string {
+	if e == nil {
+		return ""
+	}
+	return e.Strategy
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetDisplayName() string {
+	if e == nil || e.DisplayName == nil {
+		return ""
+	}
+	return *e.DisplayName
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetEnabledClients() []string {
+	if e == nil || e.EnabledClients == nil {
+		return nil
+	}
+	return e.EnabledClients
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetIsDomainConnection() bool {
+	if e == nil || e.IsDomainConnection == nil {
+		return false
+	}
+	return *e.IsDomainConnection
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetRealms() []string {
+	if e == nil || e.Realms == nil {
+		return nil
+	}
+	return e.Realms
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetOidc() *EventStreamCloudEventConnectionUpdatedObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedObject0
+	return e.Oidc
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventConnectionUpdatedObject1() *EventStreamCloudEventConnectionUpdatedObject1 {
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetOkta() *EventStreamCloudEventConnectionUpdatedObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedObject1
+	return e.Okta
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventConnectionUpdatedObject2() *EventStreamCloudEventConnectionUpdatedObject2 {
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetSamlp() *EventStreamCloudEventConnectionUpdatedObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedObject2
+	return e.Samlp
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventConnectionUpdatedObject3() *EventStreamCloudEventConnectionUpdatedObject3 {
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetPingfederate() *EventStreamCloudEventConnectionUpdatedObject3 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedObject3
+	return e.Pingfederate
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventConnectionUpdatedObject4() *EventStreamCloudEventConnectionUpdatedObject4 {
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetAdfs() *EventStreamCloudEventConnectionUpdatedObject4 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedObject4
+	return e.Adfs
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventConnectionUpdatedObject5() *EventStreamCloudEventConnectionUpdatedObject5 {
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetAd() *EventStreamCloudEventConnectionUpdatedObject5 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedObject5
+	return e.Ad
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventConnectionUpdatedObject6() *EventStreamCloudEventConnectionUpdatedObject6 {
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetGoogleApps() *EventStreamCloudEventConnectionUpdatedObject6 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedObject6
+	return e.GoogleApps
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventConnectionUpdatedObject7() *EventStreamCloudEventConnectionUpdatedObject7 {
+func (e *EventStreamCloudEventConnectionUpdatedObject) GetWaad() *EventStreamCloudEventConnectionUpdatedObject7 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedObject7
+	return e.Waad
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject0 := new(EventStreamCloudEventConnectionUpdatedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject0"
-			e.EventStreamCloudEventConnectionUpdatedObject0 = valueEventStreamCloudEventConnectionUpdatedObject0
-			return nil
+	var unmarshaler struct {
+		Strategy           string   `json:"strategy"`
+		DisplayName        *string  `json:"display_name,omitempty"`
+		EnabledClients     []string `json:"enabled_clients,omitempty"`
+		ID                 string   `json:"id"`
+		IsDomainConnection *bool    `json:"is_domain_connection,omitempty"`
+		Name               string   `json:"name"`
+		Realms             []string `json:"realms,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Strategy = unmarshaler.Strategy
+	e.DisplayName = unmarshaler.DisplayName
+	e.EnabledClients = unmarshaler.EnabledClients
+	e.ID = unmarshaler.ID
+	e.IsDomainConnection = unmarshaler.IsDomainConnection
+	e.Name = unmarshaler.Name
+	e.Realms = unmarshaler.Realms
+	if unmarshaler.Strategy == "" {
+		return fmt.Errorf("%T did not include discriminant strategy", e)
+	}
+	switch unmarshaler.Strategy {
+	case "oidc":
+		value := new(EventStreamCloudEventConnectionUpdatedObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject1 := new(EventStreamCloudEventConnectionUpdatedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject1"
-			e.EventStreamCloudEventConnectionUpdatedObject1 = valueEventStreamCloudEventConnectionUpdatedObject1
-			return nil
+		e.Oidc = value
+	case "okta":
+		value := new(EventStreamCloudEventConnectionUpdatedObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject2 := new(EventStreamCloudEventConnectionUpdatedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject2"
-			e.EventStreamCloudEventConnectionUpdatedObject2 = valueEventStreamCloudEventConnectionUpdatedObject2
-			return nil
+		e.Okta = value
+	case "samlp":
+		value := new(EventStreamCloudEventConnectionUpdatedObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject3 := new(EventStreamCloudEventConnectionUpdatedObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject3"
-			e.EventStreamCloudEventConnectionUpdatedObject3 = valueEventStreamCloudEventConnectionUpdatedObject3
-			return nil
+		e.Samlp = value
+	case "pingfederate":
+		value := new(EventStreamCloudEventConnectionUpdatedObject3)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject4 := new(EventStreamCloudEventConnectionUpdatedObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject4"
-			e.EventStreamCloudEventConnectionUpdatedObject4 = valueEventStreamCloudEventConnectionUpdatedObject4
-			return nil
+		e.Pingfederate = value
+	case "adfs":
+		value := new(EventStreamCloudEventConnectionUpdatedObject4)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject5 := new(EventStreamCloudEventConnectionUpdatedObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject5"
-			e.EventStreamCloudEventConnectionUpdatedObject5 = valueEventStreamCloudEventConnectionUpdatedObject5
-			return nil
+		e.Adfs = value
+	case "ad":
+		value := new(EventStreamCloudEventConnectionUpdatedObject5)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject6 := new(EventStreamCloudEventConnectionUpdatedObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject6"
-			e.EventStreamCloudEventConnectionUpdatedObject6 = valueEventStreamCloudEventConnectionUpdatedObject6
-			return nil
+		e.Ad = value
+	case "google-apps":
+		value := new(EventStreamCloudEventConnectionUpdatedObject6)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject7 := new(EventStreamCloudEventConnectionUpdatedObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject7"
-			e.EventStreamCloudEventConnectionUpdatedObject7 = valueEventStreamCloudEventConnectionUpdatedObject7
-			return nil
+		e.GoogleApps = value
+	case "waad":
+		value := new(EventStreamCloudEventConnectionUpdatedObject7)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Waad = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject0 := new(EventStreamCloudEventConnectionUpdatedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject0"
-			e.EventStreamCloudEventConnectionUpdatedObject0 = valueEventStreamCloudEventConnectionUpdatedObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject1 := new(EventStreamCloudEventConnectionUpdatedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject1"
-			e.EventStreamCloudEventConnectionUpdatedObject1 = valueEventStreamCloudEventConnectionUpdatedObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject2 := new(EventStreamCloudEventConnectionUpdatedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject2"
-			e.EventStreamCloudEventConnectionUpdatedObject2 = valueEventStreamCloudEventConnectionUpdatedObject2
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject3 := new(EventStreamCloudEventConnectionUpdatedObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject3"
-			e.EventStreamCloudEventConnectionUpdatedObject3 = valueEventStreamCloudEventConnectionUpdatedObject3
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject4 := new(EventStreamCloudEventConnectionUpdatedObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject4"
-			e.EventStreamCloudEventConnectionUpdatedObject4 = valueEventStreamCloudEventConnectionUpdatedObject4
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject5 := new(EventStreamCloudEventConnectionUpdatedObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject5"
-			e.EventStreamCloudEventConnectionUpdatedObject5 = valueEventStreamCloudEventConnectionUpdatedObject5
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject6 := new(EventStreamCloudEventConnectionUpdatedObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject6"
-			e.EventStreamCloudEventConnectionUpdatedObject6 = valueEventStreamCloudEventConnectionUpdatedObject6
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedObject7 := new(EventStreamCloudEventConnectionUpdatedObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedObject7"
-			e.EventStreamCloudEventConnectionUpdatedObject7 = valueEventStreamCloudEventConnectionUpdatedObject7
-			return nil
-		}
-	}
-	valueEventStreamCloudEventConnectionUpdatedObject0 := new(EventStreamCloudEventConnectionUpdatedObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject0); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedObject0"
-		e.EventStreamCloudEventConnectionUpdatedObject0 = valueEventStreamCloudEventConnectionUpdatedObject0
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedObject1 := new(EventStreamCloudEventConnectionUpdatedObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject1); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedObject1"
-		e.EventStreamCloudEventConnectionUpdatedObject1 = valueEventStreamCloudEventConnectionUpdatedObject1
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedObject2 := new(EventStreamCloudEventConnectionUpdatedObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject2); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedObject2"
-		e.EventStreamCloudEventConnectionUpdatedObject2 = valueEventStreamCloudEventConnectionUpdatedObject2
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedObject3 := new(EventStreamCloudEventConnectionUpdatedObject3)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject3); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedObject3"
-		e.EventStreamCloudEventConnectionUpdatedObject3 = valueEventStreamCloudEventConnectionUpdatedObject3
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedObject4 := new(EventStreamCloudEventConnectionUpdatedObject4)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject4); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedObject4"
-		e.EventStreamCloudEventConnectionUpdatedObject4 = valueEventStreamCloudEventConnectionUpdatedObject4
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedObject5 := new(EventStreamCloudEventConnectionUpdatedObject5)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject5); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedObject5"
-		e.EventStreamCloudEventConnectionUpdatedObject5 = valueEventStreamCloudEventConnectionUpdatedObject5
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedObject6 := new(EventStreamCloudEventConnectionUpdatedObject6)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject6); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedObject6"
-		e.EventStreamCloudEventConnectionUpdatedObject6 = valueEventStreamCloudEventConnectionUpdatedObject6
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedObject7 := new(EventStreamCloudEventConnectionUpdatedObject7)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject7); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedObject7"
-		e.EventStreamCloudEventConnectionUpdatedObject7 = valueEventStreamCloudEventConnectionUpdatedObject7
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventConnectionUpdatedObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject0" || e.EventStreamCloudEventConnectionUpdatedObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject1" || e.EventStreamCloudEventConnectionUpdatedObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedObject1)
+	if e.Oidc != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Oidc, "strategy", "oidc")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject2" || e.EventStreamCloudEventConnectionUpdatedObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedObject2)
+	if e.Okta != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Okta, "strategy", "okta")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject3" || e.EventStreamCloudEventConnectionUpdatedObject3 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedObject3)
+	if e.Samlp != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Samlp, "strategy", "samlp")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject4" || e.EventStreamCloudEventConnectionUpdatedObject4 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedObject4)
+	if e.Pingfederate != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Pingfederate, "strategy", "pingfederate")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject5" || e.EventStreamCloudEventConnectionUpdatedObject5 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedObject5)
+	if e.Adfs != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Adfs, "strategy", "adfs")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject6" || e.EventStreamCloudEventConnectionUpdatedObject6 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedObject6)
+	if e.Ad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Ad, "strategy", "ad")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject7" || e.EventStreamCloudEventConnectionUpdatedObject7 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedObject7)
+	if e.GoogleApps != nil {
+		return internal.MarshalJSONWithExtraProperty(e.GoogleApps, "strategy", "google-apps")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Waad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Waad, "strategy", "waad")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventConnectionUpdatedObjectVisitor interface {
-	VisitEventStreamCloudEventConnectionUpdatedObject0(*EventStreamCloudEventConnectionUpdatedObject0) error
-	VisitEventStreamCloudEventConnectionUpdatedObject1(*EventStreamCloudEventConnectionUpdatedObject1) error
-	VisitEventStreamCloudEventConnectionUpdatedObject2(*EventStreamCloudEventConnectionUpdatedObject2) error
-	VisitEventStreamCloudEventConnectionUpdatedObject3(*EventStreamCloudEventConnectionUpdatedObject3) error
-	VisitEventStreamCloudEventConnectionUpdatedObject4(*EventStreamCloudEventConnectionUpdatedObject4) error
-	VisitEventStreamCloudEventConnectionUpdatedObject5(*EventStreamCloudEventConnectionUpdatedObject5) error
-	VisitEventStreamCloudEventConnectionUpdatedObject6(*EventStreamCloudEventConnectionUpdatedObject6) error
-	VisitEventStreamCloudEventConnectionUpdatedObject7(*EventStreamCloudEventConnectionUpdatedObject7) error
+	VisitOidc(*EventStreamCloudEventConnectionUpdatedObject0) error
+	VisitOkta(*EventStreamCloudEventConnectionUpdatedObject1) error
+	VisitSamlp(*EventStreamCloudEventConnectionUpdatedObject2) error
+	VisitPingfederate(*EventStreamCloudEventConnectionUpdatedObject3) error
+	VisitAdfs(*EventStreamCloudEventConnectionUpdatedObject4) error
+	VisitAd(*EventStreamCloudEventConnectionUpdatedObject5) error
+	VisitGoogleApps(*EventStreamCloudEventConnectionUpdatedObject6) error
+	VisitWaad(*EventStreamCloudEventConnectionUpdatedObject7) error
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject) Accept(visitor EventStreamCloudEventConnectionUpdatedObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject0" || e.EventStreamCloudEventConnectionUpdatedObject0 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedObject0(e.EventStreamCloudEventConnectionUpdatedObject0)
+	if e.Oidc != nil {
+		return visitor.VisitOidc(e.Oidc)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject1" || e.EventStreamCloudEventConnectionUpdatedObject1 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedObject1(e.EventStreamCloudEventConnectionUpdatedObject1)
+	if e.Okta != nil {
+		return visitor.VisitOkta(e.Okta)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject2" || e.EventStreamCloudEventConnectionUpdatedObject2 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedObject2(e.EventStreamCloudEventConnectionUpdatedObject2)
+	if e.Samlp != nil {
+		return visitor.VisitSamlp(e.Samlp)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject3" || e.EventStreamCloudEventConnectionUpdatedObject3 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedObject3(e.EventStreamCloudEventConnectionUpdatedObject3)
+	if e.Pingfederate != nil {
+		return visitor.VisitPingfederate(e.Pingfederate)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject4" || e.EventStreamCloudEventConnectionUpdatedObject4 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedObject4(e.EventStreamCloudEventConnectionUpdatedObject4)
+	if e.Adfs != nil {
+		return visitor.VisitAdfs(e.Adfs)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject5" || e.EventStreamCloudEventConnectionUpdatedObject5 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedObject5(e.EventStreamCloudEventConnectionUpdatedObject5)
+	if e.Ad != nil {
+		return visitor.VisitAd(e.Ad)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject6" || e.EventStreamCloudEventConnectionUpdatedObject6 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedObject6(e.EventStreamCloudEventConnectionUpdatedObject6)
+	if e.GoogleApps != nil {
+		return visitor.VisitGoogleApps(e.GoogleApps)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedObject7" || e.EventStreamCloudEventConnectionUpdatedObject7 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedObject7(e.EventStreamCloudEventConnectionUpdatedObject7)
+	if e.Waad != nil {
+		return visitor.VisitWaad(e.Waad)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Oidc != nil {
+		fields = append(fields, "oidc")
+	}
+	if e.Okta != nil {
+		fields = append(fields, "okta")
+	}
+	if e.Samlp != nil {
+		fields = append(fields, "samlp")
+	}
+	if e.Pingfederate != nil {
+		fields = append(fields, "pingfederate")
+	}
+	if e.Adfs != nil {
+		fields = append(fields, "adfs")
+	}
+	if e.Ad != nil {
+		fields = append(fields, "ad")
+	}
+	if e.GoogleApps != nil {
+		fields = append(fields, "google-apps")
+	}
+	if e.Waad != nil {
+		fields = append(fields, "waad")
+	}
+	if len(fields) == 0 {
+		if e.Strategy != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Strategy)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Strategy != "" {
+		field := fields[0]
+		if e.Strategy != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Strategy,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -54215,7 +53133,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject0FieldConnectedAccounts  = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedObject0FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedObject0FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedObject0FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedObject0 struct {
@@ -54236,8 +53153,7 @@ type EventStreamCloudEventConnectionUpdatedObject0 struct {
 	ConnectedAccounts *EventStreamCloudEventConnectionUpdatedObject0ConnectedAccounts `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	Options           *EventStreamCloudEventConnectionUpdatedObject0Options           `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedObject0StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -54321,13 +53237,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedObject0) GetStrategy() EventStreamCloudEventConnectionUpdatedObject0StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0) GetExtraProperties() map[string]interface{} {
@@ -54421,13 +53330,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionUpdatedObject0) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedObject0FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedObject0) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedObject0StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedObject0FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0) UnmarshalJSON(data []byte) error {
@@ -56558,26 +55460,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject0OptionsTypeEnum) Ptr() *Eve
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedObject0OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedObject0StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedObject0StrategyEnumOidc EventStreamCloudEventConnectionUpdatedObject0StrategyEnum = "oidc"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject0StrategyEnum, error) {
-	switch s {
-	case "oidc":
-		return EventStreamCloudEventConnectionUpdatedObject0StrategyEnumOidc, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedObject0StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject0StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedObject1FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject1FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -56590,7 +55472,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject1FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedObject1FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedObject1FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedObject1FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedObject1 struct {
@@ -56611,8 +55492,7 @@ type EventStreamCloudEventConnectionUpdatedObject1 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedObject1Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedObject1StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -56696,13 +55576,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedObject1) GetStrategy() EventStreamCloudEventConnectionUpdatedObject1StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1) GetExtraProperties() map[string]interface{} {
@@ -56796,13 +55669,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionUpdatedObject1) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedObject1FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedObject1) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedObject1StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedObject1FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1) UnmarshalJSON(data []byte) error {
@@ -58914,26 +57780,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject1OptionsTypeEnum) Ptr() *Eve
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedObject1OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedObject1StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedObject1StrategyEnumOkta EventStreamCloudEventConnectionUpdatedObject1StrategyEnum = "okta"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject1StrategyEnum, error) {
-	switch s {
-	case "okta":
-		return EventStreamCloudEventConnectionUpdatedObject1StrategyEnumOkta, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedObject1StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject1StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedObject2FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -58946,7 +57792,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject2FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedObject2FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedObject2FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedObject2FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedObject2 struct {
@@ -58967,8 +57812,7 @@ type EventStreamCloudEventConnectionUpdatedObject2 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedObject2Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedObject2StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -59052,13 +57896,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedObject2) GetStrategy() EventStreamCloudEventConnectionUpdatedObject2StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2) GetExtraProperties() map[string]interface{} {
@@ -59152,13 +57989,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionUpdatedObject2) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedObject2FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedObject2) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedObject2StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedObject2FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2) UnmarshalJSON(data []byte) error {
@@ -61304,26 +60134,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsSubject) String() s
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedObject2OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedObject2StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedObject2StrategyEnumSamlp EventStreamCloudEventConnectionUpdatedObject2StrategyEnum = "samlp"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject2StrategyEnum, error) {
-	switch s {
-	case "samlp":
-		return EventStreamCloudEventConnectionUpdatedObject2StrategyEnumSamlp, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedObject2StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject2StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedObject3FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject3FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -61336,7 +60146,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject3FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedObject3FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedObject3FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedObject3FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedObject3 struct {
@@ -61357,8 +60166,7 @@ type EventStreamCloudEventConnectionUpdatedObject3 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedObject3Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedObject3StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -61442,13 +60250,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedObject3) GetStrategy() EventStreamCloudEventConnectionUpdatedObject3StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3) GetExtraProperties() map[string]interface{} {
@@ -61542,13 +60343,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionUpdatedObject3) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedObject3FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedObject3) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedObject3StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedObject3FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3) UnmarshalJSON(data []byte) error {
@@ -62721,26 +61515,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3OptionsSubject) String() s
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedObject3OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedObject3StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedObject3StrategyEnumPingfederate EventStreamCloudEventConnectionUpdatedObject3StrategyEnum = "pingfederate"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject3StrategyEnum, error) {
-	switch s {
-	case "pingfederate":
-		return EventStreamCloudEventConnectionUpdatedObject3StrategyEnumPingfederate, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedObject3StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject3StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedObject4FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject4FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -62753,7 +61527,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject4FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedObject4FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedObject4FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedObject4FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedObject4 struct {
@@ -62774,8 +61547,7 @@ type EventStreamCloudEventConnectionUpdatedObject4 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedObject4Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedObject4StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -62859,13 +61631,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedObject4) GetStrategy() EventStreamCloudEventConnectionUpdatedObject4StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject4) GetExtraProperties() map[string]interface{} {
@@ -62959,13 +61724,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionUpdatedObject4) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedObject4FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedObject4) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedObject4StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedObject4FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject4) UnmarshalJSON(data []byte) error {
@@ -63635,26 +62393,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject4OptionsShouldTrustEmailVeri
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedObject4OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedObject4StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedObject4StrategyEnumAdfs EventStreamCloudEventConnectionUpdatedObject4StrategyEnum = "adfs"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject4StrategyEnum, error) {
-	switch s {
-	case "adfs":
-		return EventStreamCloudEventConnectionUpdatedObject4StrategyEnumAdfs, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedObject4StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject4StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedObject5FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject5FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -63666,7 +62404,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject5FieldName               = big.NewInt(1 << 7)
 	eventStreamCloudEventConnectionUpdatedObject5FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedObject5FieldOptions            = big.NewInt(1 << 9)
-	eventStreamCloudEventConnectionUpdatedObject5FieldStrategy           = big.NewInt(1 << 10)
 )
 
 type EventStreamCloudEventConnectionUpdatedObject5 struct {
@@ -63684,9 +62421,8 @@ type EventStreamCloudEventConnectionUpdatedObject5 struct {
 	// The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
 	Name string `json:"name" url:"name"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-	Realms   []string                                                  `json:"realms,omitempty" url:"realms,omitempty"`
-	Options  *EventStreamCloudEventConnectionUpdatedObject5Options     `json:"options,omitempty" url:"options,omitempty"`
-	Strategy EventStreamCloudEventConnectionUpdatedObject5StrategyEnum `json:"strategy" url:"strategy"`
+	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
+	Options *EventStreamCloudEventConnectionUpdatedObject5Options `json:"options,omitempty" url:"options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -63763,13 +62499,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5) GetOptions() EventStream
 		return EventStreamCloudEventConnectionUpdatedObject5Options{}
 	}
 	return *e.Options
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedObject5) GetStrategy() EventStreamCloudEventConnectionUpdatedObject5StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject5) GetExtraProperties() map[string]interface{} {
@@ -63856,13 +62585,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5) SetRealms(realms []strin
 func (e *EventStreamCloudEventConnectionUpdatedObject5) SetOptions(options *EventStreamCloudEventConnectionUpdatedObject5Options) {
 	e.Options = options
 	e.require(eventStreamCloudEventConnectionUpdatedObject5FieldOptions)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedObject5) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedObject5StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedObject5FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject5) UnmarshalJSON(data []byte) error {
@@ -64570,26 +63292,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject5OptionsSetUserRootAttribute
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedObject5OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedObject5StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedObject5StrategyEnumAd EventStreamCloudEventConnectionUpdatedObject5StrategyEnum = "ad"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject5StrategyEnum, error) {
-	switch s {
-	case "ad":
-		return EventStreamCloudEventConnectionUpdatedObject5StrategyEnumAd, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedObject5StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject5StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedObject6FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject6FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -64602,7 +63304,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject6FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedObject6FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedObject6FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedObject6FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedObject6 struct {
@@ -64623,8 +63324,7 @@ type EventStreamCloudEventConnectionUpdatedObject6 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedObject6Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedObject6StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -64708,13 +63408,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedObject6) GetStrategy() EventStreamCloudEventConnectionUpdatedObject6StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6) GetExtraProperties() map[string]interface{} {
@@ -64808,13 +63501,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionUpdatedObject6) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedObject6FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedObject6) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedObject6StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedObject6FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6) UnmarshalJSON(data []byte) error {
@@ -65685,26 +64371,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject6OptionsSetUserRootAttribute
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedObject6OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedObject6StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionUpdatedObject6StrategyEnum = "google-apps"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject6StrategyEnum, error) {
-	switch s {
-	case "google-apps":
-		return EventStreamCloudEventConnectionUpdatedObject6StrategyEnumGoogleApps, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedObject6StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject6StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedObject7FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject7FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -65717,7 +64383,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject7FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedObject7FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedObject7FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedObject7FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedObject7 struct {
@@ -65738,8 +64403,7 @@ type EventStreamCloudEventConnectionUpdatedObject7 struct {
 	Realms  []string                                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedObject7Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedObject7StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -65823,13 +64487,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7) GetShowAsButton() bool {
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedObject7) GetStrategy() EventStreamCloudEventConnectionUpdatedObject7StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7) GetExtraProperties() map[string]interface{} {
@@ -65923,13 +64580,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7) SetOptions(options *Even
 func (e *EventStreamCloudEventConnectionUpdatedObject7) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedObject7FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedObject7) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedObject7StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedObject7FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7) UnmarshalJSON(data []byte) error {
@@ -66975,341 +65625,335 @@ func (e EventStreamCloudEventConnectionUpdatedObject7OptionsWaadProtocolEnum) Pt
 	return &e
 }
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedObject7StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedObject7StrategyEnumWaad EventStreamCloudEventConnectionUpdatedObject7StrategyEnum = "waad"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject7StrategyEnum, error) {
-	switch s {
-	case "waad":
-		return EventStreamCloudEventConnectionUpdatedObject7StrategyEnumWaad, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedObject7StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject7StrategyEnum {
-	return &e
-}
-
 // The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventConnectionUpdatedPreviousObject struct {
-	EventStreamCloudEventConnectionUpdatedPreviousObject0 *EventStreamCloudEventConnectionUpdatedPreviousObject0
-	EventStreamCloudEventConnectionUpdatedPreviousObject1 *EventStreamCloudEventConnectionUpdatedPreviousObject1
-	EventStreamCloudEventConnectionUpdatedPreviousObject2 *EventStreamCloudEventConnectionUpdatedPreviousObject2
-	EventStreamCloudEventConnectionUpdatedPreviousObject3 *EventStreamCloudEventConnectionUpdatedPreviousObject3
-	EventStreamCloudEventConnectionUpdatedPreviousObject4 *EventStreamCloudEventConnectionUpdatedPreviousObject4
-	EventStreamCloudEventConnectionUpdatedPreviousObject5 *EventStreamCloudEventConnectionUpdatedPreviousObject5
-	EventStreamCloudEventConnectionUpdatedPreviousObject6 *EventStreamCloudEventConnectionUpdatedPreviousObject6
-	EventStreamCloudEventConnectionUpdatedPreviousObject7 *EventStreamCloudEventConnectionUpdatedPreviousObject7
+	Strategy           string
+	DisplayName        *string
+	EnabledClients     []string
+	ID                 string
+	IsDomainConnection *bool
+	Name               string
+	Realms             []string
+	Oidc               *EventStreamCloudEventConnectionUpdatedPreviousObject0
+	Okta               *EventStreamCloudEventConnectionUpdatedPreviousObject1
+	Samlp              *EventStreamCloudEventConnectionUpdatedPreviousObject2
+	Pingfederate       *EventStreamCloudEventConnectionUpdatedPreviousObject3
+	Adfs               *EventStreamCloudEventConnectionUpdatedPreviousObject4
+	Ad                 *EventStreamCloudEventConnectionUpdatedPreviousObject5
+	GoogleApps         *EventStreamCloudEventConnectionUpdatedPreviousObject6
+	Waad               *EventStreamCloudEventConnectionUpdatedPreviousObject7
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamCloudEventConnectionUpdatedPreviousObject0() *EventStreamCloudEventConnectionUpdatedPreviousObject0 {
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetStrategy() string {
+	if e == nil {
+		return ""
+	}
+	return e.Strategy
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetDisplayName() string {
+	if e == nil || e.DisplayName == nil {
+		return ""
+	}
+	return *e.DisplayName
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEnabledClients() []string {
+	if e == nil || e.EnabledClients == nil {
+		return nil
+	}
+	return e.EnabledClients
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetIsDomainConnection() bool {
+	if e == nil || e.IsDomainConnection == nil {
+		return false
+	}
+	return *e.IsDomainConnection
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetRealms() []string {
+	if e == nil || e.Realms == nil {
+		return nil
+	}
+	return e.Realms
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetOidc() *EventStreamCloudEventConnectionUpdatedPreviousObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedPreviousObject0
+	return e.Oidc
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamCloudEventConnectionUpdatedPreviousObject1() *EventStreamCloudEventConnectionUpdatedPreviousObject1 {
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetOkta() *EventStreamCloudEventConnectionUpdatedPreviousObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedPreviousObject1
+	return e.Okta
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamCloudEventConnectionUpdatedPreviousObject2() *EventStreamCloudEventConnectionUpdatedPreviousObject2 {
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetSamlp() *EventStreamCloudEventConnectionUpdatedPreviousObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedPreviousObject2
+	return e.Samlp
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamCloudEventConnectionUpdatedPreviousObject3() *EventStreamCloudEventConnectionUpdatedPreviousObject3 {
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetPingfederate() *EventStreamCloudEventConnectionUpdatedPreviousObject3 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedPreviousObject3
+	return e.Pingfederate
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamCloudEventConnectionUpdatedPreviousObject4() *EventStreamCloudEventConnectionUpdatedPreviousObject4 {
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetAdfs() *EventStreamCloudEventConnectionUpdatedPreviousObject4 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedPreviousObject4
+	return e.Adfs
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamCloudEventConnectionUpdatedPreviousObject5() *EventStreamCloudEventConnectionUpdatedPreviousObject5 {
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetAd() *EventStreamCloudEventConnectionUpdatedPreviousObject5 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedPreviousObject5
+	return e.Ad
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamCloudEventConnectionUpdatedPreviousObject6() *EventStreamCloudEventConnectionUpdatedPreviousObject6 {
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetGoogleApps() *EventStreamCloudEventConnectionUpdatedPreviousObject6 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedPreviousObject6
+	return e.GoogleApps
 }
 
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamCloudEventConnectionUpdatedPreviousObject7() *EventStreamCloudEventConnectionUpdatedPreviousObject7 {
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetWaad() *EventStreamCloudEventConnectionUpdatedPreviousObject7 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventConnectionUpdatedPreviousObject7
+	return e.Waad
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject0 := new(EventStreamCloudEventConnectionUpdatedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject0"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject0 = valueEventStreamCloudEventConnectionUpdatedPreviousObject0
-			return nil
+	var unmarshaler struct {
+		Strategy           string   `json:"strategy"`
+		DisplayName        *string  `json:"display_name,omitempty"`
+		EnabledClients     []string `json:"enabled_clients,omitempty"`
+		ID                 string   `json:"id"`
+		IsDomainConnection *bool    `json:"is_domain_connection,omitempty"`
+		Name               string   `json:"name"`
+		Realms             []string `json:"realms,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Strategy = unmarshaler.Strategy
+	e.DisplayName = unmarshaler.DisplayName
+	e.EnabledClients = unmarshaler.EnabledClients
+	e.ID = unmarshaler.ID
+	e.IsDomainConnection = unmarshaler.IsDomainConnection
+	e.Name = unmarshaler.Name
+	e.Realms = unmarshaler.Realms
+	if unmarshaler.Strategy == "" {
+		return fmt.Errorf("%T did not include discriminant strategy", e)
+	}
+	switch unmarshaler.Strategy {
+	case "oidc":
+		value := new(EventStreamCloudEventConnectionUpdatedPreviousObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject1 := new(EventStreamCloudEventConnectionUpdatedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject1"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject1 = valueEventStreamCloudEventConnectionUpdatedPreviousObject1
-			return nil
+		e.Oidc = value
+	case "okta":
+		value := new(EventStreamCloudEventConnectionUpdatedPreviousObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject2 := new(EventStreamCloudEventConnectionUpdatedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject2"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject2 = valueEventStreamCloudEventConnectionUpdatedPreviousObject2
-			return nil
+		e.Okta = value
+	case "samlp":
+		value := new(EventStreamCloudEventConnectionUpdatedPreviousObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject3 := new(EventStreamCloudEventConnectionUpdatedPreviousObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject3"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject3 = valueEventStreamCloudEventConnectionUpdatedPreviousObject3
-			return nil
+		e.Samlp = value
+	case "pingfederate":
+		value := new(EventStreamCloudEventConnectionUpdatedPreviousObject3)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject4 := new(EventStreamCloudEventConnectionUpdatedPreviousObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject4"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject4 = valueEventStreamCloudEventConnectionUpdatedPreviousObject4
-			return nil
+		e.Pingfederate = value
+	case "adfs":
+		value := new(EventStreamCloudEventConnectionUpdatedPreviousObject4)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject5 := new(EventStreamCloudEventConnectionUpdatedPreviousObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject5"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject5 = valueEventStreamCloudEventConnectionUpdatedPreviousObject5
-			return nil
+		e.Adfs = value
+	case "ad":
+		value := new(EventStreamCloudEventConnectionUpdatedPreviousObject5)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject6 := new(EventStreamCloudEventConnectionUpdatedPreviousObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject6"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject6 = valueEventStreamCloudEventConnectionUpdatedPreviousObject6
-			return nil
+		e.Ad = value
+	case "google-apps":
+		value := new(EventStreamCloudEventConnectionUpdatedPreviousObject6)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject7 := new(EventStreamCloudEventConnectionUpdatedPreviousObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject7"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject7 = valueEventStreamCloudEventConnectionUpdatedPreviousObject7
-			return nil
+		e.GoogleApps = value
+	case "waad":
+		value := new(EventStreamCloudEventConnectionUpdatedPreviousObject7)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Waad = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject0 := new(EventStreamCloudEventConnectionUpdatedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject0"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject0 = valueEventStreamCloudEventConnectionUpdatedPreviousObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject1 := new(EventStreamCloudEventConnectionUpdatedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject1"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject1 = valueEventStreamCloudEventConnectionUpdatedPreviousObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject2 := new(EventStreamCloudEventConnectionUpdatedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject2"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject2 = valueEventStreamCloudEventConnectionUpdatedPreviousObject2
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject3 := new(EventStreamCloudEventConnectionUpdatedPreviousObject3)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject3); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject3"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject3 = valueEventStreamCloudEventConnectionUpdatedPreviousObject3
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject4 := new(EventStreamCloudEventConnectionUpdatedPreviousObject4)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject4); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject4"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject4 = valueEventStreamCloudEventConnectionUpdatedPreviousObject4
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject5 := new(EventStreamCloudEventConnectionUpdatedPreviousObject5)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject5); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject5"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject5 = valueEventStreamCloudEventConnectionUpdatedPreviousObject5
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject6 := new(EventStreamCloudEventConnectionUpdatedPreviousObject6)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject6); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject6"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject6 = valueEventStreamCloudEventConnectionUpdatedPreviousObject6
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
-		valueEventStreamCloudEventConnectionUpdatedPreviousObject7 := new(EventStreamCloudEventConnectionUpdatedPreviousObject7)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject7); err == nil {
-			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject7"
-			e.EventStreamCloudEventConnectionUpdatedPreviousObject7 = valueEventStreamCloudEventConnectionUpdatedPreviousObject7
-			return nil
-		}
-	}
-	valueEventStreamCloudEventConnectionUpdatedPreviousObject0 := new(EventStreamCloudEventConnectionUpdatedPreviousObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject0); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject0"
-		e.EventStreamCloudEventConnectionUpdatedPreviousObject0 = valueEventStreamCloudEventConnectionUpdatedPreviousObject0
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedPreviousObject1 := new(EventStreamCloudEventConnectionUpdatedPreviousObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject1); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject1"
-		e.EventStreamCloudEventConnectionUpdatedPreviousObject1 = valueEventStreamCloudEventConnectionUpdatedPreviousObject1
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedPreviousObject2 := new(EventStreamCloudEventConnectionUpdatedPreviousObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject2); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject2"
-		e.EventStreamCloudEventConnectionUpdatedPreviousObject2 = valueEventStreamCloudEventConnectionUpdatedPreviousObject2
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedPreviousObject3 := new(EventStreamCloudEventConnectionUpdatedPreviousObject3)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject3); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject3"
-		e.EventStreamCloudEventConnectionUpdatedPreviousObject3 = valueEventStreamCloudEventConnectionUpdatedPreviousObject3
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedPreviousObject4 := new(EventStreamCloudEventConnectionUpdatedPreviousObject4)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject4); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject4"
-		e.EventStreamCloudEventConnectionUpdatedPreviousObject4 = valueEventStreamCloudEventConnectionUpdatedPreviousObject4
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedPreviousObject5 := new(EventStreamCloudEventConnectionUpdatedPreviousObject5)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject5); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject5"
-		e.EventStreamCloudEventConnectionUpdatedPreviousObject5 = valueEventStreamCloudEventConnectionUpdatedPreviousObject5
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedPreviousObject6 := new(EventStreamCloudEventConnectionUpdatedPreviousObject6)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject6); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject6"
-		e.EventStreamCloudEventConnectionUpdatedPreviousObject6 = valueEventStreamCloudEventConnectionUpdatedPreviousObject6
-		return nil
-	}
-	valueEventStreamCloudEventConnectionUpdatedPreviousObject7 := new(EventStreamCloudEventConnectionUpdatedPreviousObject7)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject7); err == nil {
-		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject7"
-		e.EventStreamCloudEventConnectionUpdatedPreviousObject7 = valueEventStreamCloudEventConnectionUpdatedPreviousObject7
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventConnectionUpdatedPreviousObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject0" || e.EventStreamCloudEventConnectionUpdatedPreviousObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedPreviousObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject1" || e.EventStreamCloudEventConnectionUpdatedPreviousObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedPreviousObject1)
+	if e.Oidc != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Oidc, "strategy", "oidc")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject2" || e.EventStreamCloudEventConnectionUpdatedPreviousObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedPreviousObject2)
+	if e.Okta != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Okta, "strategy", "okta")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject3" || e.EventStreamCloudEventConnectionUpdatedPreviousObject3 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedPreviousObject3)
+	if e.Samlp != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Samlp, "strategy", "samlp")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject4" || e.EventStreamCloudEventConnectionUpdatedPreviousObject4 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedPreviousObject4)
+	if e.Pingfederate != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Pingfederate, "strategy", "pingfederate")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject5" || e.EventStreamCloudEventConnectionUpdatedPreviousObject5 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedPreviousObject5)
+	if e.Adfs != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Adfs, "strategy", "adfs")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject6" || e.EventStreamCloudEventConnectionUpdatedPreviousObject6 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedPreviousObject6)
+	if e.Ad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Ad, "strategy", "ad")
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject7" || e.EventStreamCloudEventConnectionUpdatedPreviousObject7 != nil {
-		return json.Marshal(e.EventStreamCloudEventConnectionUpdatedPreviousObject7)
+	if e.GoogleApps != nil {
+		return internal.MarshalJSONWithExtraProperty(e.GoogleApps, "strategy", "google-apps")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Waad != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Waad, "strategy", "waad")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventConnectionUpdatedPreviousObjectVisitor interface {
-	VisitEventStreamCloudEventConnectionUpdatedPreviousObject0(*EventStreamCloudEventConnectionUpdatedPreviousObject0) error
-	VisitEventStreamCloudEventConnectionUpdatedPreviousObject1(*EventStreamCloudEventConnectionUpdatedPreviousObject1) error
-	VisitEventStreamCloudEventConnectionUpdatedPreviousObject2(*EventStreamCloudEventConnectionUpdatedPreviousObject2) error
-	VisitEventStreamCloudEventConnectionUpdatedPreviousObject3(*EventStreamCloudEventConnectionUpdatedPreviousObject3) error
-	VisitEventStreamCloudEventConnectionUpdatedPreviousObject4(*EventStreamCloudEventConnectionUpdatedPreviousObject4) error
-	VisitEventStreamCloudEventConnectionUpdatedPreviousObject5(*EventStreamCloudEventConnectionUpdatedPreviousObject5) error
-	VisitEventStreamCloudEventConnectionUpdatedPreviousObject6(*EventStreamCloudEventConnectionUpdatedPreviousObject6) error
-	VisitEventStreamCloudEventConnectionUpdatedPreviousObject7(*EventStreamCloudEventConnectionUpdatedPreviousObject7) error
+	VisitOidc(*EventStreamCloudEventConnectionUpdatedPreviousObject0) error
+	VisitOkta(*EventStreamCloudEventConnectionUpdatedPreviousObject1) error
+	VisitSamlp(*EventStreamCloudEventConnectionUpdatedPreviousObject2) error
+	VisitPingfederate(*EventStreamCloudEventConnectionUpdatedPreviousObject3) error
+	VisitAdfs(*EventStreamCloudEventConnectionUpdatedPreviousObject4) error
+	VisitAd(*EventStreamCloudEventConnectionUpdatedPreviousObject5) error
+	VisitGoogleApps(*EventStreamCloudEventConnectionUpdatedPreviousObject6) error
+	VisitWaad(*EventStreamCloudEventConnectionUpdatedPreviousObject7) error
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) Accept(visitor EventStreamCloudEventConnectionUpdatedPreviousObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject0" || e.EventStreamCloudEventConnectionUpdatedPreviousObject0 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedPreviousObject0(e.EventStreamCloudEventConnectionUpdatedPreviousObject0)
+	if e.Oidc != nil {
+		return visitor.VisitOidc(e.Oidc)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject1" || e.EventStreamCloudEventConnectionUpdatedPreviousObject1 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedPreviousObject1(e.EventStreamCloudEventConnectionUpdatedPreviousObject1)
+	if e.Okta != nil {
+		return visitor.VisitOkta(e.Okta)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject2" || e.EventStreamCloudEventConnectionUpdatedPreviousObject2 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedPreviousObject2(e.EventStreamCloudEventConnectionUpdatedPreviousObject2)
+	if e.Samlp != nil {
+		return visitor.VisitSamlp(e.Samlp)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject3" || e.EventStreamCloudEventConnectionUpdatedPreviousObject3 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedPreviousObject3(e.EventStreamCloudEventConnectionUpdatedPreviousObject3)
+	if e.Pingfederate != nil {
+		return visitor.VisitPingfederate(e.Pingfederate)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject4" || e.EventStreamCloudEventConnectionUpdatedPreviousObject4 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedPreviousObject4(e.EventStreamCloudEventConnectionUpdatedPreviousObject4)
+	if e.Adfs != nil {
+		return visitor.VisitAdfs(e.Adfs)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject5" || e.EventStreamCloudEventConnectionUpdatedPreviousObject5 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedPreviousObject5(e.EventStreamCloudEventConnectionUpdatedPreviousObject5)
+	if e.Ad != nil {
+		return visitor.VisitAd(e.Ad)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject6" || e.EventStreamCloudEventConnectionUpdatedPreviousObject6 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedPreviousObject6(e.EventStreamCloudEventConnectionUpdatedPreviousObject6)
+	if e.GoogleApps != nil {
+		return visitor.VisitGoogleApps(e.GoogleApps)
 	}
-	if e.typ == "EventStreamCloudEventConnectionUpdatedPreviousObject7" || e.EventStreamCloudEventConnectionUpdatedPreviousObject7 != nil {
-		return visitor.VisitEventStreamCloudEventConnectionUpdatedPreviousObject7(e.EventStreamCloudEventConnectionUpdatedPreviousObject7)
+	if e.Waad != nil {
+		return visitor.VisitWaad(e.Waad)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Oidc != nil {
+		fields = append(fields, "oidc")
+	}
+	if e.Okta != nil {
+		fields = append(fields, "okta")
+	}
+	if e.Samlp != nil {
+		fields = append(fields, "samlp")
+	}
+	if e.Pingfederate != nil {
+		fields = append(fields, "pingfederate")
+	}
+	if e.Adfs != nil {
+		fields = append(fields, "adfs")
+	}
+	if e.Ad != nil {
+		fields = append(fields, "ad")
+	}
+	if e.GoogleApps != nil {
+		fields = append(fields, "google-apps")
+	}
+	if e.Waad != nil {
+		fields = append(fields, "waad")
+	}
+	if len(fields) == 0 {
+		if e.Strategy != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Strategy)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Strategy != "" {
+		field := fields[0]
+		if e.Strategy != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Strategy,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -67324,7 +65968,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0FieldConnectedAccounts  = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedPreviousObject0FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedPreviousObject0FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedPreviousObject0FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedPreviousObject0 struct {
@@ -67345,8 +65988,7 @@ type EventStreamCloudEventConnectionUpdatedPreviousObject0 struct {
 	ConnectedAccounts *EventStreamCloudEventConnectionUpdatedPreviousObject0ConnectedAccounts `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	Options           *EventStreamCloudEventConnectionUpdatedPreviousObject0Options           `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -67430,13 +66072,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) GetStrategy() EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) GetExtraProperties() map[string]interface{} {
@@ -67530,13 +66165,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) SetOptions(optio
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject0FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject0FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) UnmarshalJSON(data []byte) error {
@@ -69667,26 +68295,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsTypeEnum) Pt
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumOidc EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum = "oidc"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum, error) {
-	switch s {
-	case "oidc":
-		return EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumOidc, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject1FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -69699,7 +68307,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedPreviousObject1FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedPreviousObject1FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedPreviousObject1FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedPreviousObject1 struct {
@@ -69720,8 +68327,7 @@ type EventStreamCloudEventConnectionUpdatedPreviousObject1 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedPreviousObject1Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -69805,13 +68411,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) GetStrategy() EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) GetExtraProperties() map[string]interface{} {
@@ -69905,13 +68504,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) SetOptions(optio
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject1FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject1FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) UnmarshalJSON(data []byte) error {
@@ -72023,26 +70615,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsTypeEnum) Pt
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumOkta EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum = "okta"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum, error) {
-	switch s {
-	case "okta":
-		return EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumOkta, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -72055,7 +70627,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedPreviousObject2FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedPreviousObject2FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedPreviousObject2FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedPreviousObject2 struct {
@@ -72076,8 +70647,7 @@ type EventStreamCloudEventConnectionUpdatedPreviousObject2 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedPreviousObject2Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -72161,13 +70731,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) GetStrategy() EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) GetExtraProperties() map[string]interface{} {
@@ -72261,13 +70824,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) SetOptions(optio
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject2FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject2FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) UnmarshalJSON(data []byte) error {
@@ -74413,26 +72969,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsSubject) St
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumSamlp EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum = "samlp"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum, error) {
-	switch s {
-	case "samlp":
-		return EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumSamlp, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject3FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -74445,7 +72981,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedPreviousObject3FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedPreviousObject3FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedPreviousObject3FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedPreviousObject3 struct {
@@ -74466,8 +73001,7 @@ type EventStreamCloudEventConnectionUpdatedPreviousObject3 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedPreviousObject3Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -74551,13 +73085,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) GetStrategy() EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) GetExtraProperties() map[string]interface{} {
@@ -74651,13 +73178,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) SetOptions(optio
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject3FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject3FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) UnmarshalJSON(data []byte) error {
@@ -75830,26 +74350,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsSubject) St
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumPingfederate EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum = "pingfederate"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum, error) {
-	switch s {
-	case "pingfederate":
-		return EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumPingfederate, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject4FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject4FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -75862,7 +74362,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject4FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedPreviousObject4FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedPreviousObject4FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedPreviousObject4FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedPreviousObject4 struct {
@@ -75883,8 +74382,7 @@ type EventStreamCloudEventConnectionUpdatedPreviousObject4 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedPreviousObject4Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -75968,13 +74466,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) GetStrategy() EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) GetExtraProperties() map[string]interface{} {
@@ -76068,13 +74559,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) SetOptions(optio
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject4FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject4FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) UnmarshalJSON(data []byte) error {
@@ -76744,26 +75228,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject4OptionsShouldTrustE
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedPreviousObject4OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumAdfs EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum = "adfs"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum, error) {
-	switch s {
-	case "adfs":
-		return EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumAdfs, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject5FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject5FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -76775,7 +75239,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject5FieldName               = big.NewInt(1 << 7)
 	eventStreamCloudEventConnectionUpdatedPreviousObject5FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedPreviousObject5FieldOptions            = big.NewInt(1 << 9)
-	eventStreamCloudEventConnectionUpdatedPreviousObject5FieldStrategy           = big.NewInt(1 << 10)
 )
 
 type EventStreamCloudEventConnectionUpdatedPreviousObject5 struct {
@@ -76793,9 +75256,8 @@ type EventStreamCloudEventConnectionUpdatedPreviousObject5 struct {
 	// The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
 	Name string `json:"name" url:"name"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-	Realms   []string                                                          `json:"realms,omitempty" url:"realms,omitempty"`
-	Options  *EventStreamCloudEventConnectionUpdatedPreviousObject5Options     `json:"options,omitempty" url:"options,omitempty"`
-	Strategy EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum `json:"strategy" url:"strategy"`
+	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
+	Options *EventStreamCloudEventConnectionUpdatedPreviousObject5Options `json:"options,omitempty" url:"options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -76872,13 +75334,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) GetOptions() Eve
 		return EventStreamCloudEventConnectionUpdatedPreviousObject5Options{}
 	}
 	return *e.Options
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) GetStrategy() EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) GetExtraProperties() map[string]interface{} {
@@ -76965,13 +75420,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) SetRealms(realms
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) SetOptions(options *EventStreamCloudEventConnectionUpdatedPreviousObject5Options) {
 	e.Options = options
 	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject5FieldOptions)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject5FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) UnmarshalJSON(data []byte) error {
@@ -77679,26 +76127,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject5OptionsSetUserRootA
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedPreviousObject5OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumAd EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum = "ad"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum, error) {
-	switch s {
-	case "ad":
-		return EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumAd, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject6FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject6FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -77711,7 +76139,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject6FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedPreviousObject6FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedPreviousObject6FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedPreviousObject6FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedPreviousObject6 struct {
@@ -77732,8 +76159,7 @@ type EventStreamCloudEventConnectionUpdatedPreviousObject6 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedPreviousObject6Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -77817,13 +76243,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) GetStrategy() EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) GetExtraProperties() map[string]interface{} {
@@ -77917,13 +76336,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) SetOptions(optio
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject6FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject6FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) UnmarshalJSON(data []byte) error {
@@ -78794,26 +77206,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject6OptionsSetUserRootA
 // Additional parameters to include in authorization requests sent to the identity provider. Useful for passing custom claims, selecting specific identity sources, or configuring provider-specific behavior. See https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps
 type EventStreamCloudEventConnectionUpdatedPreviousObject6OptionsUpstreamParams = map[string]any
 
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum = "google-apps"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum, error) {
-	switch s {
-	case "google-apps":
-		return EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumGoogleApps, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject7FieldAuthentication     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject7FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -78826,7 +77218,6 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject7FieldRealms             = big.NewInt(1 << 8)
 	eventStreamCloudEventConnectionUpdatedPreviousObject7FieldOptions            = big.NewInt(1 << 9)
 	eventStreamCloudEventConnectionUpdatedPreviousObject7FieldShowAsButton       = big.NewInt(1 << 10)
-	eventStreamCloudEventConnectionUpdatedPreviousObject7FieldStrategy           = big.NewInt(1 << 11)
 )
 
 type EventStreamCloudEventConnectionUpdatedPreviousObject7 struct {
@@ -78847,8 +77238,7 @@ type EventStreamCloudEventConnectionUpdatedPreviousObject7 struct {
 	Realms  []string                                                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Options *EventStreamCloudEventConnectionUpdatedPreviousObject7Options `json:"options,omitempty" url:"options,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. Defaults to `false`.
-	ShowAsButton *bool                                                             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Strategy     EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum `json:"strategy" url:"strategy"`
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -78932,13 +77322,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) GetShowAsButton(
 		return false
 	}
 	return *e.ShowAsButton
-}
-
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) GetStrategy() EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Strategy
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) GetExtraProperties() map[string]interface{} {
@@ -79032,13 +77415,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) SetOptions(optio
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) SetShowAsButton(showAsButton *bool) {
 	e.ShowAsButton = showAsButton
 	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject7FieldShowAsButton)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) SetStrategy(strategy EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum) {
-	e.Strategy = strategy
-	e.require(eventStreamCloudEventConnectionUpdatedPreviousObject7FieldStrategy)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) UnmarshalJSON(data []byte) error {
@@ -80081,26 +78457,6 @@ func NewEventStreamCloudEventConnectionUpdatedPreviousObject7OptionsWaadProtocol
 }
 
 func (e EventStreamCloudEventConnectionUpdatedPreviousObject7OptionsWaadProtocolEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject7OptionsWaadProtocolEnum {
-	return &e
-}
-
-// The connection strategy.
-type EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum string
-
-const (
-	EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumWaad EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum = "waad"
-)
-
-func NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum, error) {
-	switch s {
-	case "waad":
-		return EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumWaad, nil
-	}
-	var t EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum {
 	return &e
 }
 
@@ -82077,134 +80433,193 @@ func (e *EventStreamCloudEventGroupCreatedData) String() string {
 
 // The event content.
 type EventStreamCloudEventGroupCreatedObject struct {
-	EventStreamCloudEventGroupCreatedObject0 *EventStreamCloudEventGroupCreatedObject0
-	EventStreamCloudEventGroupCreatedObject1 *EventStreamCloudEventGroupCreatedObject1
-	EventStreamCloudEventGroupCreatedObject2 *EventStreamCloudEventGroupCreatedObject2
+	Type         string
+	ID           string
+	Name         string
+	ExternalID   *string
+	CreatedAt    time.Time
+	Connection   *EventStreamCloudEventGroupCreatedObject0
+	Organization *EventStreamCloudEventGroupCreatedObject1
+	Tenant       *EventStreamCloudEventGroupCreatedObject2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupCreatedObject) GetEventStreamCloudEventGroupCreatedObject0() *EventStreamCloudEventGroupCreatedObject0 {
+func (e *EventStreamCloudEventGroupCreatedObject) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupCreatedObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupCreatedObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventGroupCreatedObject) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupCreatedObject) GetCreatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.CreatedAt
+}
+
+func (e *EventStreamCloudEventGroupCreatedObject) GetConnection() *EventStreamCloudEventGroupCreatedObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupCreatedObject0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupCreatedObject) GetEventStreamCloudEventGroupCreatedObject1() *EventStreamCloudEventGroupCreatedObject1 {
+func (e *EventStreamCloudEventGroupCreatedObject) GetOrganization() *EventStreamCloudEventGroupCreatedObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupCreatedObject1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupCreatedObject) GetEventStreamCloudEventGroupCreatedObject2() *EventStreamCloudEventGroupCreatedObject2 {
+func (e *EventStreamCloudEventGroupCreatedObject) GetTenant() *EventStreamCloudEventGroupCreatedObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupCreatedObject2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id"}, []string{"id", "name", "created_at", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupCreatedObject0 := new(EventStreamCloudEventGroupCreatedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedObject0"
-			e.EventStreamCloudEventGroupCreatedObject0 = valueEventStreamCloudEventGroupCreatedObject0
-			return nil
+	var unmarshaler struct {
+		Type       string    `json:"type"`
+		ID         string    `json:"id"`
+		Name       string    `json:"name"`
+		ExternalID *string   `json:"external_id,omitempty"`
+		CreatedAt  time.Time `json:"created_at"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.Name = unmarshaler.Name
+	e.ExternalID = unmarshaler.ExternalID
+	e.CreatedAt = unmarshaler.CreatedAt
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupCreatedObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id"}, []string{"id", "name", "created_at", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupCreatedObject1 := new(EventStreamCloudEventGroupCreatedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedObject1"
-			e.EventStreamCloudEventGroupCreatedObject1 = valueEventStreamCloudEventGroupCreatedObject1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupCreatedObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type"}, []string{"id", "name", "created_at", "type"}) {
-		valueEventStreamCloudEventGroupCreatedObject2 := new(EventStreamCloudEventGroupCreatedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedObject2"
-			e.EventStreamCloudEventGroupCreatedObject2 = valueEventStreamCloudEventGroupCreatedObject2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupCreatedObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupCreatedObject0 := new(EventStreamCloudEventGroupCreatedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedObject0"
-			e.EventStreamCloudEventGroupCreatedObject0 = valueEventStreamCloudEventGroupCreatedObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupCreatedObject1 := new(EventStreamCloudEventGroupCreatedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedObject1"
-			e.EventStreamCloudEventGroupCreatedObject1 = valueEventStreamCloudEventGroupCreatedObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type"}) {
-		valueEventStreamCloudEventGroupCreatedObject2 := new(EventStreamCloudEventGroupCreatedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedObject2"
-			e.EventStreamCloudEventGroupCreatedObject2 = valueEventStreamCloudEventGroupCreatedObject2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupCreatedObject0 := new(EventStreamCloudEventGroupCreatedObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject0); err == nil {
-		e.typ = "EventStreamCloudEventGroupCreatedObject0"
-		e.EventStreamCloudEventGroupCreatedObject0 = valueEventStreamCloudEventGroupCreatedObject0
-		return nil
-	}
-	valueEventStreamCloudEventGroupCreatedObject1 := new(EventStreamCloudEventGroupCreatedObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject1); err == nil {
-		e.typ = "EventStreamCloudEventGroupCreatedObject1"
-		e.EventStreamCloudEventGroupCreatedObject1 = valueEventStreamCloudEventGroupCreatedObject1
-		return nil
-	}
-	valueEventStreamCloudEventGroupCreatedObject2 := new(EventStreamCloudEventGroupCreatedObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject2); err == nil {
-		e.typ = "EventStreamCloudEventGroupCreatedObject2"
-		e.EventStreamCloudEventGroupCreatedObject2 = valueEventStreamCloudEventGroupCreatedObject2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupCreatedObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupCreatedObject0" || e.EventStreamCloudEventGroupCreatedObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupCreatedObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupCreatedObject1" || e.EventStreamCloudEventGroupCreatedObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupCreatedObject1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupCreatedObject2" || e.EventStreamCloudEventGroupCreatedObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupCreatedObject2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupCreatedObjectVisitor interface {
-	VisitEventStreamCloudEventGroupCreatedObject0(*EventStreamCloudEventGroupCreatedObject0) error
-	VisitEventStreamCloudEventGroupCreatedObject1(*EventStreamCloudEventGroupCreatedObject1) error
-	VisitEventStreamCloudEventGroupCreatedObject2(*EventStreamCloudEventGroupCreatedObject2) error
+	VisitConnection(*EventStreamCloudEventGroupCreatedObject0) error
+	VisitOrganization(*EventStreamCloudEventGroupCreatedObject1) error
+	VisitTenant(*EventStreamCloudEventGroupCreatedObject2) error
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject) Accept(visitor EventStreamCloudEventGroupCreatedObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupCreatedObject0" || e.EventStreamCloudEventGroupCreatedObject0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupCreatedObject0(e.EventStreamCloudEventGroupCreatedObject0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupCreatedObject1" || e.EventStreamCloudEventGroupCreatedObject1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupCreatedObject1(e.EventStreamCloudEventGroupCreatedObject1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupCreatedObject2" || e.EventStreamCloudEventGroupCreatedObject2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupCreatedObject2(e.EventStreamCloudEventGroupCreatedObject2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupCreatedObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -82212,8 +80627,7 @@ var (
 	eventStreamCloudEventGroupCreatedObject0FieldName         = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupCreatedObject0FieldExternalID   = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupCreatedObject0FieldCreatedAt    = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupCreatedObject0FieldType         = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupCreatedObject0FieldConnectionID = big.NewInt(1 << 5)
+	eventStreamCloudEventGroupCreatedObject0FieldConnectionID = big.NewInt(1 << 4)
 )
 
 // Represents a connection group entity.
@@ -82225,8 +80639,7 @@ type EventStreamCloudEventGroupCreatedObject0 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupCreatedObject0TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -82263,13 +80676,6 @@ func (e *EventStreamCloudEventGroupCreatedObject0) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupCreatedObject0) GetType() EventStreamCloudEventGroupCreatedObject0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject0) GetConnectionID() string {
@@ -82321,13 +80727,6 @@ func (e *EventStreamCloudEventGroupCreatedObject0) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupCreatedObject0) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupCreatedObject0FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupCreatedObject0) SetType(type_ EventStreamCloudEventGroupCreatedObject0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupCreatedObject0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -82387,33 +80786,12 @@ func (e *EventStreamCloudEventGroupCreatedObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupCreatedObject0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupCreatedObject0TypeEnumConnection EventStreamCloudEventGroupCreatedObject0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedObject0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupCreatedObject0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupCreatedObject0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupCreatedObject0TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedObject0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupCreatedObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedObject1FieldName           = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupCreatedObject1FieldExternalID     = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupCreatedObject1FieldCreatedAt      = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupCreatedObject1FieldType           = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupCreatedObject1FieldOrganizationID = big.NewInt(1 << 5)
+	eventStreamCloudEventGroupCreatedObject1FieldOrganizationID = big.NewInt(1 << 4)
 )
 
 // Represents an organization group entity.
@@ -82425,8 +80803,7 @@ type EventStreamCloudEventGroupCreatedObject1 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupCreatedObject1TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -82463,13 +80840,6 @@ func (e *EventStreamCloudEventGroupCreatedObject1) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupCreatedObject1) GetType() EventStreamCloudEventGroupCreatedObject1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject1) GetOrganizationID() string {
@@ -82521,13 +80891,6 @@ func (e *EventStreamCloudEventGroupCreatedObject1) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupCreatedObject1) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupCreatedObject1FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupCreatedObject1) SetType(type_ EventStreamCloudEventGroupCreatedObject1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupCreatedObject1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -82587,32 +80950,11 @@ func (e *EventStreamCloudEventGroupCreatedObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupCreatedObject1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupCreatedObject1TypeEnumOrganization EventStreamCloudEventGroupCreatedObject1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedObject1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupCreatedObject1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupCreatedObject1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupCreatedObject1TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedObject1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupCreatedObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedObject2FieldName       = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupCreatedObject2FieldExternalID = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupCreatedObject2FieldCreatedAt  = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupCreatedObject2FieldType       = big.NewInt(1 << 4)
 )
 
 // Represents a tenant group entity.
@@ -82624,8 +80966,7 @@ type EventStreamCloudEventGroupCreatedObject2 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupCreatedObject2TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -82660,13 +81001,6 @@ func (e *EventStreamCloudEventGroupCreatedObject2) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupCreatedObject2) GetType() EventStreamCloudEventGroupCreatedObject2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject2) GetExtraProperties() map[string]interface{} {
@@ -82711,13 +81045,6 @@ func (e *EventStreamCloudEventGroupCreatedObject2) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupCreatedObject2) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupCreatedObject2FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupCreatedObject2) SetType(type_ EventStreamCloudEventGroupCreatedObject2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupCreatedObject2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject2) UnmarshalJSON(data []byte) error {
@@ -82770,156 +81097,195 @@ func (e *EventStreamCloudEventGroupCreatedObject2) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupCreatedObject2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupCreatedObject2TypeEnumTenant EventStreamCloudEventGroupCreatedObject2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedObject2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupCreatedObject2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupCreatedObject2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupCreatedObject2TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedObject2TypeEnum {
-	return &e
-}
-
 // The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventGroupCreatedPreviousObject struct {
-	EventStreamCloudEventGroupCreatedPreviousObject0 *EventStreamCloudEventGroupCreatedPreviousObject0
-	EventStreamCloudEventGroupCreatedPreviousObject1 *EventStreamCloudEventGroupCreatedPreviousObject1
-	EventStreamCloudEventGroupCreatedPreviousObject2 *EventStreamCloudEventGroupCreatedPreviousObject2
+	Type         string
+	ID           string
+	Name         string
+	ExternalID   *string
+	CreatedAt    time.Time
+	Connection   *EventStreamCloudEventGroupCreatedPreviousObject0
+	Organization *EventStreamCloudEventGroupCreatedPreviousObject1
+	Tenant       *EventStreamCloudEventGroupCreatedPreviousObject2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetEventStreamCloudEventGroupCreatedPreviousObject0() *EventStreamCloudEventGroupCreatedPreviousObject0 {
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetCreatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.CreatedAt
+}
+
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetConnection() *EventStreamCloudEventGroupCreatedPreviousObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupCreatedPreviousObject0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetEventStreamCloudEventGroupCreatedPreviousObject1() *EventStreamCloudEventGroupCreatedPreviousObject1 {
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetOrganization() *EventStreamCloudEventGroupCreatedPreviousObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupCreatedPreviousObject1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetEventStreamCloudEventGroupCreatedPreviousObject2() *EventStreamCloudEventGroupCreatedPreviousObject2 {
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetTenant() *EventStreamCloudEventGroupCreatedPreviousObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupCreatedPreviousObject2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id"}, []string{"id", "name", "created_at", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupCreatedPreviousObject0 := new(EventStreamCloudEventGroupCreatedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject0"
-			e.EventStreamCloudEventGroupCreatedPreviousObject0 = valueEventStreamCloudEventGroupCreatedPreviousObject0
-			return nil
+	var unmarshaler struct {
+		Type       string    `json:"type"`
+		ID         string    `json:"id"`
+		Name       string    `json:"name"`
+		ExternalID *string   `json:"external_id,omitempty"`
+		CreatedAt  time.Time `json:"created_at"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.Name = unmarshaler.Name
+	e.ExternalID = unmarshaler.ExternalID
+	e.CreatedAt = unmarshaler.CreatedAt
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupCreatedPreviousObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id"}, []string{"id", "name", "created_at", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupCreatedPreviousObject1 := new(EventStreamCloudEventGroupCreatedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject1"
-			e.EventStreamCloudEventGroupCreatedPreviousObject1 = valueEventStreamCloudEventGroupCreatedPreviousObject1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupCreatedPreviousObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type"}, []string{"id", "name", "created_at", "type"}) {
-		valueEventStreamCloudEventGroupCreatedPreviousObject2 := new(EventStreamCloudEventGroupCreatedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject2"
-			e.EventStreamCloudEventGroupCreatedPreviousObject2 = valueEventStreamCloudEventGroupCreatedPreviousObject2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupCreatedPreviousObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupCreatedPreviousObject0 := new(EventStreamCloudEventGroupCreatedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject0"
-			e.EventStreamCloudEventGroupCreatedPreviousObject0 = valueEventStreamCloudEventGroupCreatedPreviousObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupCreatedPreviousObject1 := new(EventStreamCloudEventGroupCreatedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject1"
-			e.EventStreamCloudEventGroupCreatedPreviousObject1 = valueEventStreamCloudEventGroupCreatedPreviousObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type"}) {
-		valueEventStreamCloudEventGroupCreatedPreviousObject2 := new(EventStreamCloudEventGroupCreatedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject2"
-			e.EventStreamCloudEventGroupCreatedPreviousObject2 = valueEventStreamCloudEventGroupCreatedPreviousObject2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupCreatedPreviousObject0 := new(EventStreamCloudEventGroupCreatedPreviousObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject0); err == nil {
-		e.typ = "EventStreamCloudEventGroupCreatedPreviousObject0"
-		e.EventStreamCloudEventGroupCreatedPreviousObject0 = valueEventStreamCloudEventGroupCreatedPreviousObject0
-		return nil
-	}
-	valueEventStreamCloudEventGroupCreatedPreviousObject1 := new(EventStreamCloudEventGroupCreatedPreviousObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject1); err == nil {
-		e.typ = "EventStreamCloudEventGroupCreatedPreviousObject1"
-		e.EventStreamCloudEventGroupCreatedPreviousObject1 = valueEventStreamCloudEventGroupCreatedPreviousObject1
-		return nil
-	}
-	valueEventStreamCloudEventGroupCreatedPreviousObject2 := new(EventStreamCloudEventGroupCreatedPreviousObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject2); err == nil {
-		e.typ = "EventStreamCloudEventGroupCreatedPreviousObject2"
-		e.EventStreamCloudEventGroupCreatedPreviousObject2 = valueEventStreamCloudEventGroupCreatedPreviousObject2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupCreatedPreviousObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupCreatedPreviousObject0" || e.EventStreamCloudEventGroupCreatedPreviousObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupCreatedPreviousObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupCreatedPreviousObject1" || e.EventStreamCloudEventGroupCreatedPreviousObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupCreatedPreviousObject1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupCreatedPreviousObject2" || e.EventStreamCloudEventGroupCreatedPreviousObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupCreatedPreviousObject2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupCreatedPreviousObjectVisitor interface {
-	VisitEventStreamCloudEventGroupCreatedPreviousObject0(*EventStreamCloudEventGroupCreatedPreviousObject0) error
-	VisitEventStreamCloudEventGroupCreatedPreviousObject1(*EventStreamCloudEventGroupCreatedPreviousObject1) error
-	VisitEventStreamCloudEventGroupCreatedPreviousObject2(*EventStreamCloudEventGroupCreatedPreviousObject2) error
+	VisitConnection(*EventStreamCloudEventGroupCreatedPreviousObject0) error
+	VisitOrganization(*EventStreamCloudEventGroupCreatedPreviousObject1) error
+	VisitTenant(*EventStreamCloudEventGroupCreatedPreviousObject2) error
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject) Accept(visitor EventStreamCloudEventGroupCreatedPreviousObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupCreatedPreviousObject0" || e.EventStreamCloudEventGroupCreatedPreviousObject0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupCreatedPreviousObject0(e.EventStreamCloudEventGroupCreatedPreviousObject0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupCreatedPreviousObject1" || e.EventStreamCloudEventGroupCreatedPreviousObject1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupCreatedPreviousObject1(e.EventStreamCloudEventGroupCreatedPreviousObject1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupCreatedPreviousObject2" || e.EventStreamCloudEventGroupCreatedPreviousObject2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupCreatedPreviousObject2(e.EventStreamCloudEventGroupCreatedPreviousObject2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupCreatedPreviousObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -82927,8 +81293,7 @@ var (
 	eventStreamCloudEventGroupCreatedPreviousObject0FieldName         = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupCreatedPreviousObject0FieldExternalID   = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupCreatedPreviousObject0FieldCreatedAt    = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupCreatedPreviousObject0FieldType         = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupCreatedPreviousObject0FieldConnectionID = big.NewInt(1 << 5)
+	eventStreamCloudEventGroupCreatedPreviousObject0FieldConnectionID = big.NewInt(1 << 4)
 )
 
 // Represents a connection group entity.
@@ -82940,8 +81305,7 @@ type EventStreamCloudEventGroupCreatedPreviousObject0 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -82978,13 +81342,6 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject0) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupCreatedPreviousObject0) GetType() EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject0) GetConnectionID() string {
@@ -83036,13 +81393,6 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject0) SetExternalID(externa
 func (e *EventStreamCloudEventGroupCreatedPreviousObject0) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupCreatedPreviousObject0FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupCreatedPreviousObject0) SetType(type_ EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupCreatedPreviousObject0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -83102,33 +81452,12 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupCreatedPreviousObject0TypeEnumConnection EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupCreatedPreviousObject0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupCreatedPreviousObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedPreviousObject1FieldName           = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupCreatedPreviousObject1FieldExternalID     = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupCreatedPreviousObject1FieldCreatedAt      = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupCreatedPreviousObject1FieldType           = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupCreatedPreviousObject1FieldOrganizationID = big.NewInt(1 << 5)
+	eventStreamCloudEventGroupCreatedPreviousObject1FieldOrganizationID = big.NewInt(1 << 4)
 )
 
 // Represents an organization group entity.
@@ -83140,8 +81469,7 @@ type EventStreamCloudEventGroupCreatedPreviousObject1 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -83178,13 +81506,6 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject1) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupCreatedPreviousObject1) GetType() EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject1) GetOrganizationID() string {
@@ -83236,13 +81557,6 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject1) SetExternalID(externa
 func (e *EventStreamCloudEventGroupCreatedPreviousObject1) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupCreatedPreviousObject1FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupCreatedPreviousObject1) SetType(type_ EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupCreatedPreviousObject1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -83302,32 +81616,11 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupCreatedPreviousObject1TypeEnumOrganization EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupCreatedPreviousObject1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupCreatedPreviousObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedPreviousObject2FieldName       = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupCreatedPreviousObject2FieldExternalID = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupCreatedPreviousObject2FieldCreatedAt  = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupCreatedPreviousObject2FieldType       = big.NewInt(1 << 4)
 )
 
 // Represents a tenant group entity.
@@ -83339,8 +81632,7 @@ type EventStreamCloudEventGroupCreatedPreviousObject2 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -83375,13 +81667,6 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject2) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupCreatedPreviousObject2) GetType() EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject2) GetExtraProperties() map[string]interface{} {
@@ -83426,13 +81711,6 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject2) SetExternalID(externa
 func (e *EventStreamCloudEventGroupCreatedPreviousObject2) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupCreatedPreviousObject2FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupCreatedPreviousObject2) SetType(type_ EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupCreatedPreviousObject2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject2) UnmarshalJSON(data []byte) error {
@@ -83483,26 +81761,6 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject2) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupCreatedPreviousObject2TypeEnumTenant EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupCreatedPreviousObject2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum {
-	return &e
 }
 
 var (
@@ -83980,134 +82238,203 @@ func (e *EventStreamCloudEventGroupDeletedData) String() string {
 
 // The event content.
 type EventStreamCloudEventGroupDeletedObject struct {
-	EventStreamCloudEventGroupDeletedObject0 *EventStreamCloudEventGroupDeletedObject0
-	EventStreamCloudEventGroupDeletedObject1 *EventStreamCloudEventGroupDeletedObject1
-	EventStreamCloudEventGroupDeletedObject2 *EventStreamCloudEventGroupDeletedObject2
+	Type         string
+	ID           string
+	Name         string
+	ExternalID   *string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	Connection   *EventStreamCloudEventGroupDeletedObject0
+	Organization *EventStreamCloudEventGroupDeletedObject1
+	Tenant       *EventStreamCloudEventGroupDeletedObject2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupDeletedObject) GetEventStreamCloudEventGroupDeletedObject0() *EventStreamCloudEventGroupDeletedObject0 {
+func (e *EventStreamCloudEventGroupDeletedObject) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupDeletedObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupDeletedObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventGroupDeletedObject) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupDeletedObject) GetCreatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.CreatedAt
+}
+
+func (e *EventStreamCloudEventGroupDeletedObject) GetUpdatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.UpdatedAt
+}
+
+func (e *EventStreamCloudEventGroupDeletedObject) GetConnection() *EventStreamCloudEventGroupDeletedObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupDeletedObject0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupDeletedObject) GetEventStreamCloudEventGroupDeletedObject1() *EventStreamCloudEventGroupDeletedObject1 {
+func (e *EventStreamCloudEventGroupDeletedObject) GetOrganization() *EventStreamCloudEventGroupDeletedObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupDeletedObject1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupDeletedObject) GetEventStreamCloudEventGroupDeletedObject2() *EventStreamCloudEventGroupDeletedObject2 {
+func (e *EventStreamCloudEventGroupDeletedObject) GetTenant() *EventStreamCloudEventGroupDeletedObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupDeletedObject2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id", "updated_at"}, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedObject0 := new(EventStreamCloudEventGroupDeletedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedObject0"
-			e.EventStreamCloudEventGroupDeletedObject0 = valueEventStreamCloudEventGroupDeletedObject0
-			return nil
+	var unmarshaler struct {
+		Type       string    `json:"type"`
+		ID         string    `json:"id"`
+		Name       string    `json:"name"`
+		ExternalID *string   `json:"external_id,omitempty"`
+		CreatedAt  time.Time `json:"created_at"`
+		UpdatedAt  time.Time `json:"updated_at"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.Name = unmarshaler.Name
+	e.ExternalID = unmarshaler.ExternalID
+	e.CreatedAt = unmarshaler.CreatedAt
+	e.UpdatedAt = unmarshaler.UpdatedAt
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupDeletedObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id", "updated_at"}, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedObject1 := new(EventStreamCloudEventGroupDeletedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedObject1"
-			e.EventStreamCloudEventGroupDeletedObject1 = valueEventStreamCloudEventGroupDeletedObject1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupDeletedObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "updated_at"}, []string{"id", "name", "created_at", "type", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedObject2 := new(EventStreamCloudEventGroupDeletedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedObject2"
-			e.EventStreamCloudEventGroupDeletedObject2 = valueEventStreamCloudEventGroupDeletedObject2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupDeletedObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedObject0 := new(EventStreamCloudEventGroupDeletedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedObject0"
-			e.EventStreamCloudEventGroupDeletedObject0 = valueEventStreamCloudEventGroupDeletedObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedObject1 := new(EventStreamCloudEventGroupDeletedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedObject1"
-			e.EventStreamCloudEventGroupDeletedObject1 = valueEventStreamCloudEventGroupDeletedObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedObject2 := new(EventStreamCloudEventGroupDeletedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedObject2"
-			e.EventStreamCloudEventGroupDeletedObject2 = valueEventStreamCloudEventGroupDeletedObject2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupDeletedObject0 := new(EventStreamCloudEventGroupDeletedObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject0); err == nil {
-		e.typ = "EventStreamCloudEventGroupDeletedObject0"
-		e.EventStreamCloudEventGroupDeletedObject0 = valueEventStreamCloudEventGroupDeletedObject0
-		return nil
-	}
-	valueEventStreamCloudEventGroupDeletedObject1 := new(EventStreamCloudEventGroupDeletedObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject1); err == nil {
-		e.typ = "EventStreamCloudEventGroupDeletedObject1"
-		e.EventStreamCloudEventGroupDeletedObject1 = valueEventStreamCloudEventGroupDeletedObject1
-		return nil
-	}
-	valueEventStreamCloudEventGroupDeletedObject2 := new(EventStreamCloudEventGroupDeletedObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject2); err == nil {
-		e.typ = "EventStreamCloudEventGroupDeletedObject2"
-		e.EventStreamCloudEventGroupDeletedObject2 = valueEventStreamCloudEventGroupDeletedObject2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupDeletedObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupDeletedObject0" || e.EventStreamCloudEventGroupDeletedObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupDeletedObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupDeletedObject1" || e.EventStreamCloudEventGroupDeletedObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupDeletedObject1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupDeletedObject2" || e.EventStreamCloudEventGroupDeletedObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupDeletedObject2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupDeletedObjectVisitor interface {
-	VisitEventStreamCloudEventGroupDeletedObject0(*EventStreamCloudEventGroupDeletedObject0) error
-	VisitEventStreamCloudEventGroupDeletedObject1(*EventStreamCloudEventGroupDeletedObject1) error
-	VisitEventStreamCloudEventGroupDeletedObject2(*EventStreamCloudEventGroupDeletedObject2) error
+	VisitConnection(*EventStreamCloudEventGroupDeletedObject0) error
+	VisitOrganization(*EventStreamCloudEventGroupDeletedObject1) error
+	VisitTenant(*EventStreamCloudEventGroupDeletedObject2) error
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject) Accept(visitor EventStreamCloudEventGroupDeletedObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupDeletedObject0" || e.EventStreamCloudEventGroupDeletedObject0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupDeletedObject0(e.EventStreamCloudEventGroupDeletedObject0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupDeletedObject1" || e.EventStreamCloudEventGroupDeletedObject1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupDeletedObject1(e.EventStreamCloudEventGroupDeletedObject1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupDeletedObject2" || e.EventStreamCloudEventGroupDeletedObject2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupDeletedObject2(e.EventStreamCloudEventGroupDeletedObject2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupDeletedObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -84115,9 +82442,8 @@ var (
 	eventStreamCloudEventGroupDeletedObject0FieldName         = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupDeletedObject0FieldExternalID   = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupDeletedObject0FieldCreatedAt    = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupDeletedObject0FieldType         = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupDeletedObject0FieldConnectionID = big.NewInt(1 << 5)
-	eventStreamCloudEventGroupDeletedObject0FieldUpdatedAt    = big.NewInt(1 << 6)
+	eventStreamCloudEventGroupDeletedObject0FieldConnectionID = big.NewInt(1 << 4)
+	eventStreamCloudEventGroupDeletedObject0FieldUpdatedAt    = big.NewInt(1 << 5)
 )
 
 // Connection group with updated_at timestamp
@@ -84129,8 +82455,7 @@ type EventStreamCloudEventGroupDeletedObject0 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupDeletedObject0TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
@@ -84169,13 +82494,6 @@ func (e *EventStreamCloudEventGroupDeletedObject0) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupDeletedObject0) GetType() EventStreamCloudEventGroupDeletedObject0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject0) GetConnectionID() string {
@@ -84234,13 +82552,6 @@ func (e *EventStreamCloudEventGroupDeletedObject0) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupDeletedObject0) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupDeletedObject0FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupDeletedObject0) SetType(type_ EventStreamCloudEventGroupDeletedObject0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupDeletedObject0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -84311,34 +82622,13 @@ func (e *EventStreamCloudEventGroupDeletedObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupDeletedObject0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupDeletedObject0TypeEnumConnection EventStreamCloudEventGroupDeletedObject0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedObject0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupDeletedObject0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupDeletedObject0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupDeletedObject0TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedObject0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupDeletedObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedObject1FieldName           = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupDeletedObject1FieldExternalID     = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupDeletedObject1FieldCreatedAt      = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupDeletedObject1FieldType           = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupDeletedObject1FieldOrganizationID = big.NewInt(1 << 5)
-	eventStreamCloudEventGroupDeletedObject1FieldUpdatedAt      = big.NewInt(1 << 6)
+	eventStreamCloudEventGroupDeletedObject1FieldOrganizationID = big.NewInt(1 << 4)
+	eventStreamCloudEventGroupDeletedObject1FieldUpdatedAt      = big.NewInt(1 << 5)
 )
 
 // Organization group with updated_at timestamp
@@ -84350,8 +82640,7 @@ type EventStreamCloudEventGroupDeletedObject1 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupDeletedObject1TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
@@ -84390,13 +82679,6 @@ func (e *EventStreamCloudEventGroupDeletedObject1) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupDeletedObject1) GetType() EventStreamCloudEventGroupDeletedObject1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject1) GetOrganizationID() string {
@@ -84455,13 +82737,6 @@ func (e *EventStreamCloudEventGroupDeletedObject1) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupDeletedObject1) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupDeletedObject1FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupDeletedObject1) SetType(type_ EventStreamCloudEventGroupDeletedObject1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupDeletedObject1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -84532,33 +82807,12 @@ func (e *EventStreamCloudEventGroupDeletedObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupDeletedObject1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupDeletedObject1TypeEnumOrganization EventStreamCloudEventGroupDeletedObject1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedObject1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupDeletedObject1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupDeletedObject1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupDeletedObject1TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedObject1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupDeletedObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedObject2FieldName       = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupDeletedObject2FieldExternalID = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupDeletedObject2FieldCreatedAt  = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupDeletedObject2FieldType       = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupDeletedObject2FieldUpdatedAt  = big.NewInt(1 << 5)
+	eventStreamCloudEventGroupDeletedObject2FieldUpdatedAt  = big.NewInt(1 << 4)
 )
 
 // Tenant group with updated_at timestamp
@@ -84570,8 +82824,7 @@ type EventStreamCloudEventGroupDeletedObject2 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupDeletedObject2TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
 	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
 
@@ -84608,13 +82861,6 @@ func (e *EventStreamCloudEventGroupDeletedObject2) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupDeletedObject2) GetType() EventStreamCloudEventGroupDeletedObject2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject2) GetUpdatedAt() time.Time {
@@ -84666,13 +82912,6 @@ func (e *EventStreamCloudEventGroupDeletedObject2) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupDeletedObject2) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupDeletedObject2FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupDeletedObject2) SetType(type_ EventStreamCloudEventGroupDeletedObject2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupDeletedObject2FieldType)
 }
 
 // SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
@@ -84736,156 +82975,205 @@ func (e *EventStreamCloudEventGroupDeletedObject2) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupDeletedObject2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupDeletedObject2TypeEnumTenant EventStreamCloudEventGroupDeletedObject2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedObject2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupDeletedObject2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupDeletedObject2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupDeletedObject2TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedObject2TypeEnum {
-	return &e
-}
-
 // The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventGroupDeletedPreviousObject struct {
-	EventStreamCloudEventGroupDeletedPreviousObject0 *EventStreamCloudEventGroupDeletedPreviousObject0
-	EventStreamCloudEventGroupDeletedPreviousObject1 *EventStreamCloudEventGroupDeletedPreviousObject1
-	EventStreamCloudEventGroupDeletedPreviousObject2 *EventStreamCloudEventGroupDeletedPreviousObject2
+	Type         string
+	ID           string
+	Name         string
+	ExternalID   *string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	Connection   *EventStreamCloudEventGroupDeletedPreviousObject0
+	Organization *EventStreamCloudEventGroupDeletedPreviousObject1
+	Tenant       *EventStreamCloudEventGroupDeletedPreviousObject2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetEventStreamCloudEventGroupDeletedPreviousObject0() *EventStreamCloudEventGroupDeletedPreviousObject0 {
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetCreatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.CreatedAt
+}
+
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetUpdatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.UpdatedAt
+}
+
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetConnection() *EventStreamCloudEventGroupDeletedPreviousObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupDeletedPreviousObject0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetEventStreamCloudEventGroupDeletedPreviousObject1() *EventStreamCloudEventGroupDeletedPreviousObject1 {
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetOrganization() *EventStreamCloudEventGroupDeletedPreviousObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupDeletedPreviousObject1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetEventStreamCloudEventGroupDeletedPreviousObject2() *EventStreamCloudEventGroupDeletedPreviousObject2 {
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetTenant() *EventStreamCloudEventGroupDeletedPreviousObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupDeletedPreviousObject2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id", "updated_at"}, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedPreviousObject0 := new(EventStreamCloudEventGroupDeletedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject0"
-			e.EventStreamCloudEventGroupDeletedPreviousObject0 = valueEventStreamCloudEventGroupDeletedPreviousObject0
-			return nil
+	var unmarshaler struct {
+		Type       string    `json:"type"`
+		ID         string    `json:"id"`
+		Name       string    `json:"name"`
+		ExternalID *string   `json:"external_id,omitempty"`
+		CreatedAt  time.Time `json:"created_at"`
+		UpdatedAt  time.Time `json:"updated_at"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.Name = unmarshaler.Name
+	e.ExternalID = unmarshaler.ExternalID
+	e.CreatedAt = unmarshaler.CreatedAt
+	e.UpdatedAt = unmarshaler.UpdatedAt
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupDeletedPreviousObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id", "updated_at"}, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedPreviousObject1 := new(EventStreamCloudEventGroupDeletedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject1"
-			e.EventStreamCloudEventGroupDeletedPreviousObject1 = valueEventStreamCloudEventGroupDeletedPreviousObject1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupDeletedPreviousObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "updated_at"}, []string{"id", "name", "created_at", "type", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedPreviousObject2 := new(EventStreamCloudEventGroupDeletedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject2"
-			e.EventStreamCloudEventGroupDeletedPreviousObject2 = valueEventStreamCloudEventGroupDeletedPreviousObject2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupDeletedPreviousObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedPreviousObject0 := new(EventStreamCloudEventGroupDeletedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject0"
-			e.EventStreamCloudEventGroupDeletedPreviousObject0 = valueEventStreamCloudEventGroupDeletedPreviousObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedPreviousObject1 := new(EventStreamCloudEventGroupDeletedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject1"
-			e.EventStreamCloudEventGroupDeletedPreviousObject1 = valueEventStreamCloudEventGroupDeletedPreviousObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "updated_at"}) {
-		valueEventStreamCloudEventGroupDeletedPreviousObject2 := new(EventStreamCloudEventGroupDeletedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject2"
-			e.EventStreamCloudEventGroupDeletedPreviousObject2 = valueEventStreamCloudEventGroupDeletedPreviousObject2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupDeletedPreviousObject0 := new(EventStreamCloudEventGroupDeletedPreviousObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject0); err == nil {
-		e.typ = "EventStreamCloudEventGroupDeletedPreviousObject0"
-		e.EventStreamCloudEventGroupDeletedPreviousObject0 = valueEventStreamCloudEventGroupDeletedPreviousObject0
-		return nil
-	}
-	valueEventStreamCloudEventGroupDeletedPreviousObject1 := new(EventStreamCloudEventGroupDeletedPreviousObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject1); err == nil {
-		e.typ = "EventStreamCloudEventGroupDeletedPreviousObject1"
-		e.EventStreamCloudEventGroupDeletedPreviousObject1 = valueEventStreamCloudEventGroupDeletedPreviousObject1
-		return nil
-	}
-	valueEventStreamCloudEventGroupDeletedPreviousObject2 := new(EventStreamCloudEventGroupDeletedPreviousObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject2); err == nil {
-		e.typ = "EventStreamCloudEventGroupDeletedPreviousObject2"
-		e.EventStreamCloudEventGroupDeletedPreviousObject2 = valueEventStreamCloudEventGroupDeletedPreviousObject2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupDeletedPreviousObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupDeletedPreviousObject0" || e.EventStreamCloudEventGroupDeletedPreviousObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupDeletedPreviousObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupDeletedPreviousObject1" || e.EventStreamCloudEventGroupDeletedPreviousObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupDeletedPreviousObject1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupDeletedPreviousObject2" || e.EventStreamCloudEventGroupDeletedPreviousObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupDeletedPreviousObject2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupDeletedPreviousObjectVisitor interface {
-	VisitEventStreamCloudEventGroupDeletedPreviousObject0(*EventStreamCloudEventGroupDeletedPreviousObject0) error
-	VisitEventStreamCloudEventGroupDeletedPreviousObject1(*EventStreamCloudEventGroupDeletedPreviousObject1) error
-	VisitEventStreamCloudEventGroupDeletedPreviousObject2(*EventStreamCloudEventGroupDeletedPreviousObject2) error
+	VisitConnection(*EventStreamCloudEventGroupDeletedPreviousObject0) error
+	VisitOrganization(*EventStreamCloudEventGroupDeletedPreviousObject1) error
+	VisitTenant(*EventStreamCloudEventGroupDeletedPreviousObject2) error
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject) Accept(visitor EventStreamCloudEventGroupDeletedPreviousObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupDeletedPreviousObject0" || e.EventStreamCloudEventGroupDeletedPreviousObject0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupDeletedPreviousObject0(e.EventStreamCloudEventGroupDeletedPreviousObject0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupDeletedPreviousObject1" || e.EventStreamCloudEventGroupDeletedPreviousObject1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupDeletedPreviousObject1(e.EventStreamCloudEventGroupDeletedPreviousObject1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupDeletedPreviousObject2" || e.EventStreamCloudEventGroupDeletedPreviousObject2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupDeletedPreviousObject2(e.EventStreamCloudEventGroupDeletedPreviousObject2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupDeletedPreviousObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -84893,9 +83181,8 @@ var (
 	eventStreamCloudEventGroupDeletedPreviousObject0FieldName         = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupDeletedPreviousObject0FieldExternalID   = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupDeletedPreviousObject0FieldCreatedAt    = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupDeletedPreviousObject0FieldType         = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupDeletedPreviousObject0FieldConnectionID = big.NewInt(1 << 5)
-	eventStreamCloudEventGroupDeletedPreviousObject0FieldUpdatedAt    = big.NewInt(1 << 6)
+	eventStreamCloudEventGroupDeletedPreviousObject0FieldConnectionID = big.NewInt(1 << 4)
+	eventStreamCloudEventGroupDeletedPreviousObject0FieldUpdatedAt    = big.NewInt(1 << 5)
 )
 
 // Connection group with updated_at timestamp
@@ -84907,8 +83194,7 @@ type EventStreamCloudEventGroupDeletedPreviousObject0 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
@@ -84947,13 +83233,6 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject0) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupDeletedPreviousObject0) GetType() EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject0) GetConnectionID() string {
@@ -85012,13 +83291,6 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject0) SetExternalID(externa
 func (e *EventStreamCloudEventGroupDeletedPreviousObject0) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupDeletedPreviousObject0FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupDeletedPreviousObject0) SetType(type_ EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupDeletedPreviousObject0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -85089,34 +83361,13 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupDeletedPreviousObject0TypeEnumConnection EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupDeletedPreviousObject0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupDeletedPreviousObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedPreviousObject1FieldName           = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupDeletedPreviousObject1FieldExternalID     = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupDeletedPreviousObject1FieldCreatedAt      = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupDeletedPreviousObject1FieldType           = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupDeletedPreviousObject1FieldOrganizationID = big.NewInt(1 << 5)
-	eventStreamCloudEventGroupDeletedPreviousObject1FieldUpdatedAt      = big.NewInt(1 << 6)
+	eventStreamCloudEventGroupDeletedPreviousObject1FieldOrganizationID = big.NewInt(1 << 4)
+	eventStreamCloudEventGroupDeletedPreviousObject1FieldUpdatedAt      = big.NewInt(1 << 5)
 )
 
 // Organization group with updated_at timestamp
@@ -85128,8 +83379,7 @@ type EventStreamCloudEventGroupDeletedPreviousObject1 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
@@ -85168,13 +83418,6 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject1) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupDeletedPreviousObject1) GetType() EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject1) GetOrganizationID() string {
@@ -85233,13 +83476,6 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject1) SetExternalID(externa
 func (e *EventStreamCloudEventGroupDeletedPreviousObject1) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupDeletedPreviousObject1FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupDeletedPreviousObject1) SetType(type_ EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupDeletedPreviousObject1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -85310,33 +83546,12 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupDeletedPreviousObject1TypeEnumOrganization EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupDeletedPreviousObject1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupDeletedPreviousObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedPreviousObject2FieldName       = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupDeletedPreviousObject2FieldExternalID = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupDeletedPreviousObject2FieldCreatedAt  = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupDeletedPreviousObject2FieldType       = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupDeletedPreviousObject2FieldUpdatedAt  = big.NewInt(1 << 5)
+	eventStreamCloudEventGroupDeletedPreviousObject2FieldUpdatedAt  = big.NewInt(1 << 4)
 )
 
 // Tenant group with updated_at timestamp
@@ -85348,8 +83563,7 @@ type EventStreamCloudEventGroupDeletedPreviousObject2 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
 	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
 
@@ -85386,13 +83600,6 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject2) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupDeletedPreviousObject2) GetType() EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject2) GetUpdatedAt() time.Time {
@@ -85444,13 +83651,6 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject2) SetExternalID(externa
 func (e *EventStreamCloudEventGroupDeletedPreviousObject2) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupDeletedPreviousObject2FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupDeletedPreviousObject2) SetType(type_ EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupDeletedPreviousObject2FieldType)
 }
 
 // SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
@@ -85512,26 +83712,6 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject2) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupDeletedPreviousObject2TypeEnumTenant EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupDeletedPreviousObject2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum {
-	return &e
 }
 
 var (
@@ -86112,141 +84292,179 @@ func (e *EventStreamCloudEventGroupMemberAddedObject) String() string {
 
 // The group the member belongs to.
 type EventStreamCloudEventGroupMemberAddedObjectGroup struct {
-	EventStreamCloudEventGroupMemberAddedObjectGroup0 *EventStreamCloudEventGroupMemberAddedObjectGroup0
-	EventStreamCloudEventGroupMemberAddedObjectGroup1 *EventStreamCloudEventGroupMemberAddedObjectGroup1
-	EventStreamCloudEventGroupMemberAddedObjectGroup2 *EventStreamCloudEventGroupMemberAddedObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventGroupMemberAddedObjectGroup0
+	Organization *EventStreamCloudEventGroupMemberAddedObjectGroup1
+	Tenant       *EventStreamCloudEventGroupMemberAddedObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetEventStreamCloudEventGroupMemberAddedObjectGroup0() *EventStreamCloudEventGroupMemberAddedObjectGroup0 {
+func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetConnection() *EventStreamCloudEventGroupMemberAddedObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetEventStreamCloudEventGroupMemberAddedObjectGroup1() *EventStreamCloudEventGroupMemberAddedObjectGroup1 {
+func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetOrganization() *EventStreamCloudEventGroupMemberAddedObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetEventStreamCloudEventGroupMemberAddedObjectGroup2() *EventStreamCloudEventGroupMemberAddedObjectGroup2 {
+func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetTenant() *EventStreamCloudEventGroupMemberAddedObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup0"
-			e.EventStreamCloudEventGroupMemberAddedObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupMemberAddedObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup1"
-			e.EventStreamCloudEventGroupMemberAddedObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupMemberAddedObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup2"
-			e.EventStreamCloudEventGroupMemberAddedObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupMemberAddedObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup0"
-			e.EventStreamCloudEventGroupMemberAddedObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup1"
-			e.EventStreamCloudEventGroupMemberAddedObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup2"
-			e.EventStreamCloudEventGroupMemberAddedObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupMemberAddedObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup0"
-		e.EventStreamCloudEventGroupMemberAddedObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberAddedObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup1"
-		e.EventStreamCloudEventGroupMemberAddedObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberAddedObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup2"
-		e.EventStreamCloudEventGroupMemberAddedObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupMemberAddedObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup0" || e.EventStreamCloudEventGroupMemberAddedObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup1" || e.EventStreamCloudEventGroupMemberAddedObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup2" || e.EventStreamCloudEventGroupMemberAddedObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupMemberAddedObjectGroupVisitor interface {
-	VisitEventStreamCloudEventGroupMemberAddedObjectGroup0(*EventStreamCloudEventGroupMemberAddedObjectGroup0) error
-	VisitEventStreamCloudEventGroupMemberAddedObjectGroup1(*EventStreamCloudEventGroupMemberAddedObjectGroup1) error
-	VisitEventStreamCloudEventGroupMemberAddedObjectGroup2(*EventStreamCloudEventGroupMemberAddedObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventGroupMemberAddedObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventGroupMemberAddedObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventGroupMemberAddedObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) Accept(visitor EventStreamCloudEventGroupMemberAddedObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup0" || e.EventStreamCloudEventGroupMemberAddedObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedObjectGroup0(e.EventStreamCloudEventGroupMemberAddedObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup1" || e.EventStreamCloudEventGroupMemberAddedObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedObjectGroup1(e.EventStreamCloudEventGroupMemberAddedObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup2" || e.EventStreamCloudEventGroupMemberAddedObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedObjectGroup2(e.EventStreamCloudEventGroupMemberAddedObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventGroupMemberAddedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberAddedObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberAddedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberAddedObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -86254,8 +84472,7 @@ type EventStreamCloudEventGroupMemberAddedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                   `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -86278,13 +84495,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) GetExternalID() stri
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) GetType() EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) GetConnectionID() string {
@@ -86322,13 +84532,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) SetID(id string) {
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberAddedObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) SetType(type_ EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberAddedObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -86380,31 +84583,10 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumConnection EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupMemberAddedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberAddedObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberAddedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberAddedObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -86412,8 +84594,7 @@ type EventStreamCloudEventGroupMemberAddedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                   `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -86436,13 +84617,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) GetExternalID() stri
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) GetType() EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) GetOrganizationID() string {
@@ -86480,13 +84654,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) SetID(id string) {
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberAddedObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) SetType(type_ EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberAddedObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -86538,30 +84705,9 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupMemberAddedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberAddedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -86569,8 +84715,7 @@ type EventStreamCloudEventGroupMemberAddedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                   `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -86591,13 +84736,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) GetExternalID() stri
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) GetType() EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -86628,13 +84766,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) SetID(id string) {
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberAddedObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) SetType(type_ EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberAddedObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -86679,129 +84810,149 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumTenant EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum {
-	return &e
-}
-
 // The member that is a part of the group.
 type EventStreamCloudEventGroupMemberAddedObjectMember struct {
-	EventStreamCloudEventGroupMemberAddedObjectMember0 *EventStreamCloudEventGroupMemberAddedObjectMember0
-	EventStreamCloudEventGroupMemberAddedObjectMember1 *EventStreamCloudEventGroupMemberAddedObjectMember1
+	MemberType string
+	ID         string
+	User       *EventStreamCloudEventGroupMemberAddedObjectMember0
+	Connection *EventStreamCloudEventGroupMemberAddedObjectMember1
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedObjectMember) GetEventStreamCloudEventGroupMemberAddedObjectMember0() *EventStreamCloudEventGroupMemberAddedObjectMember0 {
+func (e *EventStreamCloudEventGroupMemberAddedObjectMember) GetMemberType() string {
+	if e == nil {
+		return ""
+	}
+	return e.MemberType
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedObjectMember) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedObjectMember) GetUser() *EventStreamCloudEventGroupMemberAddedObjectMember0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedObjectMember0
+	return e.User
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedObjectMember) GetEventStreamCloudEventGroupMemberAddedObjectMember1() *EventStreamCloudEventGroupMemberAddedObjectMember1 {
+func (e *EventStreamCloudEventGroupMemberAddedObjectMember) GetConnection() *EventStreamCloudEventGroupMemberAddedObjectMember1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedObjectMember1
+	return e.Connection
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectMember) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"member_type", "id"}, []string{"member_type", "id"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectMember0 := new(EventStreamCloudEventGroupMemberAddedObjectMember0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember0"
-			e.EventStreamCloudEventGroupMemberAddedObjectMember0 = valueEventStreamCloudEventGroupMemberAddedObjectMember0
-			return nil
+	var unmarshaler struct {
+		MemberType string `json:"member_type"`
+		ID         string `json:"id"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.MemberType = unmarshaler.MemberType
+	e.ID = unmarshaler.ID
+	if unmarshaler.MemberType == "" {
+		return fmt.Errorf("%T did not include discriminant member_type", e)
+	}
+	switch unmarshaler.MemberType {
+	case "user":
+		value := new(EventStreamCloudEventGroupMemberAddedObjectMember0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}, []string{"member_type", "id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectMember1 := new(EventStreamCloudEventGroupMemberAddedObjectMember1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember1"
-			e.EventStreamCloudEventGroupMemberAddedObjectMember1 = valueEventStreamCloudEventGroupMemberAddedObjectMember1
-			return nil
+		e.User = value
+	case "connection":
+		value := new(EventStreamCloudEventGroupMemberAddedObjectMember1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Connection = value
 	}
-	if internal.HasObjectKeys(data, []string{"member_type", "id"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectMember0 := new(EventStreamCloudEventGroupMemberAddedObjectMember0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember0"
-			e.EventStreamCloudEventGroupMemberAddedObjectMember0 = valueEventStreamCloudEventGroupMemberAddedObjectMember0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedObjectMember1 := new(EventStreamCloudEventGroupMemberAddedObjectMember1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember1"
-			e.EventStreamCloudEventGroupMemberAddedObjectMember1 = valueEventStreamCloudEventGroupMemberAddedObjectMember1
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupMemberAddedObjectMember0 := new(EventStreamCloudEventGroupMemberAddedObjectMember0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember0); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember0"
-		e.EventStreamCloudEventGroupMemberAddedObjectMember0 = valueEventStreamCloudEventGroupMemberAddedObjectMember0
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberAddedObjectMember1 := new(EventStreamCloudEventGroupMemberAddedObjectMember1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember1); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember1"
-		e.EventStreamCloudEventGroupMemberAddedObjectMember1 = valueEventStreamCloudEventGroupMemberAddedObjectMember1
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupMemberAddedObjectMember) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectMember0" || e.EventStreamCloudEventGroupMemberAddedObjectMember0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedObjectMember0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectMember1" || e.EventStreamCloudEventGroupMemberAddedObjectMember1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedObjectMember1)
+	if e.User != nil {
+		return internal.MarshalJSONWithExtraProperty(e.User, "member_type", "user")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "member_type", "connection")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupMemberAddedObjectMemberVisitor interface {
-	VisitEventStreamCloudEventGroupMemberAddedObjectMember0(*EventStreamCloudEventGroupMemberAddedObjectMember0) error
-	VisitEventStreamCloudEventGroupMemberAddedObjectMember1(*EventStreamCloudEventGroupMemberAddedObjectMember1) error
+	VisitUser(*EventStreamCloudEventGroupMemberAddedObjectMember0) error
+	VisitConnection(*EventStreamCloudEventGroupMemberAddedObjectMember1) error
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectMember) Accept(visitor EventStreamCloudEventGroupMemberAddedObjectMemberVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectMember0" || e.EventStreamCloudEventGroupMemberAddedObjectMember0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedObjectMember0(e.EventStreamCloudEventGroupMemberAddedObjectMember0)
+	if e.User != nil {
+		return visitor.VisitUser(e.User)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectMember1" || e.EventStreamCloudEventGroupMemberAddedObjectMember1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedObjectMember1(e.EventStreamCloudEventGroupMemberAddedObjectMember1)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedObjectMember) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.User != nil {
+		fields = append(fields, "user")
+	}
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if len(fields) == 0 {
+		if e.MemberType != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.MemberType)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.MemberType != "" {
+		field := fields[0]
+		if e.MemberType != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.MemberType,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
-	eventStreamCloudEventGroupMemberAddedObjectMember0FieldMemberType = big.NewInt(1 << 0)
-	eventStreamCloudEventGroupMemberAddedObjectMember0FieldID         = big.NewInt(1 << 1)
+	eventStreamCloudEventGroupMemberAddedObjectMember0FieldID = big.NewInt(1 << 0)
 )
 
 // A group member of member_type user
 type EventStreamCloudEventGroupMemberAddedObjectMember0 struct {
-	MemberType EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The user's unique identifier
 	ID string `json:"id" url:"id"`
 
@@ -86810,13 +84961,6 @@ type EventStreamCloudEventGroupMemberAddedObjectMember0 struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedObjectMember0) GetMemberType() EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.MemberType
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectMember0) GetID() string {
@@ -86840,13 +84984,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectMember0) require(field *big.
 	}
 	next.Or(next, field)
 	e.explicitFields = next
-}
-
-// SetMemberType sets the MemberType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedObjectMember0) SetMemberType(memberType EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum) {
-	e.MemberType = memberType
-	e.require(eventStreamCloudEventGroupMemberAddedObjectMember0FieldMemberType)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -86898,36 +85035,14 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectMember0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Type discriminator for user members
-type EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumUser EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum = "user"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum, error) {
-	switch s {
-	case "user":
-		return EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumUser, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum {
-	return &e
-}
-
 var (
-	eventStreamCloudEventGroupMemberAddedObjectMember1FieldMemberType   = big.NewInt(1 << 0)
-	eventStreamCloudEventGroupMemberAddedObjectMember1FieldID           = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberAddedObjectMember1FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberAddedObjectMember1FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberAddedObjectMember1FieldID           = big.NewInt(1 << 0)
+	eventStreamCloudEventGroupMemberAddedObjectMember1FieldType         = big.NewInt(1 << 1)
+	eventStreamCloudEventGroupMemberAddedObjectMember1FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // A group member of member_type group
 type EventStreamCloudEventGroupMemberAddedObjectMember1 struct {
-	MemberType EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The connection member's unique identifier
 	ID string `json:"id" url:"id"`
 	// The type of the connection
@@ -86940,13 +85055,6 @@ type EventStreamCloudEventGroupMemberAddedObjectMember1 struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedObjectMember1) GetMemberType() EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.MemberType
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectMember1) GetID() string {
@@ -86984,13 +85092,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectMember1) require(field *big.
 	}
 	next.Or(next, field)
 	e.explicitFields = next
-}
-
-// SetMemberType sets the MemberType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedObjectMember1) SetMemberType(memberType EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum) {
-	e.MemberType = memberType
-	e.require(eventStreamCloudEventGroupMemberAddedObjectMember1FieldMemberType)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -87054,26 +85155,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectMember1) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// Type discriminator for connection members
-type EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumConnection EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum {
-	return &e
 }
 
 var (
@@ -87181,141 +85262,179 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObject) String() string {
 
 // The group the member belongs to.
 type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup struct {
-	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
-	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
-	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
+	Organization *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
+	Tenant       *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 {
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetConnection() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 {
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetOrganization() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 {
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetTenant() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0"
-		e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1"
-		e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2"
-		e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupMemberAddedPreviousObjectGroupVisitor interface {
-	VisitEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0(*EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) error
-	VisitEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1(*EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) error
-	VisitEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2(*EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) Accept(visitor EventStreamCloudEventGroupMemberAddedPreviousObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0(e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1(e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2(e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -87323,8 +85442,7 @@ type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                           `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -87347,13 +85465,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) GetExternalI
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) GetType() EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) GetConnectionID() string {
@@ -87391,13 +85502,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) SetID(id str
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) SetType(type_ EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -87449,31 +85553,10 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) String() str
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -87481,8 +85564,7 @@ type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                           `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -87505,13 +85587,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) GetExternalI
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) GetType() EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) GetOrganizationID() string {
@@ -87549,13 +85624,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) SetID(id str
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) SetType(type_ EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -87607,30 +85675,9 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) String() str
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -87638,8 +85685,7 @@ type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                           `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -87660,13 +85706,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) GetExternalI
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) GetType() EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -87697,13 +85736,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) SetID(id str
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberAddedPreviousObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) SetType(type_ EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberAddedPreviousObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -87748,129 +85780,149 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) String() str
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum {
-	return &e
-}
-
 // The member that is a part of the group.
 type EventStreamCloudEventGroupMemberAddedPreviousObjectMember struct {
-	EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0
-	EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1
+	MemberType string
+	ID         string
+	User       *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0
+	Connection *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember0() *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 {
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) GetMemberType() string {
+	if e == nil {
+		return ""
+	}
+	return e.MemberType
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) GetUser() *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0
+	return e.User
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember1() *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 {
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) GetConnection() *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1
+	return e.Connection
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"member_type", "id"}, []string{"member_type", "id"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember0"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0
-			return nil
+	var unmarshaler struct {
+		MemberType string `json:"member_type"`
+		ID         string `json:"id"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.MemberType = unmarshaler.MemberType
+	e.ID = unmarshaler.ID
+	if unmarshaler.MemberType == "" {
+		return fmt.Errorf("%T did not include discriminant member_type", e)
+	}
+	switch unmarshaler.MemberType {
+	case "user":
+		value := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}, []string{"member_type", "id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember1"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1
-			return nil
+		e.User = value
+	case "connection":
+		value := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Connection = value
 	}
-	if internal.HasObjectKeys(data, []string{"member_type", "id"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember0"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember1"
-			e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember0"
-		e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember1"
-		e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupMemberAddedPreviousObjectMember) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectMember0" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectMember1" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1)
+	if e.User != nil {
+		return internal.MarshalJSONWithExtraProperty(e.User, "member_type", "user")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "member_type", "connection")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupMemberAddedPreviousObjectMemberVisitor interface {
-	VisitEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(*EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) error
-	VisitEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(*EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) error
+	VisitUser(*EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) error
+	VisitConnection(*EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) error
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) Accept(visitor EventStreamCloudEventGroupMemberAddedPreviousObjectMemberVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectMember0" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
+	if e.User != nil {
+		return visitor.VisitUser(e.User)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedPreviousObjectMember1" || e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.User != nil {
+		fields = append(fields, "user")
+	}
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if len(fields) == 0 {
+		if e.MemberType != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.MemberType)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.MemberType != "" {
+		field := fields[0]
+		if e.MemberType != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.MemberType,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
-	eventStreamCloudEventGroupMemberAddedPreviousObjectMember0FieldMemberType = big.NewInt(1 << 0)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectMember0FieldID         = big.NewInt(1 << 1)
+	eventStreamCloudEventGroupMemberAddedPreviousObjectMember0FieldID = big.NewInt(1 << 0)
 )
 
 // A group member of member_type user
 type EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 struct {
-	MemberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The user's unique identifier
 	ID string `json:"id" url:"id"`
 
@@ -87879,13 +85931,6 @@ type EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) GetMemberType() EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.MemberType
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) GetID() string {
@@ -87909,13 +85954,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) require(fie
 	}
 	next.Or(next, field)
 	e.explicitFields = next
-}
-
-// SetMemberType sets the MemberType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) SetMemberType(memberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum) {
-	e.MemberType = memberType
-	e.require(eventStreamCloudEventGroupMemberAddedPreviousObjectMember0FieldMemberType)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -87967,36 +86005,14 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) String() st
 	return fmt.Sprintf("%#v", e)
 }
 
-// Type discriminator for user members
-type EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumUser EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum = "user"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum, error) {
-	switch s {
-	case "user":
-		return EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumUser, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum {
-	return &e
-}
-
 var (
-	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldMemberType   = big.NewInt(1 << 0)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldID           = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldID           = big.NewInt(1 << 0)
+	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldType         = big.NewInt(1 << 1)
+	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // A group member of member_type group
 type EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 struct {
-	MemberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The connection member's unique identifier
 	ID string `json:"id" url:"id"`
 	// The type of the connection
@@ -88009,13 +86025,6 @@ type EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) GetMemberType() EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.MemberType
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) GetID() string {
@@ -88053,13 +86062,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) require(fie
 	}
 	next.Or(next, field)
 	e.explicitFields = next
-}
-
-// SetMemberType sets the MemberType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) SetMemberType(memberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum) {
-	e.MemberType = memberType
-	e.require(eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldMemberType)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -88123,26 +86125,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) String() st
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// Type discriminator for connection members
-type EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumConnection EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum {
-	return &e
 }
 
 var (
@@ -88723,141 +86705,179 @@ func (e *EventStreamCloudEventGroupMemberDeletedObject) String() string {
 
 // The group the member belongs to.
 type EventStreamCloudEventGroupMemberDeletedObjectGroup struct {
-	EventStreamCloudEventGroupMemberDeletedObjectGroup0 *EventStreamCloudEventGroupMemberDeletedObjectGroup0
-	EventStreamCloudEventGroupMemberDeletedObjectGroup1 *EventStreamCloudEventGroupMemberDeletedObjectGroup1
-	EventStreamCloudEventGroupMemberDeletedObjectGroup2 *EventStreamCloudEventGroupMemberDeletedObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventGroupMemberDeletedObjectGroup0
+	Organization *EventStreamCloudEventGroupMemberDeletedObjectGroup1
+	Tenant       *EventStreamCloudEventGroupMemberDeletedObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetEventStreamCloudEventGroupMemberDeletedObjectGroup0() *EventStreamCloudEventGroupMemberDeletedObjectGroup0 {
+func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetConnection() *EventStreamCloudEventGroupMemberDeletedObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetEventStreamCloudEventGroupMemberDeletedObjectGroup1() *EventStreamCloudEventGroupMemberDeletedObjectGroup1 {
+func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetOrganization() *EventStreamCloudEventGroupMemberDeletedObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetEventStreamCloudEventGroupMemberDeletedObjectGroup2() *EventStreamCloudEventGroupMemberDeletedObjectGroup2 {
+func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetTenant() *EventStreamCloudEventGroupMemberDeletedObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup0"
-			e.EventStreamCloudEventGroupMemberDeletedObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupMemberDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup1"
-			e.EventStreamCloudEventGroupMemberDeletedObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupMemberDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup2"
-			e.EventStreamCloudEventGroupMemberDeletedObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupMemberDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup0"
-			e.EventStreamCloudEventGroupMemberDeletedObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup1"
-			e.EventStreamCloudEventGroupMemberDeletedObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup2"
-			e.EventStreamCloudEventGroupMemberDeletedObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupMemberDeletedObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup0"
-		e.EventStreamCloudEventGroupMemberDeletedObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberDeletedObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup1"
-		e.EventStreamCloudEventGroupMemberDeletedObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberDeletedObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup2"
-		e.EventStreamCloudEventGroupMemberDeletedObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupMemberDeletedObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup0" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup1" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup2" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupMemberDeletedObjectGroupVisitor interface {
-	VisitEventStreamCloudEventGroupMemberDeletedObjectGroup0(*EventStreamCloudEventGroupMemberDeletedObjectGroup0) error
-	VisitEventStreamCloudEventGroupMemberDeletedObjectGroup1(*EventStreamCloudEventGroupMemberDeletedObjectGroup1) error
-	VisitEventStreamCloudEventGroupMemberDeletedObjectGroup2(*EventStreamCloudEventGroupMemberDeletedObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventGroupMemberDeletedObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventGroupMemberDeletedObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventGroupMemberDeletedObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) Accept(visitor EventStreamCloudEventGroupMemberDeletedObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup0" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedObjectGroup0(e.EventStreamCloudEventGroupMemberDeletedObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup1" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedObjectGroup1(e.EventStreamCloudEventGroupMemberDeletedObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup2" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedObjectGroup2(e.EventStreamCloudEventGroupMemberDeletedObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -88865,8 +86885,7 @@ type EventStreamCloudEventGroupMemberDeletedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                     `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -88889,13 +86908,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) GetExternalID() st
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) GetType() EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) GetConnectionID() string {
@@ -88933,13 +86945,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) SetID(id string) {
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) SetType(type_ EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -88991,31 +86996,10 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumConnection EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -89023,8 +87007,7 @@ type EventStreamCloudEventGroupMemberDeletedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                     `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -89047,13 +87030,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) GetExternalID() st
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) GetType() EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) GetOrganizationID() string {
@@ -89091,13 +87067,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) SetID(id string) {
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) SetType(type_ EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -89149,30 +87118,9 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberDeletedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -89180,8 +87128,7 @@ type EventStreamCloudEventGroupMemberDeletedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                     `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -89202,13 +87149,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) GetExternalID() st
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) GetType() EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -89239,13 +87179,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) SetID(id string) {
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberDeletedObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) SetType(type_ EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberDeletedObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -89290,129 +87223,149 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumTenant EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum {
-	return &e
-}
-
 // The member that is a part of the group.
 type EventStreamCloudEventGroupMemberDeletedObjectMember struct {
-	EventStreamCloudEventGroupMemberDeletedObjectMember0 *EventStreamCloudEventGroupMemberDeletedObjectMember0
-	EventStreamCloudEventGroupMemberDeletedObjectMember1 *EventStreamCloudEventGroupMemberDeletedObjectMember1
+	MemberType string
+	ID         string
+	User       *EventStreamCloudEventGroupMemberDeletedObjectMember0
+	Connection *EventStreamCloudEventGroupMemberDeletedObjectMember1
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) GetEventStreamCloudEventGroupMemberDeletedObjectMember0() *EventStreamCloudEventGroupMemberDeletedObjectMember0 {
+func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) GetMemberType() string {
+	if e == nil {
+		return ""
+	}
+	return e.MemberType
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) GetUser() *EventStreamCloudEventGroupMemberDeletedObjectMember0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedObjectMember0
+	return e.User
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) GetEventStreamCloudEventGroupMemberDeletedObjectMember1() *EventStreamCloudEventGroupMemberDeletedObjectMember1 {
+func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) GetConnection() *EventStreamCloudEventGroupMemberDeletedObjectMember1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedObjectMember1
+	return e.Connection
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"member_type", "id"}, []string{"member_type", "id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedObjectMember0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember0"
-			e.EventStreamCloudEventGroupMemberDeletedObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedObjectMember0
-			return nil
+	var unmarshaler struct {
+		MemberType string `json:"member_type"`
+		ID         string `json:"id"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.MemberType = unmarshaler.MemberType
+	e.ID = unmarshaler.ID
+	if unmarshaler.MemberType == "" {
+		return fmt.Errorf("%T did not include discriminant member_type", e)
+	}
+	switch unmarshaler.MemberType {
+	case "user":
+		value := new(EventStreamCloudEventGroupMemberDeletedObjectMember0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}, []string{"member_type", "id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedObjectMember1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember1"
-			e.EventStreamCloudEventGroupMemberDeletedObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedObjectMember1
-			return nil
+		e.User = value
+	case "connection":
+		value := new(EventStreamCloudEventGroupMemberDeletedObjectMember1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Connection = value
 	}
-	if internal.HasObjectKeys(data, []string{"member_type", "id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedObjectMember0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember0"
-			e.EventStreamCloudEventGroupMemberDeletedObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedObjectMember0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedObjectMember1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember1"
-			e.EventStreamCloudEventGroupMemberDeletedObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedObjectMember1
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupMemberDeletedObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedObjectMember0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember0); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember0"
-		e.EventStreamCloudEventGroupMemberDeletedObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedObjectMember0
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberDeletedObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedObjectMember1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember1); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember1"
-		e.EventStreamCloudEventGroupMemberDeletedObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedObjectMember1
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupMemberDeletedObjectMember) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectMember0" || e.EventStreamCloudEventGroupMemberDeletedObjectMember0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedObjectMember0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectMember1" || e.EventStreamCloudEventGroupMemberDeletedObjectMember1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedObjectMember1)
+	if e.User != nil {
+		return internal.MarshalJSONWithExtraProperty(e.User, "member_type", "user")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "member_type", "connection")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupMemberDeletedObjectMemberVisitor interface {
-	VisitEventStreamCloudEventGroupMemberDeletedObjectMember0(*EventStreamCloudEventGroupMemberDeletedObjectMember0) error
-	VisitEventStreamCloudEventGroupMemberDeletedObjectMember1(*EventStreamCloudEventGroupMemberDeletedObjectMember1) error
+	VisitUser(*EventStreamCloudEventGroupMemberDeletedObjectMember0) error
+	VisitConnection(*EventStreamCloudEventGroupMemberDeletedObjectMember1) error
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) Accept(visitor EventStreamCloudEventGroupMemberDeletedObjectMemberVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectMember0" || e.EventStreamCloudEventGroupMemberDeletedObjectMember0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedObjectMember0(e.EventStreamCloudEventGroupMemberDeletedObjectMember0)
+	if e.User != nil {
+		return visitor.VisitUser(e.User)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectMember1" || e.EventStreamCloudEventGroupMemberDeletedObjectMember1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedObjectMember1(e.EventStreamCloudEventGroupMemberDeletedObjectMember1)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.User != nil {
+		fields = append(fields, "user")
+	}
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if len(fields) == 0 {
+		if e.MemberType != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.MemberType)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.MemberType != "" {
+		field := fields[0]
+		if e.MemberType != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.MemberType,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
-	eventStreamCloudEventGroupMemberDeletedObjectMember0FieldMemberType = big.NewInt(1 << 0)
-	eventStreamCloudEventGroupMemberDeletedObjectMember0FieldID         = big.NewInt(1 << 1)
+	eventStreamCloudEventGroupMemberDeletedObjectMember0FieldID = big.NewInt(1 << 0)
 )
 
 // A group member of member_type user
 type EventStreamCloudEventGroupMemberDeletedObjectMember0 struct {
-	MemberType EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The user's unique identifier
 	ID string `json:"id" url:"id"`
 
@@ -89421,13 +87374,6 @@ type EventStreamCloudEventGroupMemberDeletedObjectMember0 struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedObjectMember0) GetMemberType() EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.MemberType
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectMember0) GetID() string {
@@ -89451,13 +87397,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectMember0) require(field *bi
 	}
 	next.Or(next, field)
 	e.explicitFields = next
-}
-
-// SetMemberType sets the MemberType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedObjectMember0) SetMemberType(memberType EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum) {
-	e.MemberType = memberType
-	e.require(eventStreamCloudEventGroupMemberDeletedObjectMember0FieldMemberType)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -89509,36 +87448,14 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectMember0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Type discriminator for user members
-type EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumUser EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum = "user"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum, error) {
-	switch s {
-	case "user":
-		return EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumUser, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum {
-	return &e
-}
-
 var (
-	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldMemberType   = big.NewInt(1 << 0)
-	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldID           = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldID           = big.NewInt(1 << 0)
+	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldType         = big.NewInt(1 << 1)
+	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // A group member of member_type group
 type EventStreamCloudEventGroupMemberDeletedObjectMember1 struct {
-	MemberType EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The connection member's unique identifier
 	ID string `json:"id" url:"id"`
 	// The type of the connection
@@ -89551,13 +87468,6 @@ type EventStreamCloudEventGroupMemberDeletedObjectMember1 struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedObjectMember1) GetMemberType() EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.MemberType
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectMember1) GetID() string {
@@ -89595,13 +87505,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectMember1) require(field *bi
 	}
 	next.Or(next, field)
 	e.explicitFields = next
-}
-
-// SetMemberType sets the MemberType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedObjectMember1) SetMemberType(memberType EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum) {
-	e.MemberType = memberType
-	e.require(eventStreamCloudEventGroupMemberDeletedObjectMember1FieldMemberType)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -89665,26 +87568,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectMember1) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// Type discriminator for connection members
-type EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumConnection EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum {
-	return &e
 }
 
 var (
@@ -89792,141 +87675,179 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObject) String() string 
 
 // The group the member belongs to.
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup struct {
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
+	Organization *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
+	Tenant       *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 {
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetConnection() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 {
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetOrganization() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 {
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetTenant() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0"
-		e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1"
-		e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2"
-		e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroupVisitor interface {
-	VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0(*EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) error
-	VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1(*EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) error
-	VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2(*EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) Accept(visitor EventStreamCloudEventGroupMemberDeletedPreviousObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -89934,8 +87855,7 @@ type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                             `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -89958,13 +87878,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) GetExterna
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) GetType() EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) GetConnectionID() string {
@@ -90002,13 +87915,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) SetID(id s
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) SetType(type_ EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -90060,31 +87966,10 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -90092,8 +87977,7 @@ type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                             `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -90116,13 +88000,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) GetExterna
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) GetType() EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) GetOrganizationID() string {
@@ -90160,13 +88037,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) SetID(id s
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) SetType(type_ EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -90218,30 +88088,9 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -90249,8 +88098,7 @@ type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                             `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -90271,13 +88119,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) GetExterna
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) GetType() EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -90308,13 +88149,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) SetID(id s
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) SetType(type_ EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -90359,129 +88193,149 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum {
-	return &e
-}
-
 // The member that is a part of the group.
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember struct {
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
+	MemberType string
+	ID         string
+	User       *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
+	Connection *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0() *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 {
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) GetMemberType() string {
+	if e == nil {
+		return ""
+	}
+	return e.MemberType
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) GetUser() *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
+	return e.User
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1() *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 {
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) GetConnection() *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
+	return e.Connection
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"member_type", "id"}, []string{"member_type", "id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
-			return nil
+	var unmarshaler struct {
+		MemberType string `json:"member_type"`
+		ID         string `json:"id"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.MemberType = unmarshaler.MemberType
+	e.ID = unmarshaler.ID
+	if unmarshaler.MemberType == "" {
+		return fmt.Errorf("%T did not include discriminant member_type", e)
+	}
+	switch unmarshaler.MemberType {
+	case "user":
+		value := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}, []string{"member_type", "id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
-			return nil
+		e.User = value
+	case "connection":
+		value := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Connection = value
 	}
-	if internal.HasObjectKeys(data, []string{"member_type", "id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1); err == nil {
-			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1"
-			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0"
-		e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
-		return nil
-	}
-	valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1); err == nil {
-		e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1"
-		e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1)
+	if e.User != nil {
+		return internal.MarshalJSONWithExtraProperty(e.User, "member_type", "user")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "member_type", "connection")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectMemberVisitor interface {
-	VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(*EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) error
-	VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(*EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) error
+	VisitUser(*EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) error
+	VisitConnection(*EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) error
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) Accept(visitor EventStreamCloudEventGroupMemberDeletedPreviousObjectMemberVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
+	if e.User != nil {
+		return visitor.VisitUser(e.User)
 	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1" || e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.User != nil {
+		fields = append(fields, "user")
+	}
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if len(fields) == 0 {
+		if e.MemberType != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.MemberType)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.MemberType != "" {
+		field := fields[0]
+		if e.MemberType != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.MemberType,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember0FieldMemberType = big.NewInt(1 << 0)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember0FieldID         = big.NewInt(1 << 1)
+	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember0FieldID = big.NewInt(1 << 0)
 )
 
 // A group member of member_type user
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 struct {
-	MemberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The user's unique identifier
 	ID string `json:"id" url:"id"`
 
@@ -90490,13 +88344,6 @@ type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) GetMemberType() EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.MemberType
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) GetID() string {
@@ -90520,13 +88367,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) require(f
 	}
 	next.Or(next, field)
 	e.explicitFields = next
-}
-
-// SetMemberType sets the MemberType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) SetMemberType(memberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum) {
-	e.MemberType = memberType
-	e.require(eventStreamCloudEventGroupMemberDeletedPreviousObjectMember0FieldMemberType)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -90578,36 +88418,14 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Type discriminator for user members
-type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumUser EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum = "user"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum, error) {
-	switch s {
-	case "user":
-		return EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumUser, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum {
-	return &e
-}
-
 var (
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldMemberType   = big.NewInt(1 << 0)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldID           = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldID           = big.NewInt(1 << 0)
+	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldType         = big.NewInt(1 << 1)
+	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // A group member of member_type group
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 struct {
-	MemberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The connection member's unique identifier
 	ID string `json:"id" url:"id"`
 	// The type of the connection
@@ -90620,13 +88438,6 @@ type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) GetMemberType() EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.MemberType
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) GetID() string {
@@ -90664,13 +88475,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) require(f
 	}
 	next.Or(next, field)
 	e.explicitFields = next
-}
-
-// SetMemberType sets the MemberType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) SetMemberType(memberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum) {
-	e.MemberType = memberType
-	e.require(eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldMemberType)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -90734,26 +88538,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) String() 
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// Type discriminator for connection members
-type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum string
-
-const (
-	EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumConnection EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum {
-	return &e
 }
 
 var (
@@ -91359,141 +89143,179 @@ func (e *EventStreamCloudEventGroupRoleAssignedObject) String() string {
 
 // The group the role is assigned to.
 type EventStreamCloudEventGroupRoleAssignedObjectGroup struct {
-	EventStreamCloudEventGroupRoleAssignedObjectGroup0 *EventStreamCloudEventGroupRoleAssignedObjectGroup0
-	EventStreamCloudEventGroupRoleAssignedObjectGroup1 *EventStreamCloudEventGroupRoleAssignedObjectGroup1
-	EventStreamCloudEventGroupRoleAssignedObjectGroup2 *EventStreamCloudEventGroupRoleAssignedObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventGroupRoleAssignedObjectGroup0
+	Organization *EventStreamCloudEventGroupRoleAssignedObjectGroup1
+	Tenant       *EventStreamCloudEventGroupRoleAssignedObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetEventStreamCloudEventGroupRoleAssignedObjectGroup0() *EventStreamCloudEventGroupRoleAssignedObjectGroup0 {
+func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetConnection() *EventStreamCloudEventGroupRoleAssignedObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleAssignedObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetEventStreamCloudEventGroupRoleAssignedObjectGroup1() *EventStreamCloudEventGroupRoleAssignedObjectGroup1 {
+func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetOrganization() *EventStreamCloudEventGroupRoleAssignedObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleAssignedObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetEventStreamCloudEventGroupRoleAssignedObjectGroup2() *EventStreamCloudEventGroupRoleAssignedObjectGroup2 {
+func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetTenant() *EventStreamCloudEventGroupRoleAssignedObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleAssignedObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup0"
-			e.EventStreamCloudEventGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupRoleAssignedObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup1"
-			e.EventStreamCloudEventGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupRoleAssignedObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup2"
-			e.EventStreamCloudEventGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupRoleAssignedObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup0"
-			e.EventStreamCloudEventGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup1"
-			e.EventStreamCloudEventGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup2"
-			e.EventStreamCloudEventGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup0"
-		e.EventStreamCloudEventGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup1"
-		e.EventStreamCloudEventGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup2"
-		e.EventStreamCloudEventGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupRoleAssignedObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup0" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleAssignedObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup1" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleAssignedObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup2" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleAssignedObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupRoleAssignedObjectGroupVisitor interface {
-	VisitEventStreamCloudEventGroupRoleAssignedObjectGroup0(*EventStreamCloudEventGroupRoleAssignedObjectGroup0) error
-	VisitEventStreamCloudEventGroupRoleAssignedObjectGroup1(*EventStreamCloudEventGroupRoleAssignedObjectGroup1) error
-	VisitEventStreamCloudEventGroupRoleAssignedObjectGroup2(*EventStreamCloudEventGroupRoleAssignedObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventGroupRoleAssignedObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventGroupRoleAssignedObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventGroupRoleAssignedObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) Accept(visitor EventStreamCloudEventGroupRoleAssignedObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup0" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleAssignedObjectGroup0(e.EventStreamCloudEventGroupRoleAssignedObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup1" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleAssignedObjectGroup1(e.EventStreamCloudEventGroupRoleAssignedObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup2" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleAssignedObjectGroup2(e.EventStreamCloudEventGroupRoleAssignedObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -91501,8 +89323,7 @@ type EventStreamCloudEventGroupRoleAssignedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                    `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -91525,13 +89346,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) GetExternalID() str
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) GetType() EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) GetConnectionID() string {
@@ -91569,13 +89383,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) SetID(id string) {
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) SetType(type_ EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -91627,31 +89434,10 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumConnection EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -91659,8 +89445,7 @@ type EventStreamCloudEventGroupRoleAssignedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                    `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -91683,13 +89468,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) GetExternalID() str
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) GetType() EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) GetOrganizationID() string {
@@ -91727,13 +89505,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) SetID(id string) {
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) SetType(type_ EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -91785,30 +89556,9 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupRoleAssignedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleAssignedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -91816,8 +89566,7 @@ type EventStreamCloudEventGroupRoleAssignedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                    `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -91838,13 +89587,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) GetExternalID() str
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) GetType() EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -91875,13 +89617,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) SetID(id string) {
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleAssignedObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) SetType(type_ EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleAssignedObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -91924,26 +89659,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumTenant EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum {
-	return &e
 }
 
 var (
@@ -92181,141 +89896,179 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObject) String() string {
 
 // The group the role is assigned to.
 type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup struct {
-	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
-	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
-	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
+	Organization *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
+	Tenant       *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 {
+func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetConnection() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 {
+func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetOrganization() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 {
+func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetTenant() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0"
-			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1"
-			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2"
-			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0"
-			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1"
-			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2"
-			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0"
-		e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1"
-		e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2"
-		e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0" || e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1" || e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2" || e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroupVisitor interface {
-	VisitEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0(*EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) error
-	VisitEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1(*EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) error
-	VisitEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2(*EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) Accept(visitor EventStreamCloudEventGroupRoleAssignedPreviousObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0" || e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0(e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1" || e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1(e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2" || e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2(e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -92323,8 +90076,7 @@ type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                            `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -92347,13 +90099,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) GetExternal
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) GetType() EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) GetConnectionID() string {
@@ -92391,13 +90136,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) SetID(id st
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) SetType(type_ EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -92449,31 +90187,10 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) String() st
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -92481,8 +90198,7 @@ type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                            `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -92505,13 +90221,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) GetExternal
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) GetType() EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) GetOrganizationID() string {
@@ -92549,13 +90258,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) SetID(id st
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) SetType(type_ EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -92607,30 +90309,9 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) String() st
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -92638,8 +90319,7 @@ type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                            `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -92660,13 +90340,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) GetExternal
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) GetType() EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -92697,13 +90370,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) SetID(id st
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) SetType(type_ EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -92746,26 +90412,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) String() st
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum {
-	return &e
 }
 
 var (
@@ -93476,141 +91122,179 @@ func (e *EventStreamCloudEventGroupRoleDeletedObject) String() string {
 
 // The group the role is removed from.
 type EventStreamCloudEventGroupRoleDeletedObjectGroup struct {
-	EventStreamCloudEventGroupRoleDeletedObjectGroup0 *EventStreamCloudEventGroupRoleDeletedObjectGroup0
-	EventStreamCloudEventGroupRoleDeletedObjectGroup1 *EventStreamCloudEventGroupRoleDeletedObjectGroup1
-	EventStreamCloudEventGroupRoleDeletedObjectGroup2 *EventStreamCloudEventGroupRoleDeletedObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventGroupRoleDeletedObjectGroup0
+	Organization *EventStreamCloudEventGroupRoleDeletedObjectGroup1
+	Tenant       *EventStreamCloudEventGroupRoleDeletedObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetEventStreamCloudEventGroupRoleDeletedObjectGroup0() *EventStreamCloudEventGroupRoleDeletedObjectGroup0 {
+func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetConnection() *EventStreamCloudEventGroupRoleDeletedObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleDeletedObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetEventStreamCloudEventGroupRoleDeletedObjectGroup1() *EventStreamCloudEventGroupRoleDeletedObjectGroup1 {
+func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetOrganization() *EventStreamCloudEventGroupRoleDeletedObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleDeletedObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetEventStreamCloudEventGroupRoleDeletedObjectGroup2() *EventStreamCloudEventGroupRoleDeletedObjectGroup2 {
+func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetTenant() *EventStreamCloudEventGroupRoleDeletedObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleDeletedObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup0"
-			e.EventStreamCloudEventGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupRoleDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup1"
-			e.EventStreamCloudEventGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupRoleDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup2"
-			e.EventStreamCloudEventGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupRoleDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup0"
-			e.EventStreamCloudEventGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup1"
-			e.EventStreamCloudEventGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup2"
-			e.EventStreamCloudEventGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup0"
-		e.EventStreamCloudEventGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup1"
-		e.EventStreamCloudEventGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup2"
-		e.EventStreamCloudEventGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupRoleDeletedObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup0" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleDeletedObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup1" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleDeletedObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup2" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleDeletedObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupRoleDeletedObjectGroupVisitor interface {
-	VisitEventStreamCloudEventGroupRoleDeletedObjectGroup0(*EventStreamCloudEventGroupRoleDeletedObjectGroup0) error
-	VisitEventStreamCloudEventGroupRoleDeletedObjectGroup1(*EventStreamCloudEventGroupRoleDeletedObjectGroup1) error
-	VisitEventStreamCloudEventGroupRoleDeletedObjectGroup2(*EventStreamCloudEventGroupRoleDeletedObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventGroupRoleDeletedObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventGroupRoleDeletedObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventGroupRoleDeletedObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) Accept(visitor EventStreamCloudEventGroupRoleDeletedObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup0" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleDeletedObjectGroup0(e.EventStreamCloudEventGroupRoleDeletedObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup1" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleDeletedObjectGroup1(e.EventStreamCloudEventGroupRoleDeletedObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup2" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleDeletedObjectGroup2(e.EventStreamCloudEventGroupRoleDeletedObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -93618,8 +91302,7 @@ type EventStreamCloudEventGroupRoleDeletedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                   `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -93642,13 +91325,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) GetExternalID() stri
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) GetType() EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) GetConnectionID() string {
@@ -93686,13 +91362,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) SetID(id string) {
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) SetType(type_ EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -93744,31 +91413,10 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumConnection EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -93776,8 +91424,7 @@ type EventStreamCloudEventGroupRoleDeletedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                   `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -93800,13 +91447,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) GetExternalID() stri
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) GetType() EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) GetOrganizationID() string {
@@ -93844,13 +91484,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) SetID(id string) {
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) SetType(type_ EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -93902,30 +91535,9 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupRoleDeletedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleDeletedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -93933,8 +91545,7 @@ type EventStreamCloudEventGroupRoleDeletedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                   `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -93955,13 +91566,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) GetExternalID() stri
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) GetType() EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -93992,13 +91596,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) SetID(id string) {
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleDeletedObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) SetType(type_ EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleDeletedObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -94041,26 +91638,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumTenant EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum {
-	return &e
 }
 
 var (
@@ -94281,141 +91858,179 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObject) String() string {
 
 // The group the role is assigned to.
 type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup struct {
-	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
-	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
-	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
+	Organization *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
+	Tenant       *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 {
+func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetConnection() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 {
+func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetOrganization() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 {
+func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetTenant() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0"
-			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1"
-			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2"
-			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0"
-			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1"
-			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2"
-			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0"
-		e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1"
-		e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2"
-		e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0" || e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1" || e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2" || e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroupVisitor interface {
-	VisitEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0(*EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) error
-	VisitEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1(*EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) error
-	VisitEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2(*EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) Accept(visitor EventStreamCloudEventGroupRoleDeletedPreviousObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0" || e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0(e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1" || e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1(e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2" || e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2(e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -94423,8 +92038,7 @@ type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                           `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -94447,13 +92061,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) GetExternalI
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) GetType() EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) GetConnectionID() string {
@@ -94491,13 +92098,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) SetID(id str
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) SetType(type_ EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -94549,31 +92149,10 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) String() str
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -94581,8 +92160,7 @@ type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                           `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -94605,13 +92183,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) GetExternalI
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) GetType() EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) GetOrganizationID() string {
@@ -94649,13 +92220,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) SetID(id str
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) SetType(type_ EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -94707,30 +92271,9 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) String() str
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -94738,8 +92281,7 @@ type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                           `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -94760,13 +92302,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) GetExternalI
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) GetType() EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -94797,13 +92332,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) SetID(id str
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) SetType(type_ EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -94846,26 +92374,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) String() str
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum {
-	return &e
 }
 
 var (
@@ -95448,134 +92956,203 @@ func (e *EventStreamCloudEventGroupUpdatedData) String() string {
 
 // The event content.
 type EventStreamCloudEventGroupUpdatedObject struct {
-	EventStreamCloudEventGroupUpdatedObject0 *EventStreamCloudEventGroupUpdatedObject0
-	EventStreamCloudEventGroupUpdatedObject1 *EventStreamCloudEventGroupUpdatedObject1
-	EventStreamCloudEventGroupUpdatedObject2 *EventStreamCloudEventGroupUpdatedObject2
+	Type         string
+	ID           string
+	Name         string
+	ExternalID   *string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	Connection   *EventStreamCloudEventGroupUpdatedObject0
+	Organization *EventStreamCloudEventGroupUpdatedObject1
+	Tenant       *EventStreamCloudEventGroupUpdatedObject2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupUpdatedObject) GetEventStreamCloudEventGroupUpdatedObject0() *EventStreamCloudEventGroupUpdatedObject0 {
+func (e *EventStreamCloudEventGroupUpdatedObject) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupUpdatedObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupUpdatedObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventGroupUpdatedObject) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupUpdatedObject) GetCreatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.CreatedAt
+}
+
+func (e *EventStreamCloudEventGroupUpdatedObject) GetUpdatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.UpdatedAt
+}
+
+func (e *EventStreamCloudEventGroupUpdatedObject) GetConnection() *EventStreamCloudEventGroupUpdatedObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupUpdatedObject0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupUpdatedObject) GetEventStreamCloudEventGroupUpdatedObject1() *EventStreamCloudEventGroupUpdatedObject1 {
+func (e *EventStreamCloudEventGroupUpdatedObject) GetOrganization() *EventStreamCloudEventGroupUpdatedObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupUpdatedObject1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupUpdatedObject) GetEventStreamCloudEventGroupUpdatedObject2() *EventStreamCloudEventGroupUpdatedObject2 {
+func (e *EventStreamCloudEventGroupUpdatedObject) GetTenant() *EventStreamCloudEventGroupUpdatedObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupUpdatedObject2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id", "updated_at"}, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedObject0 := new(EventStreamCloudEventGroupUpdatedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedObject0"
-			e.EventStreamCloudEventGroupUpdatedObject0 = valueEventStreamCloudEventGroupUpdatedObject0
-			return nil
+	var unmarshaler struct {
+		Type       string    `json:"type"`
+		ID         string    `json:"id"`
+		Name       string    `json:"name"`
+		ExternalID *string   `json:"external_id,omitempty"`
+		CreatedAt  time.Time `json:"created_at"`
+		UpdatedAt  time.Time `json:"updated_at"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.Name = unmarshaler.Name
+	e.ExternalID = unmarshaler.ExternalID
+	e.CreatedAt = unmarshaler.CreatedAt
+	e.UpdatedAt = unmarshaler.UpdatedAt
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupUpdatedObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id", "updated_at"}, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedObject1 := new(EventStreamCloudEventGroupUpdatedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedObject1"
-			e.EventStreamCloudEventGroupUpdatedObject1 = valueEventStreamCloudEventGroupUpdatedObject1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupUpdatedObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "updated_at"}, []string{"id", "name", "created_at", "type", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedObject2 := new(EventStreamCloudEventGroupUpdatedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedObject2"
-			e.EventStreamCloudEventGroupUpdatedObject2 = valueEventStreamCloudEventGroupUpdatedObject2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupUpdatedObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedObject0 := new(EventStreamCloudEventGroupUpdatedObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedObject0"
-			e.EventStreamCloudEventGroupUpdatedObject0 = valueEventStreamCloudEventGroupUpdatedObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedObject1 := new(EventStreamCloudEventGroupUpdatedObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedObject1"
-			e.EventStreamCloudEventGroupUpdatedObject1 = valueEventStreamCloudEventGroupUpdatedObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedObject2 := new(EventStreamCloudEventGroupUpdatedObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedObject2"
-			e.EventStreamCloudEventGroupUpdatedObject2 = valueEventStreamCloudEventGroupUpdatedObject2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupUpdatedObject0 := new(EventStreamCloudEventGroupUpdatedObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject0); err == nil {
-		e.typ = "EventStreamCloudEventGroupUpdatedObject0"
-		e.EventStreamCloudEventGroupUpdatedObject0 = valueEventStreamCloudEventGroupUpdatedObject0
-		return nil
-	}
-	valueEventStreamCloudEventGroupUpdatedObject1 := new(EventStreamCloudEventGroupUpdatedObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject1); err == nil {
-		e.typ = "EventStreamCloudEventGroupUpdatedObject1"
-		e.EventStreamCloudEventGroupUpdatedObject1 = valueEventStreamCloudEventGroupUpdatedObject1
-		return nil
-	}
-	valueEventStreamCloudEventGroupUpdatedObject2 := new(EventStreamCloudEventGroupUpdatedObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject2); err == nil {
-		e.typ = "EventStreamCloudEventGroupUpdatedObject2"
-		e.EventStreamCloudEventGroupUpdatedObject2 = valueEventStreamCloudEventGroupUpdatedObject2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupUpdatedObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject0" || e.EventStreamCloudEventGroupUpdatedObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupUpdatedObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject1" || e.EventStreamCloudEventGroupUpdatedObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupUpdatedObject1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject2" || e.EventStreamCloudEventGroupUpdatedObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupUpdatedObject2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupUpdatedObjectVisitor interface {
-	VisitEventStreamCloudEventGroupUpdatedObject0(*EventStreamCloudEventGroupUpdatedObject0) error
-	VisitEventStreamCloudEventGroupUpdatedObject1(*EventStreamCloudEventGroupUpdatedObject1) error
-	VisitEventStreamCloudEventGroupUpdatedObject2(*EventStreamCloudEventGroupUpdatedObject2) error
+	VisitConnection(*EventStreamCloudEventGroupUpdatedObject0) error
+	VisitOrganization(*EventStreamCloudEventGroupUpdatedObject1) error
+	VisitTenant(*EventStreamCloudEventGroupUpdatedObject2) error
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject) Accept(visitor EventStreamCloudEventGroupUpdatedObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject0" || e.EventStreamCloudEventGroupUpdatedObject0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupUpdatedObject0(e.EventStreamCloudEventGroupUpdatedObject0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject1" || e.EventStreamCloudEventGroupUpdatedObject1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupUpdatedObject1(e.EventStreamCloudEventGroupUpdatedObject1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject2" || e.EventStreamCloudEventGroupUpdatedObject2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupUpdatedObject2(e.EventStreamCloudEventGroupUpdatedObject2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupUpdatedObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -95583,9 +93160,8 @@ var (
 	eventStreamCloudEventGroupUpdatedObject0FieldName         = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupUpdatedObject0FieldExternalID   = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupUpdatedObject0FieldCreatedAt    = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupUpdatedObject0FieldType         = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupUpdatedObject0FieldConnectionID = big.NewInt(1 << 5)
-	eventStreamCloudEventGroupUpdatedObject0FieldUpdatedAt    = big.NewInt(1 << 6)
+	eventStreamCloudEventGroupUpdatedObject0FieldConnectionID = big.NewInt(1 << 4)
+	eventStreamCloudEventGroupUpdatedObject0FieldUpdatedAt    = big.NewInt(1 << 5)
 )
 
 // Connection group with updated_at timestamp
@@ -95597,8 +93173,7 @@ type EventStreamCloudEventGroupUpdatedObject0 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupUpdatedObject0TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
@@ -95637,13 +93212,6 @@ func (e *EventStreamCloudEventGroupUpdatedObject0) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupUpdatedObject0) GetType() EventStreamCloudEventGroupUpdatedObject0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject0) GetConnectionID() string {
@@ -95702,13 +93270,6 @@ func (e *EventStreamCloudEventGroupUpdatedObject0) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupUpdatedObject0) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupUpdatedObject0FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupUpdatedObject0) SetType(type_ EventStreamCloudEventGroupUpdatedObject0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupUpdatedObject0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -95779,34 +93340,13 @@ func (e *EventStreamCloudEventGroupUpdatedObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupUpdatedObject0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupUpdatedObject0TypeEnumConnection EventStreamCloudEventGroupUpdatedObject0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedObject0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupUpdatedObject0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupUpdatedObject0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupUpdatedObject0TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedObject0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupUpdatedObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedObject1FieldName           = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupUpdatedObject1FieldExternalID     = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupUpdatedObject1FieldCreatedAt      = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupUpdatedObject1FieldType           = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupUpdatedObject1FieldOrganizationID = big.NewInt(1 << 5)
-	eventStreamCloudEventGroupUpdatedObject1FieldUpdatedAt      = big.NewInt(1 << 6)
+	eventStreamCloudEventGroupUpdatedObject1FieldOrganizationID = big.NewInt(1 << 4)
+	eventStreamCloudEventGroupUpdatedObject1FieldUpdatedAt      = big.NewInt(1 << 5)
 )
 
 // Organization group with updated_at timestamp
@@ -95818,8 +93358,7 @@ type EventStreamCloudEventGroupUpdatedObject1 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupUpdatedObject1TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
@@ -95858,13 +93397,6 @@ func (e *EventStreamCloudEventGroupUpdatedObject1) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupUpdatedObject1) GetType() EventStreamCloudEventGroupUpdatedObject1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject1) GetOrganizationID() string {
@@ -95923,13 +93455,6 @@ func (e *EventStreamCloudEventGroupUpdatedObject1) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupUpdatedObject1) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupUpdatedObject1FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupUpdatedObject1) SetType(type_ EventStreamCloudEventGroupUpdatedObject1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupUpdatedObject1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -96000,33 +93525,12 @@ func (e *EventStreamCloudEventGroupUpdatedObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupUpdatedObject1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupUpdatedObject1TypeEnumOrganization EventStreamCloudEventGroupUpdatedObject1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedObject1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupUpdatedObject1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupUpdatedObject1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupUpdatedObject1TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedObject1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupUpdatedObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedObject2FieldName       = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupUpdatedObject2FieldExternalID = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupUpdatedObject2FieldCreatedAt  = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupUpdatedObject2FieldType       = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupUpdatedObject2FieldUpdatedAt  = big.NewInt(1 << 5)
+	eventStreamCloudEventGroupUpdatedObject2FieldUpdatedAt  = big.NewInt(1 << 4)
 )
 
 // Tenant group with updated_at timestamp
@@ -96038,8 +93542,7 @@ type EventStreamCloudEventGroupUpdatedObject2 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                        `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupUpdatedObject2TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
 	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
 
@@ -96076,13 +93579,6 @@ func (e *EventStreamCloudEventGroupUpdatedObject2) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupUpdatedObject2) GetType() EventStreamCloudEventGroupUpdatedObject2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject2) GetUpdatedAt() time.Time {
@@ -96134,13 +93630,6 @@ func (e *EventStreamCloudEventGroupUpdatedObject2) SetExternalID(externalID *str
 func (e *EventStreamCloudEventGroupUpdatedObject2) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupUpdatedObject2FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupUpdatedObject2) SetType(type_ EventStreamCloudEventGroupUpdatedObject2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupUpdatedObject2FieldType)
 }
 
 // SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
@@ -96204,156 +93693,205 @@ func (e *EventStreamCloudEventGroupUpdatedObject2) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupUpdatedObject2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupUpdatedObject2TypeEnumTenant EventStreamCloudEventGroupUpdatedObject2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedObject2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupUpdatedObject2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupUpdatedObject2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupUpdatedObject2TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedObject2TypeEnum {
-	return &e
-}
-
 // The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventGroupUpdatedPreviousObject struct {
-	EventStreamCloudEventGroupUpdatedPreviousObject0 *EventStreamCloudEventGroupUpdatedPreviousObject0
-	EventStreamCloudEventGroupUpdatedPreviousObject1 *EventStreamCloudEventGroupUpdatedPreviousObject1
-	EventStreamCloudEventGroupUpdatedPreviousObject2 *EventStreamCloudEventGroupUpdatedPreviousObject2
+	Type         string
+	ID           string
+	Name         string
+	ExternalID   *string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	Connection   *EventStreamCloudEventGroupUpdatedPreviousObject0
+	Organization *EventStreamCloudEventGroupUpdatedPreviousObject1
+	Tenant       *EventStreamCloudEventGroupUpdatedPreviousObject2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetEventStreamCloudEventGroupUpdatedPreviousObject0() *EventStreamCloudEventGroupUpdatedPreviousObject0 {
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetCreatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.CreatedAt
+}
+
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetUpdatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.UpdatedAt
+}
+
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetConnection() *EventStreamCloudEventGroupUpdatedPreviousObject0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupUpdatedPreviousObject0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetEventStreamCloudEventGroupUpdatedPreviousObject1() *EventStreamCloudEventGroupUpdatedPreviousObject1 {
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetOrganization() *EventStreamCloudEventGroupUpdatedPreviousObject1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupUpdatedPreviousObject1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetEventStreamCloudEventGroupUpdatedPreviousObject2() *EventStreamCloudEventGroupUpdatedPreviousObject2 {
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetTenant() *EventStreamCloudEventGroupUpdatedPreviousObject2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventGroupUpdatedPreviousObject2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id", "updated_at"}, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedPreviousObject0 := new(EventStreamCloudEventGroupUpdatedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject0"
-			e.EventStreamCloudEventGroupUpdatedPreviousObject0 = valueEventStreamCloudEventGroupUpdatedPreviousObject0
-			return nil
+	var unmarshaler struct {
+		Type       string    `json:"type"`
+		ID         string    `json:"id"`
+		Name       string    `json:"name"`
+		ExternalID *string   `json:"external_id,omitempty"`
+		CreatedAt  time.Time `json:"created_at"`
+		UpdatedAt  time.Time `json:"updated_at"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.Name = unmarshaler.Name
+	e.ExternalID = unmarshaler.ExternalID
+	e.CreatedAt = unmarshaler.CreatedAt
+	e.UpdatedAt = unmarshaler.UpdatedAt
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventGroupUpdatedPreviousObject0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id", "updated_at"}, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedPreviousObject1 := new(EventStreamCloudEventGroupUpdatedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject1"
-			e.EventStreamCloudEventGroupUpdatedPreviousObject1 = valueEventStreamCloudEventGroupUpdatedPreviousObject1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventGroupUpdatedPreviousObject1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "updated_at"}, []string{"id", "name", "created_at", "type", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedPreviousObject2 := new(EventStreamCloudEventGroupUpdatedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject2"
-			e.EventStreamCloudEventGroupUpdatedPreviousObject2 = valueEventStreamCloudEventGroupUpdatedPreviousObject2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventGroupUpdatedPreviousObject2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedPreviousObject0 := new(EventStreamCloudEventGroupUpdatedPreviousObject0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject0); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject0"
-			e.EventStreamCloudEventGroupUpdatedPreviousObject0 = valueEventStreamCloudEventGroupUpdatedPreviousObject0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedPreviousObject1 := new(EventStreamCloudEventGroupUpdatedPreviousObject1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject1); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject1"
-			e.EventStreamCloudEventGroupUpdatedPreviousObject1 = valueEventStreamCloudEventGroupUpdatedPreviousObject1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "updated_at"}) {
-		valueEventStreamCloudEventGroupUpdatedPreviousObject2 := new(EventStreamCloudEventGroupUpdatedPreviousObject2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject2); err == nil {
-			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject2"
-			e.EventStreamCloudEventGroupUpdatedPreviousObject2 = valueEventStreamCloudEventGroupUpdatedPreviousObject2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventGroupUpdatedPreviousObject0 := new(EventStreamCloudEventGroupUpdatedPreviousObject0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject0); err == nil {
-		e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject0"
-		e.EventStreamCloudEventGroupUpdatedPreviousObject0 = valueEventStreamCloudEventGroupUpdatedPreviousObject0
-		return nil
-	}
-	valueEventStreamCloudEventGroupUpdatedPreviousObject1 := new(EventStreamCloudEventGroupUpdatedPreviousObject1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject1); err == nil {
-		e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject1"
-		e.EventStreamCloudEventGroupUpdatedPreviousObject1 = valueEventStreamCloudEventGroupUpdatedPreviousObject1
-		return nil
-	}
-	valueEventStreamCloudEventGroupUpdatedPreviousObject2 := new(EventStreamCloudEventGroupUpdatedPreviousObject2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject2); err == nil {
-		e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject2"
-		e.EventStreamCloudEventGroupUpdatedPreviousObject2 = valueEventStreamCloudEventGroupUpdatedPreviousObject2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventGroupUpdatedPreviousObject) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventGroupUpdatedPreviousObject0" || e.EventStreamCloudEventGroupUpdatedPreviousObject0 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupUpdatedPreviousObject0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedPreviousObject1" || e.EventStreamCloudEventGroupUpdatedPreviousObject1 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupUpdatedPreviousObject1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedPreviousObject2" || e.EventStreamCloudEventGroupUpdatedPreviousObject2 != nil {
-		return json.Marshal(e.EventStreamCloudEventGroupUpdatedPreviousObject2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventGroupUpdatedPreviousObjectVisitor interface {
-	VisitEventStreamCloudEventGroupUpdatedPreviousObject0(*EventStreamCloudEventGroupUpdatedPreviousObject0) error
-	VisitEventStreamCloudEventGroupUpdatedPreviousObject1(*EventStreamCloudEventGroupUpdatedPreviousObject1) error
-	VisitEventStreamCloudEventGroupUpdatedPreviousObject2(*EventStreamCloudEventGroupUpdatedPreviousObject2) error
+	VisitConnection(*EventStreamCloudEventGroupUpdatedPreviousObject0) error
+	VisitOrganization(*EventStreamCloudEventGroupUpdatedPreviousObject1) error
+	VisitTenant(*EventStreamCloudEventGroupUpdatedPreviousObject2) error
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject) Accept(visitor EventStreamCloudEventGroupUpdatedPreviousObjectVisitor) error {
-	if e.typ == "EventStreamCloudEventGroupUpdatedPreviousObject0" || e.EventStreamCloudEventGroupUpdatedPreviousObject0 != nil {
-		return visitor.VisitEventStreamCloudEventGroupUpdatedPreviousObject0(e.EventStreamCloudEventGroupUpdatedPreviousObject0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedPreviousObject1" || e.EventStreamCloudEventGroupUpdatedPreviousObject1 != nil {
-		return visitor.VisitEventStreamCloudEventGroupUpdatedPreviousObject1(e.EventStreamCloudEventGroupUpdatedPreviousObject1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedPreviousObject2" || e.EventStreamCloudEventGroupUpdatedPreviousObject2 != nil {
-		return visitor.VisitEventStreamCloudEventGroupUpdatedPreviousObject2(e.EventStreamCloudEventGroupUpdatedPreviousObject2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventGroupUpdatedPreviousObject) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
@@ -96361,9 +93899,8 @@ var (
 	eventStreamCloudEventGroupUpdatedPreviousObject0FieldName         = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupUpdatedPreviousObject0FieldExternalID   = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupUpdatedPreviousObject0FieldCreatedAt    = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupUpdatedPreviousObject0FieldType         = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupUpdatedPreviousObject0FieldConnectionID = big.NewInt(1 << 5)
-	eventStreamCloudEventGroupUpdatedPreviousObject0FieldUpdatedAt    = big.NewInt(1 << 6)
+	eventStreamCloudEventGroupUpdatedPreviousObject0FieldConnectionID = big.NewInt(1 << 4)
+	eventStreamCloudEventGroupUpdatedPreviousObject0FieldUpdatedAt    = big.NewInt(1 << 5)
 )
 
 // Connection group with updated_at timestamp
@@ -96375,8 +93912,7 @@ type EventStreamCloudEventGroupUpdatedPreviousObject0 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
@@ -96415,13 +93951,6 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) GetType() EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) GetConnectionID() string {
@@ -96480,13 +94009,6 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) SetExternalID(externa
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupUpdatedPreviousObject0FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) SetType(type_ EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupUpdatedPreviousObject0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -96557,34 +94079,13 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum string
-
-const (
-	EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumConnection EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupUpdatedPreviousObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedPreviousObject1FieldName           = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupUpdatedPreviousObject1FieldExternalID     = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupUpdatedPreviousObject1FieldCreatedAt      = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupUpdatedPreviousObject1FieldType           = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupUpdatedPreviousObject1FieldOrganizationID = big.NewInt(1 << 5)
-	eventStreamCloudEventGroupUpdatedPreviousObject1FieldUpdatedAt      = big.NewInt(1 << 6)
+	eventStreamCloudEventGroupUpdatedPreviousObject1FieldOrganizationID = big.NewInt(1 << 4)
+	eventStreamCloudEventGroupUpdatedPreviousObject1FieldUpdatedAt      = big.NewInt(1 << 5)
 )
 
 // Organization group with updated_at timestamp
@@ -96596,8 +94097,7 @@ type EventStreamCloudEventGroupUpdatedPreviousObject1 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
@@ -96636,13 +94136,6 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) GetType() EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) GetOrganizationID() string {
@@ -96701,13 +94194,6 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) SetExternalID(externa
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupUpdatedPreviousObject1FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) SetType(type_ EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupUpdatedPreviousObject1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -96778,33 +94264,12 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum string
-
-const (
-	EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumOrganization EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventGroupUpdatedPreviousObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedPreviousObject2FieldName       = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupUpdatedPreviousObject2FieldExternalID = big.NewInt(1 << 2)
 	eventStreamCloudEventGroupUpdatedPreviousObject2FieldCreatedAt  = big.NewInt(1 << 3)
-	eventStreamCloudEventGroupUpdatedPreviousObject2FieldType       = big.NewInt(1 << 4)
-	eventStreamCloudEventGroupUpdatedPreviousObject2FieldUpdatedAt  = big.NewInt(1 << 5)
+	eventStreamCloudEventGroupUpdatedPreviousObject2FieldUpdatedAt  = big.NewInt(1 << 4)
 )
 
 // Tenant group with updated_at timestamp
@@ -96816,8 +94281,7 @@ type EventStreamCloudEventGroupUpdatedPreviousObject2 struct {
 	// The external identifier for the group.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Date and time when this entity was created (ISO_8601 format).
-	CreatedAt time.Time                                                `json:"created_at" url:"created_at"`
-	Type      EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum `json:"type" url:"type"`
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// Date and time when this entity was last updated/modified (ISO_8601 format).
 	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
 
@@ -96854,13 +94318,6 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) GetCreatedAt() time.T
 		return time.Time{}
 	}
 	return e.CreatedAt
-}
-
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) GetType() EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) GetUpdatedAt() time.Time {
@@ -96912,13 +94369,6 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) SetExternalID(externa
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) SetCreatedAt(createdAt time.Time) {
 	e.CreatedAt = createdAt
 	e.require(eventStreamCloudEventGroupUpdatedPreviousObject2FieldCreatedAt)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) SetType(type_ EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventGroupUpdatedPreviousObject2FieldType)
 }
 
 // SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
@@ -96980,26 +94430,6 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum string
-
-const (
-	EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumTenant EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum {
-	return &e
 }
 
 var (
@@ -104722,141 +102152,179 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObject) String() string {
 
 // The group the role is assigned to.
 type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup struct {
-	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
-	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
-	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
+	Organization *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
+	Tenant       *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 {
+func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetConnection() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 {
+func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetOrganization() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 {
+func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetTenant() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0"
-			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1"
-			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2"
-			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0"
-			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1"
-			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2"
-			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0"
-		e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1"
-		e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2"
-		e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventOrgGroupRoleAssignedObjectGroupVisitor interface {
-	VisitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0(*EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) error
-	VisitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1(*EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) error
-	VisitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2(*EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) Accept(visitor EventStreamCloudEventOrgGroupRoleAssignedObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0(e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1(e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2(e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -104864,8 +102332,7 @@ type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                       `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -104888,13 +102355,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) GetExternalID() 
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) GetType() EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) GetConnectionID() string {
@@ -104932,13 +102392,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) SetID(id string)
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) SetType(type_ EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -104990,31 +102443,10 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumConnection EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -105022,8 +102454,7 @@ type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                       `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -105046,13 +102477,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) GetExternalID() 
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) GetType() EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) GetOrganizationID() string {
@@ -105090,13 +102514,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) SetID(id string)
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) SetType(type_ EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -105148,30 +102565,9 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumOrganization EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -105179,8 +102575,7 @@ type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                       `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -105201,13 +102596,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) GetExternalID() 
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) GetType() EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -105238,13 +102626,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) SetID(id string)
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleAssignedObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) SetType(type_ EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleAssignedObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -105287,26 +102668,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) String() string 
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumTenant EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum {
-	return &e
 }
 
 var (
@@ -105648,141 +103009,179 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObject) String() strin
 
 // The group the role is assigned to.
 type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup struct {
-	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
-	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
-	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
+	Organization *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
+	Tenant       *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 {
+func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetConnection() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 {
+func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetOrganization() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 {
+func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetTenant() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0"
-			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1"
-			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2"
-			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0"
-			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1"
-			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2"
-			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0"
-		e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1"
-		e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2"
-		e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroupVisitor interface {
-	VisitEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0(*EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) error
-	VisitEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1(*EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) error
-	VisitEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2(*EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) Accept(visitor EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0(e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1(e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2(e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -105790,8 +103189,7 @@ type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                               `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -105814,13 +103212,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) GetExter
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) GetType() EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) GetConnectionID() string {
@@ -105858,13 +103249,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) SetID(id
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) SetType(type_ EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -105916,31 +103300,10 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -105948,8 +103311,7 @@ type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                               `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -105972,13 +103334,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) GetExter
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) GetType() EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) GetOrganizationID() string {
@@ -106016,13 +103371,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) SetID(id
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) SetType(type_ EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -106074,30 +103422,9 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -106105,8 +103432,7 @@ type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                               `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -106127,13 +103453,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) GetExter
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) GetType() EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -106164,13 +103483,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) SetID(id
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) SetType(type_ EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -106213,26 +103525,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) String()
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum {
-	return &e
 }
 
 var (
@@ -107047,141 +104339,179 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObject) String() string {
 
 // The group the role is removed from.
 type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup struct {
-	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
-	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
-	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
+	Organization *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
+	Tenant       *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 {
+func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetConnection() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 {
+func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetOrganization() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 {
+func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetTenant() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0"
-			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1"
-			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2"
-			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0"
-			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1"
-			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2"
-			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0"
-		e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1"
-		e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2"
-		e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventOrgGroupRoleDeletedObjectGroupVisitor interface {
-	VisitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0(*EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) error
-	VisitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1(*EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) error
-	VisitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2(*EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) Accept(visitor EventStreamCloudEventOrgGroupRoleDeletedObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0(e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1(e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2(e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -107189,8 +104519,7 @@ type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                      `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -107213,13 +104542,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) GetExternalID() s
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) GetType() EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) GetConnectionID() string {
@@ -107257,13 +104579,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) SetID(id string) 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) SetType(type_ EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -107315,31 +104630,10 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumConnection EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -107347,8 +104641,7 @@ type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                      `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -107371,13 +104664,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) GetExternalID() s
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) GetType() EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) GetOrganizationID() string {
@@ -107415,13 +104701,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) SetID(id string) 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) SetType(type_ EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -107473,30 +104752,9 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumOrganization EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -107504,8 +104762,7 @@ type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                      `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -107526,13 +104783,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) GetExternalID() s
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) GetType() EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -107563,13 +104813,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) SetID(id string) 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleDeletedObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) SetType(type_ EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleDeletedObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -107612,26 +104855,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumTenant EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum {
-	return &e
 }
 
 var (
@@ -107956,141 +105179,179 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObject) String() string
 
 // The group the role is assigned to.
 type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup struct {
-	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
-	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
-	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
+	Type         string
+	ID           string
+	ExternalID   *string
+	Connection   *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
+	Organization *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
+	Tenant       *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 {
+func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetExternalID() string {
+	if e == nil || e.ExternalID == nil {
+		return ""
+	}
+	return *e.ExternalID
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetConnection() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
+	return e.Connection
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 {
+func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetOrganization() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
+	return e.Organization
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 {
+func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetTenant() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 {
 	if e == nil {
 		return nil
 	}
-	return e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
+	return e.Tenant
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0"
-			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
-			return nil
+	var unmarshaler struct {
+		Type       string  `json:"type"`
+		ID         string  `json:"id"`
+		ExternalID *string `json:"external_id,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	e.Type = unmarshaler.Type
+	e.ID = unmarshaler.ID
+	e.ExternalID = unmarshaler.ExternalID
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
+	switch unmarshaler.Type {
+	case "connection":
+		value := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1"
-			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
-			return nil
+		e.Connection = value
+	case "organization":
+		value := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2"
-			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
-			return nil
+		e.Organization = value
+	case "tenant":
+		value := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
 		}
+		e.Tenant = value
 	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0"
-			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1"
-			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id", "type"}) {
-		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2)
-		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2); err == nil {
-			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2"
-			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
-			return nil
-		}
-	}
-	valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0"
-		e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
-		return nil
-	}
-	valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1"
-		e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
-		return nil
-	}
-	valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2)
-	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2); err == nil {
-		e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2"
-		e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	e.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
+	if err := e.validate(); err != nil {
+		return nil, err
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1)
+	if e.Connection != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Connection, "type", "connection")
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 != nil {
-		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2)
+	if e.Organization != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Organization, "type", "organization")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	if e.Tenant != nil {
+		return internal.MarshalJSONWithExtraProperty(e.Tenant, "type", "tenant")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroupVisitor interface {
-	VisitEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0(*EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) error
-	VisitEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1(*EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) error
-	VisitEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2(*EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) error
+	VisitConnection(*EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) error
+	VisitOrganization(*EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) error
+	VisitTenant(*EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) error
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) Accept(visitor EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroupVisitor) error {
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0(e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
+	if e.Connection != nil {
+		return visitor.VisitConnection(e.Connection)
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1(e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1)
+	if e.Organization != nil {
+		return visitor.VisitOrganization(e.Organization)
 	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 != nil {
-		return visitor.VisitEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2(e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2)
+	if e.Tenant != nil {
+		return visitor.VisitTenant(e.Tenant)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Connection != nil {
+		fields = append(fields, "connection")
+	}
+	if e.Organization != nil {
+		fields = append(fields, "organization")
+	}
+	if e.Tenant != nil {
+		fields = append(fields, "tenant")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldType         = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 2)
 )
 
 // Reference to a connection group
@@ -108098,8 +105359,7 @@ type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                              `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The connection ID associated with the group.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
 
@@ -108122,13 +105382,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) GetExtern
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) GetType() EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) GetConnectionID() string {
@@ -108166,13 +105419,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) SetID(id 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) SetType(type_ EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldType)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -108224,31 +105470,10 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum = "connection"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum, error) {
-	switch s {
-	case "connection":
-		return EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumConnection, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldType           = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 2)
 )
 
 // Reference to an organization group
@@ -108256,8 +105481,7 @@ type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                              `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// The organization ID associated with the group.
 	OrganizationID string `json:"organization_id" url:"organization_id"`
 
@@ -108280,13 +105504,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) GetExtern
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) GetType() EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) GetOrganizationID() string {
@@ -108324,13 +105541,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) SetID(id 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) SetType(type_ EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldType)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -108382,30 +105592,9 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum = "organization"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum, error) {
-	switch s {
-	case "organization":
-		return EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumOrganization, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum {
-	return &e
-}
-
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
 // Reference to a tenant group
@@ -108413,8 +105602,7 @@ type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
 	// The external identifier for the group.
-	ExternalID *string                                                              `json:"external_id,omitempty" url:"external_id,omitempty"`
-	Type       EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum `json:"type" url:"type"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -108435,13 +105623,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) GetExtern
 		return ""
 	}
 	return *e.ExternalID
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) GetType() EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.Type
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) GetExtraProperties() map[string]interface{} {
@@ -108472,13 +105653,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) SetID(id 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) SetExternalID(externalID *string) {
 	e.ExternalID = externalID
 	e.require(eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2FieldExternalID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) SetType(type_ EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum) {
-	e.Type = type_
-	e.require(eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2FieldType)
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) UnmarshalJSON(data []byte) error {
@@ -108521,26 +105695,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) String() 
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
-}
-
-// The type of the group.
-type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum string
-
-const (
-	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum = "tenant"
-)
-
-func NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum, error) {
-	switch s {
-	case "tenant":
-		return EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumTenant, nil
-	}
-	var t EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum {
-	return &e
 }
 
 var (

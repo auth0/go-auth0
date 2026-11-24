@@ -1175,20 +1175,21 @@ var (
 	clientFieldExpressConfiguration                           = big.NewInt(1 << 56)
 	clientFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
 	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
-	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
-	clientFieldAnonymousSessions                              = big.NewInt(1 << 60)
-	clientFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
-	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
-	clientFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	clientFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
-	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	clientFieldGoogleAccountLinking                           = big.NewInt(1 << 59)
+	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 60)
+	clientFieldAnonymousSessions                              = big.NewInt(1 << 61)
+	clientFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 62)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	clientFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 73)
 )
 
 // clientNullableFields maps the wire names of Client's nullable fields (required or optional) to their field bits.
@@ -1298,6 +1299,7 @@ type Client struct {
 	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
 	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	GoogleAccountLinking                     *GoogleAccountLinkingConfiguration                `json:"google_account_linking,omitempty" url:"google_account_linking,omitempty"`
 	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
@@ -1736,6 +1738,13 @@ func (c *Client) GetMyOrganizationConfiguration() ClientMyOrganizationResponseCo
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *c.MyOrganizationConfiguration
+}
+
+func (c *Client) GetGoogleAccountLinking() GoogleAccountLinkingConfiguration {
+	if c == nil || c.GoogleAccountLinking == nil {
+		return GoogleAccountLinkingConfiguration{}
+	}
+	return *c.GoogleAccountLinking
 }
 
 func (c *Client) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
@@ -2263,6 +2272,13 @@ func (c *Client) SetB2BIntegrationConfiguration(b2BIntegrationConfiguration *B2B
 func (c *Client) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
 	c.MyOrganizationConfiguration = myOrganizationConfiguration
 	c.require(clientFieldMyOrganizationConfiguration)
+}
+
+// SetGoogleAccountLinking sets the GoogleAccountLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetGoogleAccountLinking(googleAccountLinking *GoogleAccountLinkingConfiguration) {
+	c.GoogleAccountLinking = googleAccountLinking
+	c.require(clientFieldGoogleAccountLinking)
 }
 
 // SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
@@ -10104,20 +10120,21 @@ var (
 	clientSearchResponseFieldExpressConfiguration                           = big.NewInt(1 << 52)
 	clientSearchResponseFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 53)
 	clientSearchResponseFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	clientSearchResponseFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
-	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 56)
-	clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 57)
-	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 58)
-	clientSearchResponseFieldOidcSupport                                    = big.NewInt(1 << 59)
-	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 60)
-	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 61)
-	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 62)
-	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	clientSearchResponseFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientSearchResponseFieldGoogleAccountLinking                           = big.NewInt(1 << 55)
+	clientSearchResponseFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
+	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 57)
+	clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 58)
+	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 59)
+	clientSearchResponseFieldOidcSupport                                    = big.NewInt(1 << 60)
+	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 61)
+	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 62)
+	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientSearchResponseFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
 )
 
 // clientSearchResponseNullableFields maps the wire names of ClientSearchResponse's nullable fields (required or optional) to their field bits.
@@ -10220,6 +10237,7 @@ type ClientSearchResponse struct {
 	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
 	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	GoogleAccountLinking                     *GoogleAccountLinkingConfiguration                `json:"google_account_linking,omitempty" url:"google_account_linking,omitempty"`
 	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
@@ -10630,6 +10648,13 @@ func (c *ClientSearchResponse) GetMyOrganizationConfiguration() ClientMyOrganiza
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *c.MyOrganizationConfiguration
+}
+
+func (c *ClientSearchResponse) GetGoogleAccountLinking() GoogleAccountLinkingConfiguration {
+	if c == nil || c.GoogleAccountLinking == nil {
+		return GoogleAccountLinkingConfiguration{}
+	}
+	return *c.GoogleAccountLinking
 }
 
 func (c *ClientSearchResponse) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
@@ -11129,6 +11154,13 @@ func (c *ClientSearchResponse) SetB2BIntegrationConfiguration(b2BIntegrationConf
 func (c *ClientSearchResponse) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
 	c.MyOrganizationConfiguration = myOrganizationConfiguration
 	c.require(clientSearchResponseFieldMyOrganizationConfiguration)
+}
+
+// SetGoogleAccountLinking sets the GoogleAccountLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetGoogleAccountLinking(googleAccountLinking *GoogleAccountLinkingConfiguration) {
+	c.GoogleAccountLinking = googleAccountLinking
+	c.require(clientSearchResponseFieldGoogleAccountLinking)
 }
 
 // SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
@@ -12773,20 +12805,21 @@ var (
 	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
 	createClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
 	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
-	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
-	createClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
-	createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
-	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
-	createClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	createClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	createClientResponseContentFieldGoogleAccountLinking                           = big.NewInt(1 << 59)
+	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 60)
+	createClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 61)
+	createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 62)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	createClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	createClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 73)
 )
 
 // createClientResponseContentNullableFields maps the wire names of CreateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -12896,6 +12929,7 @@ type CreateClientResponseContent struct {
 	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
 	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	GoogleAccountLinking                     *GoogleAccountLinkingConfiguration                `json:"google_account_linking,omitempty" url:"google_account_linking,omitempty"`
 	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
@@ -13334,6 +13368,13 @@ func (c *CreateClientResponseContent) GetMyOrganizationConfiguration() ClientMyO
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *c.MyOrganizationConfiguration
+}
+
+func (c *CreateClientResponseContent) GetGoogleAccountLinking() GoogleAccountLinkingConfiguration {
+	if c == nil || c.GoogleAccountLinking == nil {
+		return GoogleAccountLinkingConfiguration{}
+	}
+	return *c.GoogleAccountLinking
 }
 
 func (c *CreateClientResponseContent) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
@@ -13863,6 +13904,13 @@ func (c *CreateClientResponseContent) SetMyOrganizationConfiguration(myOrganizat
 	c.require(createClientResponseContentFieldMyOrganizationConfiguration)
 }
 
+// SetGoogleAccountLinking sets the GoogleAccountLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetGoogleAccountLinking(googleAccountLinking *GoogleAccountLinkingConfiguration) {
+	c.GoogleAccountLinking = googleAccountLinking
+	c.require(createClientResponseContentFieldGoogleAccountLinking)
+}
+
 // SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientResponseContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
@@ -14207,6 +14255,7 @@ var (
 	expressConfigurationFieldOktaOinClientID          = big.NewInt(1 << 6)
 	expressConfigurationFieldAdminLoginDomain         = big.NewInt(1 << 7)
 	expressConfigurationFieldOinSubmissionID          = big.NewInt(1 << 8)
+	expressConfigurationFieldOktaOinListingURL        = big.NewInt(1 << 9)
 )
 
 // Application specific configuration for use with the OIN Express Configuration feature.
@@ -14229,6 +14278,8 @@ type ExpressConfiguration struct {
 	AdminLoginDomain string `json:"admin_login_domain" url:"admin_login_domain"`
 	// The identifier of the published application in the OKTA OIN.
 	OinSubmissionID *string `json:"oin_submission_id,omitempty" url:"oin_submission_id,omitempty"`
+	// URL of the application's listing in the Okta Integration Network (OIN) catalog, used to redirect customers into OIN Express Configuration. Must be an https URL on an okta.com domain with no query string or fragment.
+	OktaOinListingURL *string `json:"okta_oin_listing_url,omitempty" url:"okta_oin_listing_url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -14298,6 +14349,13 @@ func (e *ExpressConfiguration) GetOinSubmissionID() string {
 		return ""
 	}
 	return *e.OinSubmissionID
+}
+
+func (e *ExpressConfiguration) GetOktaOinListingURL() string {
+	if e == nil || e.OktaOinListingURL == nil {
+		return ""
+	}
+	return *e.OktaOinListingURL
 }
 
 func (e *ExpressConfiguration) GetExtraProperties() map[string]interface{} {
@@ -14379,6 +14437,13 @@ func (e *ExpressConfiguration) SetOinSubmissionID(oinSubmissionID *string) {
 	e.require(expressConfigurationFieldOinSubmissionID)
 }
 
+// SetOktaOinListingURL sets the OktaOinListingURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExpressConfiguration) SetOktaOinListingURL(oktaOinListingURL *string) {
+	e.OktaOinListingURL = oktaOinListingURL
+	e.require(expressConfigurationFieldOktaOinListingURL)
+}
+
 func (e *ExpressConfiguration) UnmarshalJSON(data []byte) error {
 	type unmarshaler ExpressConfiguration
 	var value unmarshaler
@@ -14431,6 +14496,7 @@ var (
 	expressConfigurationOrNullFieldOktaOinClientID          = big.NewInt(1 << 6)
 	expressConfigurationOrNullFieldAdminLoginDomain         = big.NewInt(1 << 7)
 	expressConfigurationOrNullFieldOinSubmissionID          = big.NewInt(1 << 8)
+	expressConfigurationOrNullFieldOktaOinListingURL        = big.NewInt(1 << 9)
 )
 
 // Application specific configuration for use with the OIN Express Configuration feature.
@@ -14453,6 +14519,8 @@ type ExpressConfigurationOrNull struct {
 	AdminLoginDomain string `json:"admin_login_domain" url:"admin_login_domain"`
 	// The identifier of the published application in the OKTA OIN.
 	OinSubmissionID *string `json:"oin_submission_id,omitempty" url:"oin_submission_id,omitempty"`
+	// URL of the application's listing in the Okta Integration Network (OIN) catalog, used to redirect customers into OIN Express Configuration. Must be an https URL on an okta.com domain with no query string or fragment.
+	OktaOinListingURL *string `json:"okta_oin_listing_url,omitempty" url:"okta_oin_listing_url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -14522,6 +14590,13 @@ func (e *ExpressConfigurationOrNull) GetOinSubmissionID() string {
 		return ""
 	}
 	return *e.OinSubmissionID
+}
+
+func (e *ExpressConfigurationOrNull) GetOktaOinListingURL() string {
+	if e == nil || e.OktaOinListingURL == nil {
+		return ""
+	}
+	return *e.OktaOinListingURL
 }
 
 func (e *ExpressConfigurationOrNull) GetExtraProperties() map[string]interface{} {
@@ -14601,6 +14676,13 @@ func (e *ExpressConfigurationOrNull) SetAdminLoginDomain(adminLoginDomain string
 func (e *ExpressConfigurationOrNull) SetOinSubmissionID(oinSubmissionID *string) {
 	e.OinSubmissionID = oinSubmissionID
 	e.require(expressConfigurationOrNullFieldOinSubmissionID)
+}
+
+// SetOktaOinListingURL sets the OktaOinListingURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExpressConfigurationOrNull) SetOktaOinListingURL(oktaOinListingURL *string) {
+	e.OktaOinListingURL = oktaOinListingURL
+	e.require(expressConfigurationOrNullFieldOktaOinListingURL)
 }
 
 func (e *ExpressConfigurationOrNull) UnmarshalJSON(data []byte) error {
@@ -15067,20 +15149,21 @@ var (
 	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
 	getClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
 	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
-	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
-	getClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
-	getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
-	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
-	getClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	getClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	getClientResponseContentFieldGoogleAccountLinking                           = big.NewInt(1 << 59)
+	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 60)
+	getClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 61)
+	getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 62)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	getClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	getClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 73)
 )
 
 // getClientResponseContentNullableFields maps the wire names of GetClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -15190,6 +15273,7 @@ type GetClientResponseContent struct {
 	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
 	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	GoogleAccountLinking                     *GoogleAccountLinkingConfiguration                `json:"google_account_linking,omitempty" url:"google_account_linking,omitempty"`
 	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
@@ -15628,6 +15712,13 @@ func (g *GetClientResponseContent) GetMyOrganizationConfiguration() ClientMyOrga
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *g.MyOrganizationConfiguration
+}
+
+func (g *GetClientResponseContent) GetGoogleAccountLinking() GoogleAccountLinkingConfiguration {
+	if g == nil || g.GoogleAccountLinking == nil {
+		return GoogleAccountLinkingConfiguration{}
+	}
+	return *g.GoogleAccountLinking
 }
 
 func (g *GetClientResponseContent) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
@@ -16157,6 +16248,13 @@ func (g *GetClientResponseContent) SetMyOrganizationConfiguration(myOrganization
 	g.require(getClientResponseContentFieldMyOrganizationConfiguration)
 }
 
+// SetGoogleAccountLinking sets the GoogleAccountLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetGoogleAccountLinking(googleAccountLinking *GoogleAccountLinkingConfiguration) {
+	g.GoogleAccountLinking = googleAccountLinking
+	g.require(getClientResponseContentFieldGoogleAccountLinking)
+}
+
 // SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientResponseContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
@@ -16302,6 +16400,270 @@ func (g *GetClientResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetClientResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	googleAccountLinkingConfigurationFieldAllowStreamlinedLinking = big.NewInt(1 << 0)
+)
+
+// Configuration for Google account linking.
+type GoogleAccountLinkingConfiguration struct {
+	// Enables the Google streamlined account linking flow for this client.
+	AllowStreamlinedLinking *bool `json:"allow_streamlined_linking,omitempty" url:"allow_streamlined_linking,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GoogleAccountLinkingConfiguration) GetAllowStreamlinedLinking() bool {
+	if g == nil || g.AllowStreamlinedLinking == nil {
+		return false
+	}
+	return *g.AllowStreamlinedLinking
+}
+
+func (g *GoogleAccountLinkingConfiguration) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GoogleAccountLinkingConfiguration) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetAllowStreamlinedLinking sets the AllowStreamlinedLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GoogleAccountLinkingConfiguration) SetAllowStreamlinedLinking(allowStreamlinedLinking *bool) {
+	g.AllowStreamlinedLinking = allowStreamlinedLinking
+	g.require(googleAccountLinkingConfigurationFieldAllowStreamlinedLinking)
+}
+
+func (g *GoogleAccountLinkingConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler GoogleAccountLinkingConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GoogleAccountLinkingConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GoogleAccountLinkingConfiguration) MarshalJSON() ([]byte, error) {
+	type embed GoogleAccountLinkingConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GoogleAccountLinkingConfiguration) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	googleAccountLinkingConfigurationCreateFieldAllowStreamlinedLinking = big.NewInt(1 << 0)
+)
+
+// Configuration for Google account linking.
+type GoogleAccountLinkingConfigurationCreate struct {
+	// Enables the Google streamlined account linking flow for this client.
+	AllowStreamlinedLinking *bool `json:"allow_streamlined_linking,omitempty" url:"allow_streamlined_linking,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GoogleAccountLinkingConfigurationCreate) GetAllowStreamlinedLinking() bool {
+	if g == nil || g.AllowStreamlinedLinking == nil {
+		return false
+	}
+	return *g.AllowStreamlinedLinking
+}
+
+func (g *GoogleAccountLinkingConfigurationCreate) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GoogleAccountLinkingConfigurationCreate) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetAllowStreamlinedLinking sets the AllowStreamlinedLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GoogleAccountLinkingConfigurationCreate) SetAllowStreamlinedLinking(allowStreamlinedLinking *bool) {
+	g.AllowStreamlinedLinking = allowStreamlinedLinking
+	g.require(googleAccountLinkingConfigurationCreateFieldAllowStreamlinedLinking)
+}
+
+func (g *GoogleAccountLinkingConfigurationCreate) UnmarshalJSON(data []byte) error {
+	type unmarshaler GoogleAccountLinkingConfigurationCreate
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GoogleAccountLinkingConfigurationCreate(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GoogleAccountLinkingConfigurationCreate) MarshalJSON() ([]byte, error) {
+	type embed GoogleAccountLinkingConfigurationCreate
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GoogleAccountLinkingConfigurationCreate) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	googleAccountLinkingConfigurationOrNullFieldAllowStreamlinedLinking = big.NewInt(1 << 0)
+)
+
+// Configuration for Google account linking.
+type GoogleAccountLinkingConfigurationOrNull struct {
+	// Enables the Google streamlined account linking flow for this client.
+	AllowStreamlinedLinking *bool `json:"allow_streamlined_linking,omitempty" url:"allow_streamlined_linking,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GoogleAccountLinkingConfigurationOrNull) GetAllowStreamlinedLinking() bool {
+	if g == nil || g.AllowStreamlinedLinking == nil {
+		return false
+	}
+	return *g.AllowStreamlinedLinking
+}
+
+func (g *GoogleAccountLinkingConfigurationOrNull) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GoogleAccountLinkingConfigurationOrNull) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetAllowStreamlinedLinking sets the AllowStreamlinedLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GoogleAccountLinkingConfigurationOrNull) SetAllowStreamlinedLinking(allowStreamlinedLinking *bool) {
+	g.AllowStreamlinedLinking = allowStreamlinedLinking
+	g.require(googleAccountLinkingConfigurationOrNullFieldAllowStreamlinedLinking)
+}
+
+func (g *GoogleAccountLinkingConfigurationOrNull) UnmarshalJSON(data []byte) error {
+	type unmarshaler GoogleAccountLinkingConfigurationOrNull
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GoogleAccountLinkingConfigurationOrNull(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GoogleAccountLinkingConfigurationOrNull) MarshalJSON() ([]byte, error) {
+	type embed GoogleAccountLinkingConfigurationOrNull
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GoogleAccountLinkingConfigurationOrNull) String() string {
 	if g == nil {
 		return "<nil>"
 	}
@@ -18009,20 +18371,21 @@ var (
 	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
 	rotateClientSecretResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
 	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
-	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
-	rotateClientSecretResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
-	rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
-	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
-	rotateClientSecretResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	rotateClientSecretResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	rotateClientSecretResponseContentFieldGoogleAccountLinking                           = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 60)
+	rotateClientSecretResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 61)
+	rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 62)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	rotateClientSecretResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	rotateClientSecretResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 73)
 )
 
 // rotateClientSecretResponseContentNullableFields maps the wire names of RotateClientSecretResponseContent's nullable fields (required or optional) to their field bits.
@@ -18132,6 +18495,7 @@ type RotateClientSecretResponseContent struct {
 	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
 	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	GoogleAccountLinking                     *GoogleAccountLinkingConfiguration                `json:"google_account_linking,omitempty" url:"google_account_linking,omitempty"`
 	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
@@ -18570,6 +18934,13 @@ func (r *RotateClientSecretResponseContent) GetMyOrganizationConfiguration() Cli
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *r.MyOrganizationConfiguration
+}
+
+func (r *RotateClientSecretResponseContent) GetGoogleAccountLinking() GoogleAccountLinkingConfiguration {
+	if r == nil || r.GoogleAccountLinking == nil {
+		return GoogleAccountLinkingConfiguration{}
+	}
+	return *r.GoogleAccountLinking
 }
 
 func (r *RotateClientSecretResponseContent) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
@@ -19099,6 +19470,13 @@ func (r *RotateClientSecretResponseContent) SetMyOrganizationConfiguration(myOrg
 	r.require(rotateClientSecretResponseContentFieldMyOrganizationConfiguration)
 }
 
+// SetGoogleAccountLinking sets the GoogleAccountLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetGoogleAccountLinking(googleAccountLinking *GoogleAccountLinkingConfiguration) {
+	r.GoogleAccountLinking = googleAccountLinking
+	r.require(rotateClientSecretResponseContentFieldGoogleAccountLinking)
+}
+
 // SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
@@ -19614,20 +19992,21 @@ var (
 	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
 	updateClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
 	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
-	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
-	updateClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
-	updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
-	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
-	updateClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	updateClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	updateClientResponseContentFieldGoogleAccountLinking                           = big.NewInt(1 << 59)
+	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 60)
+	updateClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 61)
+	updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 62)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	updateClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	updateClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 72)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 73)
 )
 
 // updateClientResponseContentNullableFields maps the wire names of UpdateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -19737,6 +20116,7 @@ type UpdateClientResponseContent struct {
 	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
 	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	GoogleAccountLinking                     *GoogleAccountLinkingConfiguration                `json:"google_account_linking,omitempty" url:"google_account_linking,omitempty"`
 	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
@@ -20175,6 +20555,13 @@ func (u *UpdateClientResponseContent) GetMyOrganizationConfiguration() ClientMyO
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *u.MyOrganizationConfiguration
+}
+
+func (u *UpdateClientResponseContent) GetGoogleAccountLinking() GoogleAccountLinkingConfiguration {
+	if u == nil || u.GoogleAccountLinking == nil {
+		return GoogleAccountLinkingConfiguration{}
+	}
+	return *u.GoogleAccountLinking
 }
 
 func (u *UpdateClientResponseContent) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
@@ -20702,6 +21089,13 @@ func (u *UpdateClientResponseContent) SetB2BIntegrationConfiguration(b2BIntegrat
 func (u *UpdateClientResponseContent) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
 	u.MyOrganizationConfiguration = myOrganizationConfiguration
 	u.require(updateClientResponseContentFieldMyOrganizationConfiguration)
+}
+
+// SetGoogleAccountLinking sets the GoogleAccountLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetGoogleAccountLinking(googleAccountLinking *GoogleAccountLinkingConfiguration) {
+	u.GoogleAccountLinking = googleAccountLinking
+	u.require(updateClientResponseContentFieldGoogleAccountLinking)
 }
 
 // SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;

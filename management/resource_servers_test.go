@@ -13411,6 +13411,13 @@ func TestEnumResourceServerTypeEnum(t *testing.T) {
 		assert.Equal(t, ResourceServerTypeEnum("universal_commerce_protocol_server"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_model_context_protocol_server", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewResourceServerTypeEnumFromString("model_context_protocol_server")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ResourceServerTypeEnum("model_context_protocol_server"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewResourceServerTypeEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)

@@ -111,8 +111,7 @@ func TestLogStreamsCreateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.CreateLogStreamRequestContent{
-		CreateLogStreamHTTPRequestBody: &management.CreateLogStreamHTTPRequestBody{
-			Type: management.LogStreamHTTPEnumHTTP,
+		HTTP: &management.CreateLogStreamHTTPRequestBody{
 			Sink: &management.LogStreamHTTPSink{
 				HTTPEndpoint: "httpEndpoint",
 			},

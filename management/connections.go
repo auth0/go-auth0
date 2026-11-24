@@ -3005,10 +3005,12 @@ var (
 	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 40)
 	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 41)
 	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 42)
-	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 43)
-	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 44)
-	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 45)
-	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 46)
+	connectionPropertiesOptionsFieldClientID                           = big.NewInt(1 << 43)
+	connectionPropertiesOptionsFieldAllowedAudiences                   = big.NewInt(1 << 44)
+	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 45)
+	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 46)
+	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 47)
+	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 48)
 )
 
 // connectionPropertiesOptionsNullableFields maps the wire names of ConnectionPropertiesOptions's nullable fields (required or optional) to their field bits.
@@ -3028,6 +3030,8 @@ var connectionPropertiesOptionsNullableFields = map[string]*big.Int{
 	"id_token_signed_response_algs":   connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs,
 	"token_endpoint_auth_method":      connectionPropertiesOptionsFieldTokenEndpointAuthMethod,
 	"token_endpoint_auth_signing_alg": connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg,
+	"client_id":                       connectionPropertiesOptionsFieldClientID,
+	"allowed_audiences":               connectionPropertiesOptionsFieldAllowedAudiences,
 	"discovery_url":                   connectionPropertiesOptionsFieldDiscoveryURL,
 	"oidc_metadata":                   connectionPropertiesOptionsFieldOidcMetadata,
 }
@@ -3083,10 +3087,14 @@ type ConnectionPropertiesOptions struct {
 	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
-	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
-	Thumbprints                        *ConnectionThumbprints                         `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
-	ThumbprintsSha384                  *ConnectionThumbprintsSha384                   `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
+	// The client ID registered with the identity provider
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// Additional Google client IDs accepted as the `aud` (audience) of Google ID tokens, used by Google native login and Google Streamlined Linking.
+	AllowedAudiences  []string                     `json:"allowed_audiences,omitempty" url:"allowed_audiences,omitempty"`
+	DiscoveryURL      *ConnectionsDiscoveryURL     `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata      *ConnectionsOidcMetadata     `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Thumbprints       *ConnectionThumbprints       `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384 *ConnectionThumbprintsSha384 `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3395,6 +3403,20 @@ func (c *ConnectionPropertiesOptions) GetUseOauthSpecScope() ConnectionUseOauthS
 		return false
 	}
 	return *c.UseOauthSpecScope
+}
+
+func (c *ConnectionPropertiesOptions) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+func (c *ConnectionPropertiesOptions) GetAllowedAudiences() []string {
+	if c == nil || c.AllowedAudiences == nil {
+		return nil
+	}
+	return c.AllowedAudiences
 }
 
 func (c *ConnectionPropertiesOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
@@ -3740,6 +3762,20 @@ func (c *ConnectionPropertiesOptions) SetIDTokenSessionExpirySupported(idTokenSe
 func (c *ConnectionPropertiesOptions) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
 	c.UseOauthSpecScope = useOauthSpecScope
 	c.require(connectionPropertiesOptionsFieldUseOauthSpecScope)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(connectionPropertiesOptionsFieldClientID)
+}
+
+// SetAllowedAudiences sets the AllowedAudiences field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetAllowedAudiences(allowedAudiences []string) {
+	c.AllowedAudiences = allowedAudiences
+	c.require(connectionPropertiesOptionsFieldAllowedAudiences)
 }
 
 // SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
@@ -7057,10 +7093,12 @@ var (
 	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 40)
 	updateConnectionOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 41)
 	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 42)
-	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 43)
-	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 44)
-	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 45)
-	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 46)
+	updateConnectionOptionsFieldClientID                           = big.NewInt(1 << 43)
+	updateConnectionOptionsFieldAllowedAudiences                   = big.NewInt(1 << 44)
+	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 45)
+	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 46)
+	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 47)
+	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 48)
 )
 
 // updateConnectionOptionsNullableFields maps the wire names of UpdateConnectionOptions's nullable fields (required or optional) to their field bits.
@@ -7080,6 +7118,8 @@ var updateConnectionOptionsNullableFields = map[string]*big.Int{
 	"id_token_signed_response_algs":   updateConnectionOptionsFieldIDTokenSignedResponseAlgs,
 	"token_endpoint_auth_method":      updateConnectionOptionsFieldTokenEndpointAuthMethod,
 	"token_endpoint_auth_signing_alg": updateConnectionOptionsFieldTokenEndpointAuthSigningAlg,
+	"client_id":                       updateConnectionOptionsFieldClientID,
+	"allowed_audiences":               updateConnectionOptionsFieldAllowedAudiences,
 	"discovery_url":                   updateConnectionOptionsFieldDiscoveryURL,
 	"oidc_metadata":                   updateConnectionOptionsFieldOidcMetadata,
 }
@@ -7135,10 +7175,14 @@ type UpdateConnectionOptions struct {
 	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
-	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
-	Thumbprints                        *ConnectionThumbprints                         `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
-	ThumbprintsSha384                  *ConnectionThumbprintsSha384                   `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
+	// The client ID registered with the identity provider
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// Additional Google client IDs accepted as the `aud` (audience) of Google ID tokens, used by Google native login and Google Streamlined Linking.
+	AllowedAudiences  []string                     `json:"allowed_audiences,omitempty" url:"allowed_audiences,omitempty"`
+	DiscoveryURL      *ConnectionsDiscoveryURL     `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata      *ConnectionsOidcMetadata     `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Thumbprints       *ConnectionThumbprints       `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384 *ConnectionThumbprintsSha384 `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7447,6 +7491,20 @@ func (u *UpdateConnectionOptions) GetUseOauthSpecScope() ConnectionUseOauthSpecS
 		return false
 	}
 	return *u.UseOauthSpecScope
+}
+
+func (u *UpdateConnectionOptions) GetClientID() string {
+	if u == nil || u.ClientID == nil {
+		return ""
+	}
+	return *u.ClientID
+}
+
+func (u *UpdateConnectionOptions) GetAllowedAudiences() []string {
+	if u == nil || u.AllowedAudiences == nil {
+		return nil
+	}
+	return u.AllowedAudiences
 }
 
 func (u *UpdateConnectionOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
@@ -7792,6 +7850,20 @@ func (u *UpdateConnectionOptions) SetIDTokenSessionExpirySupported(idTokenSessio
 func (u *UpdateConnectionOptions) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
 	u.UseOauthSpecScope = useOauthSpecScope
 	u.require(updateConnectionOptionsFieldUseOauthSpecScope)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetClientID(clientID *string) {
+	u.ClientID = clientID
+	u.require(updateConnectionOptionsFieldClientID)
+}
+
+// SetAllowedAudiences sets the AllowedAudiences field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetAllowedAudiences(allowedAudiences []string) {
+	u.AllowedAudiences = allowedAudiences
+	u.require(updateConnectionOptionsFieldAllowedAudiences)
 }
 
 // SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
