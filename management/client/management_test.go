@@ -118,7 +118,7 @@ func TestNewSendsClientInfo(t *testing.T) {
 	listClients(t, recorder)
 
 	assert.Equal(t, internal.UserAgent, recorder.header.Get("User-Agent"))
-	assert.Equal(t, internal.DefaultAuth0ClientInfo.Name, recorder.auth0Client(t).Name)
+	assert.Equal(t, internal.DefaultAuth0ClientInfo().Name, recorder.auth0Client(t).Name)
 }
 
 func TestNewSendsClientInfoWithCustomHTTPClient(t *testing.T) {
@@ -127,7 +127,7 @@ func TestNewSendsClientInfoWithCustomHTTPClient(t *testing.T) {
 	listClients(t, recorder, option.WithHTTPClient(&http.Client{}))
 
 	assert.Equal(t, internal.UserAgent, recorder.header.Get("User-Agent"))
-	assert.Equal(t, internal.DefaultAuth0ClientInfo.Name, recorder.auth0Client(t).Name)
+	assert.Equal(t, internal.DefaultAuth0ClientInfo().Name, recorder.auth0Client(t).Name)
 }
 
 func TestNewSendsClientInfoWithCustomHTTPClientImplementation(t *testing.T) {
@@ -138,7 +138,7 @@ func TestNewSendsClientInfoWithCustomHTTPClientImplementation(t *testing.T) {
 
 	assert.True(t, httpClient.called, "expected the custom client to issue the request")
 	assert.Equal(t, internal.UserAgent, recorder.header.Get("User-Agent"))
-	assert.Equal(t, internal.DefaultAuth0ClientInfo.Name, recorder.auth0Client(t).Name)
+	assert.Equal(t, internal.DefaultAuth0ClientInfo().Name, recorder.auth0Client(t).Name)
 }
 
 func TestNewSendsClientInfoEnvEntriesWithCustomHTTPClient(t *testing.T) {
@@ -177,7 +177,7 @@ func TestNewKeepsCustomHTTPClientTransport(t *testing.T) {
 	listClients(t, recorder, option.WithHTTPClient(httpClient))
 
 	assert.Equal(t, "called", recorder.header.Get("X-Custom-Transport"))
-	assert.Equal(t, internal.DefaultAuth0ClientInfo.Name, recorder.auth0Client(t).Name)
+	assert.Equal(t, internal.DefaultAuth0ClientInfo().Name, recorder.auth0Client(t).Name)
 }
 
 func TestNewDoesNotModifyCustomHTTPClient(t *testing.T) {

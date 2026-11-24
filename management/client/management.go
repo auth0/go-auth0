@@ -81,17 +81,10 @@ func New(domain string, options ...option.RequestOption) (*Management, error) {
 		// Process env options if any were found
 		envOpts := core.NewRequestOptions(envOnlyOptions...)
 
-		// Build Auth0ClientInfo with default values plus any custom env entries
-		auth0ClientInfo := &internal.Auth0ClientInfo{
-			Name:    internal.DefaultAuth0ClientInfo.Name,
-			Version: internal.DefaultAuth0ClientInfo.Version,
-			Env:     make(map[string]string),
-		}
-
-		// Copy default env entries
-		for k, v := range internal.DefaultAuth0ClientInfo.Env {
-			auth0ClientInfo.Env[k] = v
-		}
+		// Build Auth0ClientInfo with default values plus any custom env
+		// entries. DefaultAuth0ClientInfo hands out a fresh value, so the
+		// Env map below is safe to merge into.
+		auth0ClientInfo := internal.DefaultAuth0ClientInfo()
 
 		// Merge custom env entries
 		for k, v := range envOpts.Auth0ClientEnv {

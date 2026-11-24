@@ -163,7 +163,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		basePath:          "",
 		debug:             false,
 		http:              &httpClient,
-		auth0ClientInfo:   client.DefaultAuth0ClientInfo,
+		auth0ClientInfo:   client.DefaultAuth0ClientInfo(),
 		idTokenSigningAlg: "RS256",
 		retryStrategy:     client.DefaultRetryOptions,
 	}
