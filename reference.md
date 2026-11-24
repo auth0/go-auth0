@@ -2779,6 +2779,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dl>
 <dd>
 
+**googleAccountLinking:** `*management.GoogleAccountLinkingConfigurationCreate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration` 
     
 </dd>
@@ -3754,6 +3762,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **myOrganizationConfiguration:** `*management.ClientMyOrganizationPatchConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**googleAccountLinking:** `*management.GoogleAccountLinkingConfigurationOrNull` 
     
 </dd>
 </dl>
@@ -6535,8 +6551,7 @@ request := &management.EventStreamsCreateRequest{
             Configuration: &management.EventStreamWebhookConfiguration{
                 WebhookEndpoint: "webhook_endpoint",
                 WebhookAuthorization: &management.EventStreamWebhookAuthorizationResponse{
-                    EventStreamWebhookBasicAuth: &management.EventStreamWebhookBasicAuth{
-                        Method: management.EventStreamWebhookBasicAuthMethodEnumBasic,
+                    Basic: &management.EventStreamWebhookBasicAuth{
                         Username: "username",
                     },
                 },
@@ -9038,8 +9053,7 @@ For a `Sumo Logic` Stream, the `sink` properties are listed in the payload below
 
 ```go
 request := &management.CreateLogStreamRequestContent{
-    CreateLogStreamHTTPRequestBody: &management.CreateLogStreamHTTPRequestBody{
-        Type: management.LogStreamHTTPEnumHTTP,
+    HTTP: &management.CreateLogStreamHTTPRequestBody{
         Sink: &management.LogStreamHTTPSink{
             HTTPEndpoint: "httpEndpoint",
         },
@@ -35573,6 +35587,14 @@ client.SelfServiceProfiles.SSOTicket.Create(
 <dd>
 
 **thirdPartyClientAccessConfig:** `*management.ThirdPartyClientAccessConfig` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**universalLogoutConfig:** `*management.SelfServiceProfileSSOTicketUniversalLogoutConfig` 
     
 </dd>
 </dl>

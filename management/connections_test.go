@@ -4914,6 +4914,22 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetClientID", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueClientID *string
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowedAudiences", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueAllowedAudiences []string
+		obj.SetAllowedAudiences(fernTestValueAllowedAudiences)
+		assert.Equal(t, fernTestValueAllowedAudiences, obj.AllowedAudiences)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetDiscoveryURL", func(t *testing.T) {
 		obj := &ConnectionPropertiesOptions{}
 		var fernTestValueDiscoveryURL *ConnectionsDiscoveryURL
@@ -6408,6 +6424,73 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 		_ = obj.GetUseOauthSpecScope() // Should return zero value
 	})
 
+	t.Run("GetClientID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value string
+		obj.ClientID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.ClientID = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientID() // Should return zero value
+	})
+
+	t.Run("GetAllowedAudiences", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var expected []string
+		obj.AllowedAudiences = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAllowedAudiences(), "getter should return the property value")
+	})
+
+	t.Run("GetAllowedAudiences_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.AllowedAudiences = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAllowedAudiences(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAllowedAudiences_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowedAudiences() // Should return zero value
+	})
+
 	t.Run("GetDiscoveryURL", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -7857,6 +7940,68 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetUseOauthSpecScope(fernTestValueUseOauthSpecScope)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueClientID *string
+
+		// Act
+		obj.SetClientID(fernTestValueClientID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowedAudiences_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueAllowedAudiences []string
+
+		// Act
+		obj.SetAllowedAudiences(fernTestValueAllowedAudiences)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -15146,6 +15291,22 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetClientID", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueClientID *string
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowedAudiences", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueAllowedAudiences []string
+		obj.SetAllowedAudiences(fernTestValueAllowedAudiences)
+		assert.Equal(t, fernTestValueAllowedAudiences, obj.AllowedAudiences)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetDiscoveryURL", func(t *testing.T) {
 		obj := &UpdateConnectionOptions{}
 		var fernTestValueDiscoveryURL *ConnectionsDiscoveryURL
@@ -16640,6 +16801,73 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 		_ = obj.GetUseOauthSpecScope() // Should return zero value
 	})
 
+	t.Run("GetClientID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value string
+		obj.ClientID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.ClientID = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientID() // Should return zero value
+	})
+
+	t.Run("GetAllowedAudiences", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var expected []string
+		obj.AllowedAudiences = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAllowedAudiences(), "getter should return the property value")
+	})
+
+	t.Run("GetAllowedAudiences_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.AllowedAudiences = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAllowedAudiences(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAllowedAudiences_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowedAudiences() // Should return zero value
+	})
+
 	t.Run("GetDiscoveryURL", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -18089,6 +18317,68 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetUseOauthSpecScope(fernTestValueUseOauthSpecScope)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueClientID *string
+
+		// Act
+		obj.SetClientID(fernTestValueClientID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowedAudiences_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueAllowedAudiences []string
+
+		// Act
+		obj.SetAllowedAudiences(fernTestValueAllowedAudiences)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -21606,6 +21896,8 @@ func TestOptionalNullableRoundTripConnectionPropertiesOptions(t *testing.T) {
 		"id_token_signed_response_algs",
 		"token_endpoint_auth_method",
 		"token_endpoint_auth_signing_alg",
+		"client_id",
+		"allowed_audiences",
 		"discovery_url",
 		"oidc_metadata",
 	}
@@ -21620,7 +21912,7 @@ func TestOptionalNullableRoundTripConnectionPropertiesOptions(t *testing.T) {
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj ConnectionPropertiesOptions
-		require.NoError(t, json.Unmarshal([]byte(`{"validation":null,"non_persistent_attrs":null,"configuration":null,"authentication_methods":null,"passkey_options":null,"passwordPolicy":null,"password_complexity_options":null,"password_history":null,"password_no_personal_info":null,"password_dictionary":null,"upstream_params":null,"gateway_authentication":null,"id_token_signed_response_algs":null,"token_endpoint_auth_method":null,"token_endpoint_auth_signing_alg":null,"discovery_url":null,"oidc_metadata":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"validation":null,"non_persistent_attrs":null,"configuration":null,"authentication_methods":null,"passkey_options":null,"passwordPolicy":null,"password_complexity_options":null,"password_history":null,"password_no_personal_info":null,"password_dictionary":null,"upstream_params":null,"gateway_authentication":null,"id_token_signed_response_algs":null,"token_endpoint_auth_method":null,"token_endpoint_auth_signing_alg":null,"client_id":null,"allowed_audiences":null,"discovery_url":null,"oidc_metadata":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
@@ -21752,6 +22044,8 @@ func TestOptionalNullableRoundTripUpdateConnectionOptions(t *testing.T) {
 		"id_token_signed_response_algs",
 		"token_endpoint_auth_method",
 		"token_endpoint_auth_signing_alg",
+		"client_id",
+		"allowed_audiences",
 		"discovery_url",
 		"oidc_metadata",
 	}
@@ -21766,7 +22060,7 @@ func TestOptionalNullableRoundTripUpdateConnectionOptions(t *testing.T) {
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj UpdateConnectionOptions
-		require.NoError(t, json.Unmarshal([]byte(`{"validation":null,"non_persistent_attrs":null,"configuration":null,"authentication_methods":null,"passkey_options":null,"passwordPolicy":null,"password_complexity_options":null,"password_history":null,"password_no_personal_info":null,"password_dictionary":null,"upstream_params":null,"gateway_authentication":null,"id_token_signed_response_algs":null,"token_endpoint_auth_method":null,"token_endpoint_auth_signing_alg":null,"discovery_url":null,"oidc_metadata":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"validation":null,"non_persistent_attrs":null,"configuration":null,"authentication_methods":null,"passkey_options":null,"passwordPolicy":null,"password_complexity_options":null,"password_history":null,"password_no_personal_info":null,"password_dictionary":null,"upstream_params":null,"gateway_authentication":null,"id_token_signed_response_algs":null,"token_endpoint_auth_method":null,"token_endpoint_auth_signing_alg":null,"client_id":null,"allowed_audiences":null,"discovery_url":null,"oidc_metadata":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
