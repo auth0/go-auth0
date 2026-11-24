@@ -6405,7 +6405,7 @@ func (a AssessorsTypeEnum) Ptr() *AssessorsTypeEnum {
 }
 
 var (
-	associateOrganizationClientGrantResponseContentFieldID                   = big.NewInt(1 << 0)
+	associateOrganizationClientGrantResponseContentFieldGrantID              = big.NewInt(1 << 0)
 	associateOrganizationClientGrantResponseContentFieldClientID             = big.NewInt(1 << 1)
 	associateOrganizationClientGrantResponseContentFieldAudience             = big.NewInt(1 << 2)
 	associateOrganizationClientGrantResponseContentFieldScope                = big.NewInt(1 << 3)
@@ -6415,7 +6415,7 @@ var (
 
 type AssociateOrganizationClientGrantResponseContent struct {
 	// ID of the client grant.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	GrantID *string `json:"grant_id,omitempty" url:"grant_id,omitempty"`
 	// ID of the client.
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant
@@ -6433,11 +6433,11 @@ type AssociateOrganizationClientGrantResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *AssociateOrganizationClientGrantResponseContent) GetID() string {
-	if a == nil || a.ID == nil {
+func (a *AssociateOrganizationClientGrantResponseContent) GetGrantID() string {
+	if a == nil || a.GrantID == nil {
 		return ""
 	}
-	return *a.ID
+	return *a.GrantID
 }
 
 func (a *AssociateOrganizationClientGrantResponseContent) GetClientID() string {
@@ -6491,11 +6491,11 @@ func (a *AssociateOrganizationClientGrantResponseContent) require(field *big.Int
 	a.explicitFields = next
 }
 
-// SetID sets the ID field and marks it as non-optional;
+// SetGrantID sets the GrantID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AssociateOrganizationClientGrantResponseContent) SetID(id *string) {
-	a.ID = id
-	a.require(associateOrganizationClientGrantResponseContentFieldID)
+func (a *AssociateOrganizationClientGrantResponseContent) SetGrantID(grantID *string) {
+	a.GrantID = grantID
+	a.require(associateOrganizationClientGrantResponseContentFieldGrantID)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -99211,6 +99211,190 @@ func (g *GetVerifiableCredentialTemplateResponseContent) String() string {
 }
 
 var (
+	getWebtaskResponseContentFieldContainer  = big.NewInt(1 << 0)
+	getWebtaskResponseContentFieldName       = big.NewInt(1 << 1)
+	getWebtaskResponseContentFieldToken      = big.NewInt(1 << 2)
+	getWebtaskResponseContentFieldMeta       = big.NewInt(1 << 3)
+	getWebtaskResponseContentFieldWebtaskURL = big.NewInt(1 << 4)
+	getWebtaskResponseContentFieldCode       = big.NewInt(1 << 5)
+	getWebtaskResponseContentFieldSecrets    = big.NewInt(1 << 6)
+)
+
+// A webtask in the tenant's container, as returned by the webtask platform's GET. Code and decrypted secrets are only included when requested.
+type GetWebtaskResponseContent struct {
+	Container  WebtaskContainer    `json:"container" url:"container"`
+	Name       WebtaskName         `json:"name" url:"name"`
+	Token      *WebtaskToken       `json:"token,omitempty" url:"token,omitempty"`
+	Meta       WebtaskResponseMeta `json:"meta" url:"meta"`
+	WebtaskURL *WebtaskURL         `json:"webtask_url,omitempty" url:"webtask_url,omitempty"`
+	// JavaScript code of the webtask. Only returned with <code>fetch_code=true</code>.
+	Code    *string                 `json:"code,omitempty" url:"code,omitempty"`
+	Secrets *WebtaskResponseSecrets `json:"secrets,omitempty" url:"secrets,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetWebtaskResponseContent) GetContainer() WebtaskContainer {
+	if g == nil {
+		return ""
+	}
+	return g.Container
+}
+
+func (g *GetWebtaskResponseContent) GetName() WebtaskName {
+	if g == nil {
+		return ""
+	}
+	return g.Name
+}
+
+func (g *GetWebtaskResponseContent) GetToken() WebtaskToken {
+	if g == nil || g.Token == nil {
+		return ""
+	}
+	return *g.Token
+}
+
+func (g *GetWebtaskResponseContent) GetMeta() WebtaskResponseMeta {
+	if g == nil {
+		return nil
+	}
+	return g.Meta
+}
+
+func (g *GetWebtaskResponseContent) GetWebtaskURL() WebtaskURL {
+	if g == nil || g.WebtaskURL == nil {
+		return ""
+	}
+	return *g.WebtaskURL
+}
+
+func (g *GetWebtaskResponseContent) GetCode() string {
+	if g == nil || g.Code == nil {
+		return ""
+	}
+	return *g.Code
+}
+
+func (g *GetWebtaskResponseContent) GetSecrets() WebtaskResponseSecrets {
+	if g == nil || g.Secrets == nil {
+		return nil
+	}
+	return *g.Secrets
+}
+
+func (g *GetWebtaskResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetWebtaskResponseContent) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetContainer sets the Container field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWebtaskResponseContent) SetContainer(container WebtaskContainer) {
+	g.Container = container
+	g.require(getWebtaskResponseContentFieldContainer)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWebtaskResponseContent) SetName(name WebtaskName) {
+	g.Name = name
+	g.require(getWebtaskResponseContentFieldName)
+}
+
+// SetToken sets the Token field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWebtaskResponseContent) SetToken(token *WebtaskToken) {
+	g.Token = token
+	g.require(getWebtaskResponseContentFieldToken)
+}
+
+// SetMeta sets the Meta field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWebtaskResponseContent) SetMeta(meta WebtaskResponseMeta) {
+	g.Meta = meta
+	g.require(getWebtaskResponseContentFieldMeta)
+}
+
+// SetWebtaskURL sets the WebtaskURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWebtaskResponseContent) SetWebtaskURL(webtaskURL *WebtaskURL) {
+	g.WebtaskURL = webtaskURL
+	g.require(getWebtaskResponseContentFieldWebtaskURL)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWebtaskResponseContent) SetCode(code *string) {
+	g.Code = code
+	g.require(getWebtaskResponseContentFieldCode)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWebtaskResponseContent) SetSecrets(secrets *WebtaskResponseSecrets) {
+	g.Secrets = secrets
+	g.require(getWebtaskResponseContentFieldSecrets)
+}
+
+func (g *GetWebtaskResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetWebtaskResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetWebtaskResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetWebtaskResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetWebtaskResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetWebtaskResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	groupFieldID           = big.NewInt(1 << 0)
 	groupFieldName         = big.NewInt(1 << 1)
 	groupFieldExternalID   = big.NewInt(1 << 2)
@@ -127564,7 +127748,7 @@ type TenantSettingsFlags struct {
 	EnableClientConnections *bool `json:"enable_client_connections,omitempty" url:"enable_client_connections,omitempty"`
 	// Whether advanced API Authorization scenarios are enabled (true) or disabled (false).
 	EnablePipeline2 *bool `json:"enable_pipeline2,omitempty" url:"enable_pipeline2,omitempty"`
-	// If enabled, clients are able to add legacy delegation grants.
+	// DEPRECATED property. If enabled, first-party applications can add the legacy delegation grant types. It does not enable the /delegation endpoint.
 	AllowLegacyDelegationGrantTypes *bool `json:"allow_legacy_delegation_grant_types,omitempty" url:"allow_legacy_delegation_grant_types,omitempty"`
 	// If enabled, clients are able to add legacy RO grants.
 	AllowLegacyRoGrantTypes *bool `json:"allow_legacy_ro_grant_types,omitempty" url:"allow_legacy_ro_grant_types,omitempty"`
@@ -149572,6 +149756,180 @@ func (v *VerifiableCredentialTemplateResponse) String() string {
 	}
 	return fmt.Sprintf("%#v", v)
 }
+
+var (
+	webtaskFieldContainer  = big.NewInt(1 << 0)
+	webtaskFieldName       = big.NewInt(1 << 1)
+	webtaskFieldToken      = big.NewInt(1 << 2)
+	webtaskFieldMeta       = big.NewInt(1 << 3)
+	webtaskFieldWebtaskURL = big.NewInt(1 << 4)
+)
+
+// A webtask in the tenant's container, as returned by the webtask platform.
+type Webtask struct {
+	Container  WebtaskContainer    `json:"container" url:"container"`
+	Name       WebtaskName         `json:"name" url:"name"`
+	Token      *WebtaskToken       `json:"token,omitempty" url:"token,omitempty"`
+	Meta       WebtaskResponseMeta `json:"meta" url:"meta"`
+	WebtaskURL *WebtaskURL         `json:"webtask_url,omitempty" url:"webtask_url,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (w *Webtask) GetContainer() WebtaskContainer {
+	if w == nil {
+		return ""
+	}
+	return w.Container
+}
+
+func (w *Webtask) GetName() WebtaskName {
+	if w == nil {
+		return ""
+	}
+	return w.Name
+}
+
+func (w *Webtask) GetToken() WebtaskToken {
+	if w == nil || w.Token == nil {
+		return ""
+	}
+	return *w.Token
+}
+
+func (w *Webtask) GetMeta() WebtaskResponseMeta {
+	if w == nil {
+		return nil
+	}
+	return w.Meta
+}
+
+func (w *Webtask) GetWebtaskURL() WebtaskURL {
+	if w == nil || w.WebtaskURL == nil {
+		return ""
+	}
+	return *w.WebtaskURL
+}
+
+func (w *Webtask) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.ExtraProperties
+}
+
+func (w *Webtask) require(field *big.Int) {
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
+	}
+	next.Or(next, field)
+	w.explicitFields = next
+}
+
+// SetContainer sets the Container field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *Webtask) SetContainer(container WebtaskContainer) {
+	w.Container = container
+	w.require(webtaskFieldContainer)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *Webtask) SetName(name WebtaskName) {
+	w.Name = name
+	w.require(webtaskFieldName)
+}
+
+// SetToken sets the Token field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *Webtask) SetToken(token *WebtaskToken) {
+	w.Token = token
+	w.require(webtaskFieldToken)
+}
+
+// SetMeta sets the Meta field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *Webtask) SetMeta(meta WebtaskResponseMeta) {
+	w.Meta = meta
+	w.require(webtaskFieldMeta)
+}
+
+// SetWebtaskURL sets the WebtaskURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *Webtask) SetWebtaskURL(webtaskURL *WebtaskURL) {
+	w.WebtaskURL = webtaskURL
+	w.require(webtaskFieldWebtaskURL)
+}
+
+func (w *Webtask) UnmarshalJSON(data []byte) error {
+	type embed Webtask
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*w = Webtask(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.ExtraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *Webtask) MarshalJSON() ([]byte, error) {
+	type embed Webtask
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, w.ExtraProperties)
+}
+
+func (w *Webtask) String() string {
+	if w == nil {
+		return "<nil>"
+	}
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
+// Webtask container of the tenant. Hooks run in the same container.
+type WebtaskContainer = string
+
+// Name of the webtask. It is part of the webtask URL.
+type WebtaskName = string
+
+// Metadata of the webtask, as returned by the webtask platform. Values have no length limit, since webtasks written by other tools are returned too.
+type WebtaskResponseMeta = map[string]string
+
+// Secrets of the webtask, decrypted. Only returned by <code>GET /api/v2/webtasks/{name}</code> with <code>decrypt=true</code>. Values have no length limit, since webtasks written by other tools are returned too.
+type WebtaskResponseSecrets = map[string]string
+
+// Webtask token issued by the webtask platform for this webtask.
+type WebtaskToken = string
+
+// URL the webtask runs at.
+type WebtaskURL = string
 
 var (
 	xSSProtectionConfigFieldEnabled   = big.NewInt(1 << 0)
