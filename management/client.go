@@ -422,6 +422,8 @@ type ExpressConfiguration struct {
 	OktaOINClientID *string `json:"okta_oin_client_id,omitempty"`
 	// AdminLoginDomain is the domain that admins are expected to log in via for authenticating for express configuration.
 	AdminLoginDomain *string `json:"admin_login_domain,omitempty"`
+	// OktaOINListingURL is the application's listing URL in the Okta Integration Network catalog.
+	OktaOINListingURL *string `json:"okta_oin_listing_url,omitempty"`
 	// OINSubmissionID is the identifier of the published application in the OKTA OIN.
 	OINSubmissionID *string `json:"oin_submission_id,omitempty"`
 }

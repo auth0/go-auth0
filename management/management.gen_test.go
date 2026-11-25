@@ -11322,6 +11322,16 @@ func TestExpressConfiguration_GetOktaOINClientID(tt *testing.T) {
 	e.GetOktaOINClientID()
 }
 
+func TestExpressConfiguration_GetOktaOINListingURL(tt *testing.T) {
+	var zeroValue string
+	e := &ExpressConfiguration{OktaOINListingURL: &zeroValue}
+	e.GetOktaOINListingURL()
+	e = &ExpressConfiguration{}
+	e.GetOktaOINListingURL()
+	e = nil
+	e.GetOktaOINListingURL()
+}
+
 func TestExpressConfiguration_GetUserAttributeProfileID(tt *testing.T) {
 	var zeroValue string
 	e := &ExpressConfiguration{UserAttributeProfileID: &zeroValue}
