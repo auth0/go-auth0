@@ -9113,6 +9113,14 @@ func (e *ExpressConfiguration) GetOktaOINClientID() string {
 	return *e.OktaOINClientID
 }
 
+// GetOktaOINListingURL returns the OktaOINListingURL field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetOktaOINListingURL() string {
+	if e == nil || e.OktaOINListingURL == nil {
+		return ""
+	}
+	return *e.OktaOINListingURL
+}
+
 // GetUserAttributeProfileID returns the UserAttributeProfileID field if it's non-nil, zero value otherwise.
 func (e *ExpressConfiguration) GetUserAttributeProfileID() string {
 	if e == nil || e.UserAttributeProfileID == nil {
