@@ -837,7 +837,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 			testServer.Close()
 		})
 
-		httpClient := WrapWithTokenSource(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(DefaultAuth0ClientInfo))
+		httpClient := WrapWithTokenSource(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(DefaultAuth0ClientInfo()))
 		_, err := httpClient.Get(testServer.URL)
 		assert.NoError(t, err)
 	})

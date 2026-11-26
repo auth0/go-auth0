@@ -82,13 +82,18 @@ func (td *Auth0ClientInfo) IsEmpty() bool {
 	return td.Name == "" && td.Version == "" && len(td.Env) == 0
 }
 
-// DefaultAuth0ClientInfo is the default client information sent by the go-auth0 SDK.
-var DefaultAuth0ClientInfo = &Auth0ClientInfo{
-	Name:    "go-auth0",
-	Version: auth0.Version,
-	Env: map[string]string{
-		"go": runtime.Version(),
-	},
+// DefaultAuth0ClientInfo returns the default client information sent by the
+// go-auth0 SDK. Each call returns a freshly built value, including a fresh
+// Env map, so clients can carry their own client information without sharing
+// (and concurrently mutating) package-level state.
+func DefaultAuth0ClientInfo() *Auth0ClientInfo {
+	return &Auth0ClientInfo{
+		Name:    "go-auth0",
+		Version: auth0.Version,
+		Env: map[string]string{
+			"go": runtime.Version(),
+		},
+	}
 }
 
 // RetryOptions defines the retry rules that should be followed by the SDK when making requests.
