@@ -2,6 +2,7 @@ package authentication
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,14 +16,10 @@ func TestCIBA_Initiate(t *testing.T) {
 
 	// Call the Initiate method of the CIBA manager
 	resp, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		Scope:        "openid",
-		LoginHint: map[string]string{
-			"format": "iss_sub",
-			"iss":    "https://witty-silver-sailfish-sus1-staging-20240704.sus.auth0.com/",
-			"sub":    "auth0|6707939cad3d8bec47ecfa2e",
-		},
+		ClientID:       clientID,
+		ClientSecret:   clientSecret,
+		Scope:          "openid",
+		LoginHint:      cibaLoginHint(t, ""),
 		BindingMessage: "TEST-BINDING-MESSAGE",
 	})
 
@@ -51,14 +48,10 @@ func TestCIBANegative_Initiate(t *testing.T) {
 		configureHTTPTestRecordings(t, authAPI)
 
 		_, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			Scope:        "openid",
-			LoginHint: map[string]string{
-				"format": "iss_sub",
-				"iss":    "https://witty-silver-sailfish-sus1-staging-20240704.sus.auth0.com/",
-				"sub":    "auth0|Random-ID",
-			},
+			ClientID:       clientID,
+			ClientSecret:   clientSecret,
+			Scope:          "openid",
+			LoginHint:      cibaLoginHint(t, "auth0|Random-ID"),
 			BindingMessage: "TEST-BINDING-MESSAGE",
 		})
 
@@ -69,17 +62,42 @@ func TestCIBANegative_Initiate(t *testing.T) {
 		configureHTTPTestRecordings(t, authAPI)
 
 		_, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			Scope:        "tempID",
-			LoginHint: map[string]string{
-				"format": "iss_sub",
-				"iss":    "https://witty-silver-sailfish-sus1-staging-20240704.sus.auth0.com/",
-				"sub":    "auth0|6707939cad3d8bec47ecfa2e",
-			},
+			ClientID:       clientID,
+			ClientSecret:   clientSecret,
+			Scope:          "tempID",
+			LoginHint:      cibaLoginHint(t, ""),
 			BindingMessage: "TEST-BINDING-MESSAGE",
 		})
 
 		assert.ErrorContains(t, err, "openid scope must be requested")
 	})
+}
+
+// cibaLoginHint returns the login hint used by the CIBA tests. When replaying recordings it uses
+// placeholders, otherwise the issuer and user ID come from AUTH0_CIBA_ISSUER and AUTH0_CIBA_USER_ID.
+// A non-empty userID overrides the user ID.
+func cibaLoginHint(t *testing.T, userID string) map[string]string {
+	t.Helper()
+
+	issuer, sub := recordingsCIBAIssuer, recordingsCIBAUserID
+
+	if !usingRecordingResponses(t) {
+		if v := os.Getenv("AUTH0_CIBA_ISSUER"); v != "" {
+			issuer = v
+		}
+
+		if v := os.Getenv("AUTH0_CIBA_USER_ID"); v != "" {
+			sub = v
+		}
+	}
+
+	if userID != "" {
+		sub = userID
+	}
+
+	return map[string]string{
+		"format": "iss_sub",
+		"iss":    issuer,
+		"sub":    sub,
+	}
 }
