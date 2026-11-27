@@ -300,7 +300,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            [{"type":"email","name":"MyEmail","email":"foo@example.com"},{"type":"phone","name":"MyPhone","phone_number":"+44207183875044","preferred_authentication_method":"sms"},{"type":"totp","name":"MyTotp","totp_secret":"5HCWXIP2MJNSUBGYVUZFLRB2HWIGXR4SYJQXNBQ"}]
+            [{"type":"email","name":"MyEmail","email":"foo@example.com"},{"type":"phone","name":"MyPhone","phone_number":"+44207183875044","preferred_authentication_method":"sms"},{"type":"totp","name":"MyTotp","totp_secret":"[REDACTED]"}]
         form: {}
         headers:
             Content-Type:

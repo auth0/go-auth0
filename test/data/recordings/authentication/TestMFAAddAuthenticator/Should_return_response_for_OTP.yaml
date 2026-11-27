@@ -27,7 +27,7 @@ interactions:
         trailer: {}
         content_length: 241
         uncompressed: false
-        body: '{"authenticator_type":"otp","secret":"HJ6XM2DNERXDAVCUONGWKRTCMNTU6VDF","barcode_uri":"otpauth://totp/My%20Test%20Tenant:user%40example.com?secret=HJ6XM2DNERXDAVCUONGWKRTCMNTU6VDF&issuer=My%20Test%20Tenant&algorithm=SHA1&digits=6&period=30"}'
+        body: '{"authenticator_type":"otp","secret":"test-secret","barcode_uri":"otpauth://totp/My%20Test%20Tenant:user%40example.com?secret=test-secret&issuer=My%20Test%20Tenant&algorithm=SHA1&digits=6&period=30"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
