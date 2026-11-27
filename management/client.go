@@ -308,6 +308,9 @@ type Client struct {
 	// FedCMLogin holds the Federated Credential Management login configuration.
 	FedCMLogin *FedCMLogin `json:"fedcm_login,omitempty"`
 
+	// GoogleAccountLinking configures Google streamlined account linking for the client.
+	GoogleAccountLinking *ClientGoogleAccountLinking `json:"google_account_linking,omitempty"`
+
 	// IdentityAssertionAuthorizationGrant enables the Identity Assertion Authorization Grant (ID-JAG) exchange for the client, used for Cross-App Access.
 	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant `json:"identity_assertion_authorization_grant,omitempty"`
 
@@ -826,6 +829,12 @@ type FedCMLogin struct {
 type FedCMLoginGoogle struct {
 	// IsEnabled shows the Google FedCM prompt on New Universal Login when true.
 	IsEnabled *bool `json:"is_enabled,omitempty"`
+}
+
+// ClientGoogleAccountLinking defines the Google account linking configuration.
+type ClientGoogleAccountLinking struct {
+	// AllowStreamlinedLinking enables Google streamlined account linking for the client.
+	AllowStreamlinedLinking *bool `json:"allow_streamlined_linking,omitempty"`
 }
 
 // ClientAddons defines the `addons` settings for a Client.

@@ -1998,6 +1998,14 @@ func (c *Client) GetFormTemplate() string {
 	return *c.FormTemplate
 }
 
+// GetGoogleAccountLinking returns the GoogleAccountLinking field.
+func (c *Client) GetGoogleAccountLinking() *ClientGoogleAccountLinking {
+	if c == nil {
+		return nil
+	}
+	return c.GoogleAccountLinking
+}
+
 // GetGrantTypes returns the GrantTypes field if it's non-nil, zero value otherwise.
 func (c *Client) GetGrantTypes() []string {
 	if c == nil || c.GrantTypes == nil {
@@ -2580,6 +2588,19 @@ func (c *ClientDefaultOrganization) GetOrganizationID() string {
 
 // String returns a string representation of ClientDefaultOrganization.
 func (c *ClientDefaultOrganization) String() string {
+	return Stringify(c)
+}
+
+// GetAllowStreamlinedLinking returns the AllowStreamlinedLinking field if it's non-nil, zero value otherwise.
+func (c *ClientGoogleAccountLinking) GetAllowStreamlinedLinking() bool {
+	if c == nil || c.AllowStreamlinedLinking == nil {
+		return false
+	}
+	return *c.AllowStreamlinedLinking
+}
+
+// String returns a string representation of ClientGoogleAccountLinking.
+func (c *ClientGoogleAccountLinking) String() string {
 	return Stringify(c)
 }
 
