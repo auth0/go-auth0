@@ -1,9 +1,11 @@
 package management
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -61,6 +63,7 @@ func removeSensitiveDataFromRecordings(t *testing.T, recorderTransport *recorder
 			redactSensitiveDataInResourceServer(t, i)
 			redactSensitiveDataInLogs(t, i)
 			redactSensitiveDataInConnectionSCIMToken(t, i)
+			redactSensitiveJSONFields(t, i)
 
 			// Redact domain should always be ran last
 			redactDomain(i, domain)
@@ -104,6 +107,98 @@ func redactDomain(i *cassette.Interaction, domain string) {
 
 	i.Response.Body = strings.ReplaceAll(i.Response.Body, domainParts[0], recordingsDomain)
 	i.Request.Body = strings.ReplaceAll(i.Request.Body, domainParts[0], recordingsDomain)
+}
+
+// sensitiveJSONKeys are the JSON keys whose string values must never be recorded, wherever they
+// appear in a request or response body. This covers list responses, such as the clients list,
+// which the resource specific redactions above deliberately skip.
+var sensitiveJSONKeys = map[string]bool{
+	"client_secret":  true,
+	"signing_secret": true,
+	"totp_secret":    true,
+	"secret":         true,
+	"recovery_code":  true,
+	"oob_code":       true,
+}
+
+// barcodeURISecrets matches the query parameters of an MFA barcode URI that must not be recorded.
+var barcodeURISecrets = regexp.MustCompile(`([?&])(secret|enrollment_tx_id)=[^&]*`)
+
+// redactSensitiveJSONFields redacts every sensitive key found in the request and response bodies.
+// Connection "options" are skipped because the tests send and then assert on fixed fixture values there.
+func redactSensitiveJSONFields(t *testing.T, i *cassette.Interaction) {
+	i.Request.Body = redactSensitiveJSONBody(t, i.Request.Body)
+	i.Response.Body = redactSensitiveJSONBody(t, i.Response.Body)
+}
+
+func redactSensitiveJSONBody(t *testing.T, body string) string {
+	decoder := json.NewDecoder(strings.NewReader(body))
+	decoder.UseNumber()
+
+	var value interface{}
+	if err := decoder.Decode(&value); err != nil {
+		return body
+	}
+
+	if !redactSensitiveJSONValue(value) {
+		return body
+	}
+
+	// Avoid HTML escaping so that characters such as & stay readable in the recording.
+	buf := &bytes.Buffer{}
+	encoder := json.NewEncoder(buf)
+	encoder.SetEscapeHTML(false)
+	require.NoError(t, encoder.Encode(value))
+
+	return strings.TrimSpace(buf.String())
+}
+
+func redactSensitiveJSONValue(value interface{}) bool {
+	redacted := false
+
+	switch node := value.(type) {
+	case map[string]interface{}:
+		for key, child := range node {
+			if key == "options" {
+				continue
+			}
+
+			switch {
+			case sensitiveJSONKeys[key]:
+				if s, ok := child.(string); ok && s != "" && s != "[REDACTED]" {
+					node[key] = "[REDACTED]"
+					redacted = true
+				}
+			case key == "recovery_codes":
+				if codes, ok := child.([]interface{}); ok {
+					for idx := range codes {
+						codes[idx] = "[REDACTED]"
+					}
+
+					redacted = redacted || len(codes) > 0
+				}
+			case key == "barcode_uri":
+				if uri, ok := child.(string); ok {
+					if masked := barcodeURISecrets.ReplaceAllString(uri, "${1}${2}=[REDACTED]"); masked != uri {
+						node[key] = masked
+						redacted = true
+					}
+				}
+			default:
+				if redactSensitiveJSONValue(child) {
+					redacted = true
+				}
+			}
+		}
+	case []interface{}:
+		for _, child := range node {
+			if redactSensitiveJSONValue(child) {
+				redacted = true
+			}
+		}
+	}
+
+	return redacted
 }
 
 func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {

@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"os"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -23,7 +25,15 @@ import (
 const (
 	recordingsDIR    = "./../test/data/recordings/authentication/"
 	recordingsDomain = "go-auth0-dev.eu.auth0.com"
+
+	// Placeholders written into recordings in place of the CIBA issuer and user that were used
+	// when recording. The real values are supplied through AUTH0_CIBA_ISSUER and AUTH0_CIBA_USER_ID.
+	recordingsCIBAIssuer = "https://test-tenant.auth0.com/"
+	recordingsCIBAUserID = "auth0|test-user-id"
 )
+
+// barcodeURISecrets matches the query parameters of an MFA barcode URI that must not be recorded.
+var barcodeURISecrets = regexp.MustCompile(`([?&])(secret|enrollment_tx_id)=[^&]*`)
 
 func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 	t.Helper()
@@ -116,6 +126,8 @@ func removeSensitiveDataFromRecordings(t *testing.T, recorderTransport *recorder
 			redactHeaders(i)
 			redactClientAuth(t, i)
 			redactTokens(t, i)
+			redactSecretResponseFields(t, i)
+			redactCIBALoginHint(i)
 
 			// Redact domain should always be ran last
 			redactDomain(i, domain)
@@ -218,6 +230,89 @@ func redactTokens(t *testing.T, i *cassette.Interaction) {
 	require.NoError(t, err)
 
 	i.Response.Body = string(body)
+}
+
+// redactSecretResponseFields replaces one-time or secret values returned by the MFA enrollment,
+// recovery code and CIBA endpoints, so that they never end up in a recording.
+func redactSecretResponseFields(t *testing.T, i *cassette.Interaction) {
+	if !strings.HasPrefix(i.Response.Headers.Get("Content-Type"), "application/json") {
+		return
+	}
+
+	if i.Response.Code >= http.StatusBadRequest {
+		return
+	}
+
+	body := map[string]interface{}{}
+	if err := json.Unmarshal([]byte(i.Response.Body), &body); err != nil {
+		return
+	}
+
+	redacted := false
+
+	for _, key := range []string{"secret", "oob_code", "recovery_code", "auth_req_id"} {
+		if _, ok := body[key].(string); ok {
+			body[key] = "test-" + key
+			redacted = true
+		}
+	}
+
+	if codes, ok := body["recovery_codes"].([]interface{}); ok {
+		for idx := range codes {
+			codes[idx] = "test-recovery_code"
+		}
+
+		redacted = true
+	}
+
+	if uri, ok := body["barcode_uri"].(string); ok {
+		if masked := barcodeURISecrets.ReplaceAllString(uri, "${1}${2}=test-${2}"); masked != uri {
+			body["barcode_uri"] = masked
+			redacted = true
+		}
+	}
+
+	if !redacted {
+		return
+	}
+
+	// Avoid HTML escaping so that characters such as & stay readable in the recording.
+	buf := &bytes.Buffer{}
+	encoder := json.NewEncoder(buf)
+	encoder.SetEscapeHTML(false)
+	require.NoError(t, encoder.Encode(body))
+
+	i.Response.Body = strings.TrimSpace(buf.String())
+}
+
+// redactCIBALoginHint replaces the real CIBA issuer and user ID, read from the environment,
+// with placeholders. The tests send the same placeholders when replaying recordings.
+func redactCIBALoginHint(i *cassette.Interaction) {
+	replacements := map[string]string{
+		os.Getenv("AUTH0_CIBA_ISSUER"):  recordingsCIBAIssuer,
+		os.Getenv("AUTH0_CIBA_USER_ID"): recordingsCIBAUserID,
+	}
+
+	for real, placeholder := range replacements {
+		if real == "" {
+			continue
+		}
+
+		for key, values := range i.Request.Form {
+			for idx, value := range values {
+				i.Request.Form[key][idx] = strings.ReplaceAll(value, real, placeholder)
+			}
+		}
+
+		if strings.HasPrefix(i.Request.Headers.Get("Content-Type"), "application/x-www-form-urlencoded") {
+			i.Request.Body = i.Request.Form.Encode()
+		} else {
+			i.Request.Body = strings.ReplaceAll(i.Request.Body, real, placeholder)
+		}
+
+		i.Request.URL = strings.ReplaceAll(i.Request.URL, real, placeholder)
+		i.Response.Body = strings.ReplaceAll(i.Response.Body, real, placeholder)
+	}
 }
 
 func redactDomain(i *cassette.Interaction, domain string) {

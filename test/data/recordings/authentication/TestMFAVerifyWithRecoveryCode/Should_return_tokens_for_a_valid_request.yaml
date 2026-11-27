@@ -37,7 +37,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"test-access-token","expires_in":86400,"scope":"openid profile","token_type":"Bearer","recovery_code":"17EQHNZC2SZDYG7X4QXVX9SW"}'
+        body: '{"access_token":"test-access-token","expires_in":86400,"scope":"openid profile","token_type":"Bearer","recovery_code":"test-recovery_code"}'
         headers:
             Content-Type:
                 - application/json
