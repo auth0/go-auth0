@@ -29,14 +29,10 @@ func TestLoginWithGrant(t *testing.T) {
 
 		// Call the Initiate method of the CIBA manager
 		resp, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			Scope:        "openid",
-			LoginHint: map[string]string{
-				"format": "iss_sub",
-				"iss":    "https://witty-silver-sailfish-sus1-staging-20240704.sus.auth0.com/",
-				"sub":    "auth0|6707939cad3d8bec47ecfa2e",
-			},
+			ClientID:       clientID,
+			ClientSecret:   clientSecret,
+			Scope:          "openid",
+			LoginHint:      cibaLoginHint(t, ""),
 			BindingMessage: "TEST-BINDING-MESSAGE",
 		})
 		assert.Empty(t, err)
